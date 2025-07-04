@@ -18,7 +18,6 @@
 </head>
 <body>
 
-    <!-- <a href="" style="font-size: 1.17em; font-weight: bold; padding:0;  text-decoration: none;"><h3>民谣俱乐部</h3></a>-->
     <div class="menu">
         <style scoped>
              .menu{ margin-top: 12px;}
@@ -34,28 +33,17 @@
         </style>
     <div id="app" v-cloak>
     <a href="https://mp.weixin.qq.com/s/FUDUo05qYm9KMNgS1XOevQ"><button class="button-error pure-button">上传至网易云盘</button></a> 
-    <!--<a><button class="pure-button pure-button-primary" class="download-btn" type="primary" @click="drawer = true" plain icon="el-icon-download">下载</button></a>-->
+
     <a href="https://mp.weixin.qq.com/s/sBP_RPKBx9kOajL4gB6zQA"><button class=" pure-button button-secondary">视频</button></a>
     <a href="https://www.weiyun.com/document?fileId=1482357921_a1fc5a585a38e55958695081d555a4b0_af5f417e-e61a-4d9d-9b97-9ca1614eb22b&officeType=pdf&tdsourcetag=s_weiyun_file"><button class=" pure-button button-warning">吉他谱</button></a>
     <a href="https://mp.weixin.qq.com/s/DXdydTJnx_tG92TMxtMa9w" > <button class="button-success pure-button">公众号</button></a>
    
-       <!-- <el-drawer title="下载歌曲" :visible.sync="drawer" direction="rtl" :wrapperClosable="false" :size="isMobile ? '100%' : '50%'">
-          <el-table :data="songList" @selection-change="handleDownloadSelect" width="800px" :max-height="computedTableHeight">
-            <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column property="name" label="歌名"></el-table-column>
-            <el-table-column property="artist" label="专辑"></el-table-column>
-          </el-table>
-          <el-alert :title="isMobile ? '当前为手机环境，不支持微信内下载，建议使用浏览器或电脑下载 资源来源于网络 本站不做任何存储' : '点击下载后，注意左上角弹窗，需同意下载多个文件；资源来源于网络 本站不做任何存储'" type="info" show-icon></el-alert>
-          <el-progress :percentage="percentage"  :text-inside="true":stroke-width="20"style="margin: 10px;" :format="percentage => `${(percentage/100*downloadSongList.length).toFixed()}/${downloadSongList.length}`"></el-progress>
-          <div style="margin-left: 20px;">
-            <el-button @click="handleDownloadSong" type="primary" :disabled="downloadSongList.length == 0" :loading="downloading">下载选中歌曲</el-button>
-          </div>
-        </el-drawer>-->
+      
        
       </div></div>
 <div id="skPlayer"></div>
 <div class="pure-menu custom-restricted-width">
-    <!--<span class="pure-menu-heading" style="font-size: 1.17em; font-weight: bold;color: #6A6B6F;">专辑列表</span>-->
+    
     <ul class="listimg pure-menu-list">
     <li class=""><a href="#" class="pure-menu-link" onclick="change(1)"><img class="listimg2" src="./img/tokyo.jpg"></a></li>
     <li class=""><a href="#" class="pure-menu-link" onclick="change(2)"><img class="listimg2" src="./img/2.jpg"></a></li>
@@ -138,7 +126,7 @@
                 { name:"大象+门+来了+热河", author: "2024 In Tokyo live", src: "./music/11_大象+门+来了+热河_2024_In_Tokyo_live_.mp3", cover: "./img/tokyo.jpg", },
                  { name:"寻找+忽然", author: "2024 In Tokyo live", src: "./music/12_寻找+忽然_2024_In_Tokyo_live_.mp3", cover: "./img/tokyo.jpg", },
                   { name:"山阴路的夏天", author: "2024 In Tokyo live", src: "./music/13_山阴路的夏天_2024_In_Tokyo_live_.mp3", cover: "./img/tokyo.jpg", },
-                   { name:"你离开了南京，从此没有人和我说话", author: "2024 In Tokyo live", src: "./music/14_你离开了南京，从此没有人和我说话_2024 In Tokyo live_.mp3", cover: "./img/tokyo.jpg", },
+                   { name:"你离开了南京，从此没有人和我说话", author: "2024 In Tokyo live", src: "./music/14_你离开了南京_从此没有人和我说话_2024_In_Tokyo_live_.mp3", cover: "./img/tokyo.jpg", },
        
        ]
     
@@ -567,7 +555,7 @@
 
 
 
-    <!--<span class=""  >本站歌曲来源：github nj-lizhi/song</a></span>-->
+    <!--<span  >歌曲来源：github nj-lizhi/song</a></span>-->
     <script src="https://testingcf.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
     <script src="https://testingcf.jsdelivr.net/npm/element-ui@2.15.1/lib/index.js"></script>
     <script src="https://testingcf.jsdelivr.net/gh/nj-lizhi/song@main/audio/list-v2.js"></script>
