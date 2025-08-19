@@ -1982,9 +1982,52 @@
             
             // 分享功能
             function shareMusic() {
-                // 实现简单的分享功能提示
-                alert('分享功能已触发，当前播放歌曲：' + songTitleElement.textContent);
-                // 在实际应用中，这里可以实现复制链接或调用系统分享功能
+                // 获取当前播放歌曲的信息
+                const songTitle = songTitleElement.textContent;
+                const songArtist = songArtistElement.textContent;
+                
+                // 构造分享文本
+                const shareText = `我正在听 ${songTitle} - ${songArtist}，来自民谣俱乐部音乐播放器`;
+                
+                // 尝试使用Web Share API
+                if (navigator.share) {
+                    navigator.share({
+                        title: '民谣俱乐部音乐分享',
+                        text: shareText,
+                        url: window.location.href
+                    }).catch(error => {
+                        console.log('分享失败:', error);
+                        // 如果Web Share API失败，回退到复制链接
+                        copyToClipboard(shareText + ' ' + window.location.href);
+                    });
+                } else {
+                    // 如果浏览器不支持Web Share API，回退到复制链接
+                    copyToClipboard(shareText + ' ' + window.location.href);
+                }
+            }
+            
+            // 复制文本到剪贴板
+            function copyToClipboard(text) {
+                // 创建临时textarea元素
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                
+                // 选择并复制文本
+                textarea.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        alert('分享链接已复制到剪贴板:\n' + text);
+                    } else {
+                        alert('复制失败，请手动复制链接:\n' + text);
+                    }
+                } catch (err) {
+                    alert('复制失败，请手动复制链接:\n' + text);
+                }
+                
+                // 移除临时元素
+                document.body.removeChild(textarea);
             }
             
             // 移动端菜单控制
