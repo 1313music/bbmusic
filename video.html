@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>民谣俱乐部 | 音乐视频平台</title>
+    
+    <!-- 关键CSS内联 -->
+    <style>
+        :root {
+            --bg-dark: #0f1117; /* 深蓝灰背景 */
+            --bg-card: rgba(25, 28, 36, 0.95); /* 卡片背景 */
+            --bg-hover: rgba(45, 50, 65, 0.85); /* 悬停背景 */
+            --primary: #d4af37; /* 琥珀金主色 */
+            --primary-dark: #b08d26; /* 深琥珀金 */
+            --accent: #ffd700; /* 亮金色强调色 */
+            --text-primary: #f0f0f8; /* 浅灰紫色文字 */
+            --text-secondary: #a0a8c0; /* 浅灰蓝文字 */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glow: 0 0 15px rgba(212, 175, 55, 0.3); /* 金色光晕 */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f1117 0%, #1a1d28 100%);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            padding: 20px 15px;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -2;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+           
+            padding: 0 10px;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            color: var(--primary);
+            font-size: 28px;
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover i {
+            transform: rotate(15deg);
+        }
+        
+        /* 导航菜单样式 - 优化设计 */
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-link i {
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-link:hover::before {
+            opacity: 0.15;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transform: translateX(-50%);
+            transition: width 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 80%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+        
+        /* 移动端菜单 - 优化设计 */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 17, 23, 0.95);
+            z-index: 1000;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            transform: translateX(100%);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-header {
+            display: flex;
+            justify-content: flex-end; /* 右对齐，关闭按钮靠右 */
+            align-items: center;
+            padding: 15px 20px; /* 调整内边距 */
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative; /* 添加相对定位 */
+        }
+        
+        .mobile-menu-center-logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        .mobile-menu-logo {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            display: none; /* 隐藏logo */
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mobile-menu-logo i {
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 32px; /* 增大字体大小 */
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 10px; /* 使内边距对称 */
+            margin-right: 0; /* 移除右侧边距 */
+            transform-origin: center center; /* 设置旋转中心点 */
+            display: flex; /* 使用flex布局确保内容居中 */
+            align-items: center;
+            justify-content: center;
+            width: 44px; /* 固定宽度 */
+            height: 44px; /* 固定高度 */
+        }
+        
+        .mobile-menu-close:hover {
+            color: var(--primary);
+            transform: rotate(90deg) translateY(0);
+            transform-origin: center center;
+        }
+        
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        .mobile-menu .nav-link {
+            padding: 15px 15px;
+            font-size: 16px;
+            width: 100%;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        .mobile-menu.active .nav-link {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: calc(0.05s * var(--index, 0));
+        }
+        
+        .mobile-menu .nav-link:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(15px);
+            color: var(--primary);
+            border-radius: var(--radius-md);
+        }
+        
+        .mobile-menu .nav-link.active {
+            color: var(--primary);
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            border-radius: var(--radius-md);
+        }
+        
+        .mobile-menu .nav-link:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu-footer {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        /* DPlayer 自定义样式 */
+        .player-section {
+            border-radius: var(--radius-md);
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: #000;
+        }
+        
+        .player-section.loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%23d4af37" stroke-width="8" fill="none" stroke-dasharray="60 200" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50"/></circle></svg>') center center no-repeat;
+            background-size: 50px;
+            border-radius: var(--radius-md);
+            z-index: 10;
+        }
+        
+        #dplayer-container {
+            width: 100%;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            transform: translateZ(0);
+            aspect-ratio: 16/9;
+        }
+        
+        /* DPlayer 自定义主题色 */
+        .dplayer .dplayer-controller .dplayer-bar-wrap .dplayer-bar .dplayer-played {
+            background: var(--accent) !important;
+        }
+        
+        .dplayer .dplayer-controller .dplayer-bar-wrap .dplayer-bar .dplayer-played::after {
+            background: var(--accent) !important;
+            border-color: var(--accent) !important;
+        }
+        
+        .dplayer .dplayer-controller .dplayer-bar-wrap .dplayer-bar .dplayer-loaded {
+            background: rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        .dplayer .dplayer-controller .dplayer-icons .dplayer-volume .dplayer-thumb {
+            background: var(--accent) !important;
+        }
+        
+        .dplayer .dplayer-controller .dplayer-icons .dplayer-setting .dplayer-setting-box .dplayer-setting-speed-item.dplayer-setting-speed-item-active {
+            color: var(--accent) !important;
+        }
+        
+        .dplayer .dplayer-controller .dplayer-icons .dplayer-play-icon {
+            color: var(--accent) !important;
+        }
+        
+        .dplayer .dplayer-controller .dplayer-icons .dplayer-volume .dplayer-volume-bar .dplayer-volume-bar-inner {
+            background: var(--accent) !important;
+        }
+        
+        /* 默认隐藏控制栏 */
+        .dplayer .dplayer-controller {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s ease;
+        }
+        
+        .dplayer.dplayer-hide-controller .dplayer-controller {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .dplayer:hover .dplayer-controller {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* 隐藏DPlayer右键菜单 */
+        .dplayer .dplayer-menu {
+            display: none !important;
+        }
+        
+        /* 分类导航优化 */
+        .categories-container {
+            position: relative;
+            padding: 0;
+        }
+        
+        .categories-scroll {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            gap: 10px;
+            padding: 10px 5px;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            scroll-padding: 10px;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .categories-scroll {
+                justify-content: flex-start;
+            }
+        }
+        
+        .categories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-btn {
+            flex: 0 0 auto;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .category-btn:hover {
+            transform: translateY(-3px);
+            color: var(--text-primary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            background: var(--bg-hover);
+            border-color: var(--primary);
+        }
+        
+        .category-btn:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--glow);
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        
+        /* 视频列表优化 */
+        .videos-section {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .videos-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 2px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .video-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: var(--shadow);
+        }
+        
+        .video-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            border-color: var(--primary);
+        }
+        
+        .video-item:hover::before {
+            transform: translateX(100%);
+            transition-duration: 1s;
+        }
+        
+        .thumbnail {
+            position: relative;
+            padding-top: 56.25%;
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+            transform-origin: center;
+            z-index: 2;
+        }
+        
+        .thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .video-item:hover .thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 15px;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: var(--transition);
+        }
+        
+        .video-item:hover .video-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .video-title {
+            padding: 12px 5px;
+            font-size: 15px;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            height: 55px;
+            line-height: 1.4;
+            transition: var(--transition);
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .video-item:hover .video-title {
+            color: var(--primary);
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-info {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        
+        .play-icon, .folder-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+        }
+        
+        .video-item:hover .play-icon,
+        .video-item:hover .folder-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .play-icon i, .folder-icon i {
+            font-size: 20px;
+            color: white;
+        }
+        
+        .play-icon i {
+            margin-left: 5px;
+        }
+        
+        /* 文件夹样式 */
+        .folder-item .thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            z-index: 1;
+        }
+        
+        .folder-icon {
+            z-index: 2;
+            background: rgba(212, 175, 55, 0.5);
+        }
+        
+        .back-folder .folder-icon {
+            background: rgba(212, 175, 55, 0.5);
+        }
+        
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            width: 100%;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        
+        .no-videos {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-secondary);
+            font-size: 18px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .no-videos i {
+            font-size: 40px;
+            color: var(--primary);
+        }
+        
+        .placeholder-content {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+        
+        .placeholder-content.active {
+            display: block;
+        }
+        
+        .placeholder-icon {
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .placeholder-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-sm);
+            margin: 20px auto;
+            max-height: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .placeholder-title {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .placeholder-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0 15px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+       
+        
+        /* 兼容性提示 */
+        .compatibility-alert {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(212, 175, 55, 0.9);
+            color: #000;
+            padding: 12px 25px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            z-index: 10000;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease-out;
+            display: none;
+            white-space: nowrap;
+            max-width: 90%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        @keyframes slideUp {
+            from { bottom: -50px; opacity: 0; }
+            to { bottom: 20px; opacity: 1; }
+        }
+        
+        .compatibility-alert i {
+            font-size: 22px;
+        }
+        
+        .compatibility-alert .close {
+            background: none;
+            border: none;
+            color: #000;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        
+        /* 移动端菜单按钮 - 优化设计 */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            position: relative;
+            width: 40px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn span {
+            position: absolute;
+            height: 3px;
+            width: 24px;
+            background: currentColor;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn span:nth-child(1) {
+            top: 12px;
+        }
+        
+        .mobile-menu-btn span:nth-child(2) {
+            top: 18px;
+        }
+        
+        .mobile-menu-btn span:nth-child(3) {
+            top: 24px;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 18px;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 18px;
+        }
+        
+        /* 响应式优化 */
+        @media (max-width: 1200px) {
+            .videos-list {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .logo {
+                font-size: 20px;
+            }
+            
+            .nav-menu {
+                gap: 12px;
+            }
+            
+            .nav-link {
+                font-size: 13px;
+                padding: 5px 10px;
+            }
+        }
+        
+        @media (max-width: 788px) {
+            body {
+                padding: 15px 10px;
+            }
+            
+            .videos-section {
+                display: block;
+            }
+            
+            .videos-list {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+                max-width: 100%;
+            }
+            
+            .category-btn {
+                padding: 8px 15px;
+                font-size: 15px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .player-section {
+                padding: 0;
+                border-radius: var(--radius-sm);
+            }
+            
+            #dplayer-container {
+                border-radius: var(--radius-sm);
+            }
+            
+            .video-title {
+                font-size: 13px;
+                height: 38px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .videos-list {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
+            }
+            
+            .category-btn {
+                padding: 7px 12px;
+                font-size: 15px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .video-title {
+                font-size: 12px;
+                height: 36px;
+            }
+            
+            .no-videos {
+                font-size: 16px;
+                padding: 30px 0;
+            }
+            
+            .no-videos i {
+                font-size: 35px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .videos-list {
+               
+                gap: 10px;
+            }
+            
+            .category-btn {
+                padding: 6px 10px;
+                font-size: 15px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .video-title {
+                font-size: 13px;
+                height: 44px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .videos-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .category-btn {
+                padding: 5px 8px;
+                font-size: 15px;
+            }
+        }
+    </style>
+    
+    <!-- 非关键CSS异步加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.27.1/DPlayer.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.27.1/DPlayer.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+</head>
+<body>
+ 
+    
+    <div class="compatibility-alert" id="compatibility-alert">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="compatibility-message">正在检测您的设备兼容性...</span>
+        <button class="close" id="close-alert">&times;</button>
+    </div>
+    
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo">
+                <i class="fas fa-guitar"></i>
+                民谣俱乐部
+            </div>
+            <div class="mobile-menu-center-logo">
+             <i class="fa-solid fa-champagne-glasses"></i>
+            </div>
+            <button class="mobile-menu-close" id="mobile-menu-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-links">
+            <a href="#" class="nav-link" data-menu="home"><i class="fas fa-home"></i> 首页</a>
+            <a href="#" class="nav-link active" data-menu="videos"><i class="fas fa-video"></i> 视频</a>   
+            <a href="https://1701701.xyz/" class="nav-link" data-menu="music"><i class="fas fa-music"></i> 音乐</a>
+            <a href="https://www.weiyun.com/document?fileId=1482357921_a1fc5a585a38e55958695081d555a4b0_af5f417e-e61a-4d9d-9b97-9ca1614eb22b&officeType=pdf&tdsourcetag=s_weiyun_file" class="nav-link" data-menu="guitar" target="_blank"><i class="fas fa-guitar"></i> 吉他谱</a>
+            <a href="#" class="nav-link" data-menu="autobiography"><i class="fas fa-book"></i> 自传</a>
+            <a href="#" class="nav-link" data-menu="message"><i class="fas fa-comments"></i> 留言</a>
+            <a href="#" class="nav-link" data-menu="about"><i class="fas fa-info-circle"></i> 关于</a>
+        </div>
+        <div class="mobile-menu-footer">
+            © 2025 民谣俱乐部
+        </div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-guitar"></i>
+                <span>民谣俱乐部</span>
+            </div>
+            
+            <!-- 导航菜单 - 优化设计 -->
+            <nav class="nav-menu">
+                
+                <a href="#" class="nav-link" data-menu="home"><i class="fas fa-home"></i> 首页</a>
+                <a href="#" class="nav-link active" data-menu="videos"><i class="fas fa-video"></i> 视频</a>
+                <a href="https://1701701.xyz/" class="nav-link" data-menu="music"><i class="fas fa-music"></i> 音乐</a>
+                <a href="https://www.weiyun.com/document?fileId=1482357921_a1fc5a585a38e55958695081d555a4b0_af5f417e-e61a-4d9d-9b97-9ca1614eb22b&officeType=pdf&tdsourcetag=s_weiyun_file" class="nav-link" data-menu="guitar"target="_blank"><i class="fas fa-guitar"></i> 吉他谱</a>
+                <a href="#" class="nav-link" data-menu="autobiography"><i class="fas fa-book"></i> 自传</a>
+                <a href="#" class="nav-link" data-menu="message"><i class="fas fa-comments"></i> 留言</a>
+                <a href="#" class="nav-link" data-menu="about"><i class="fas fa-info-circle"></i> 关于</a>
+            </nav>
+            
+            <!-- 移动端菜单按钮 - 优化设计 -->
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </header>
+        
+        <!-- DPlayer 播放器区域 -->
+        <section class="player-section">
+            <div id="dplayer-container"></div>
+        </section>
+        
+        <!-- 分类导航 -->
+        <section class="categories-container">
+            <div class="categories-scroll" id="categories-container">
+                <!-- 分类会通过JS动态添加 -->
+            </div>
+        </section>
+        
+        <!-- 视频列表 -->
+        <section class="videos-section">
+            <div class="videos-list" id="videos-list">
+                <div class="no-videos">
+                    <i class="fas fa-film"></i>
+                    <div>请选择分类浏览视频内容</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 占位内容区域 -->
+        <section class="placeholder-content" id="placeholder-content">
+            <div class="placeholder-icon" id="placeholder-icon">
+                <i class="fas fa-guitar"></i>
+            </div>
+            <h2 class="placeholder-title" id="placeholder-title">吉他谱</h2>
+            <p class="placeholder-text" id="placeholder-text">吉他谱内容即将上线，敬请期待！</p>
+        </section>
+        
+        <footer>
+            © 2025 民谣俱乐部 - 音乐与故事的空间
+        </footer>
+    </div>
+
+    <!-- 异步加载关键脚本 -->
+    <script>
+        // 关键功能初始化
+        window.addEventListener('DOMContentLoaded', function() {
+            // 创建脚本加载函数
+            function loadScript(src, callback) {
+                const script = document.createElement('script');
+                script.src = src;
+                script.defer = true;
+                script.onload = callback;
+                document.body.appendChild(script);
+            }
+            
+            // 先加载核心功能
+            loadScript('https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js', function() {
+                // 配置 hls.js，但仅对HLS流使用，不影响MP4播放
+                if (window.Hls && window.Hls.isSupported) {
+                    window.Hls.DefaultConfig.enableWorker = true;
+                    window.Hls.DefaultConfig.enableStreaming = true;
+                    window.Hls.DefaultConfig.maxBufferLength = 30;
+                    window.Hls.DefaultConfig.maxMaxBufferLength = 60;
+                    window.Hls.DefaultConfig.liveSyncDurationCount = 3;
+                }
+                loadScript('https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.27.1/DPlayer.min.js', initializeApp);
+            });
+        });
+        
+        // 应用核心逻辑
+        function initializeApp() {
+            // 更完整的视频数据（民谣主题）
+            const videoData = {
+                     bgyh: [ // 逼哥夜話 -> bgyh
+                { 
+                    id: 1, 
+                    title: "逼哥夜話 - 上海", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E4%B8%8A%E6%B5%B7/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E4%B8%8A%E6%B5%B7%E3%80%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 2, 
+                    title: "逼哥夜話 - 寧波 上", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E5%AF%A7%E6%B3%A2%E4%B8%8A/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E5%AF%A7%E6%B3%A2%E3%80%8B%E4%B8%8A.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 3, 
+                    title: "逼哥夜話 - 寧波 下", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E5%AF%A7%E6%B3%A2%E4%B8%8B/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E5%AF%A7%E6%B3%A2%E3%80%8B%E4%B8%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 4, 
+                    title: "逼哥夜話 - 廈門 上", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E5%BB%88%E9%96%80%E4%B8%8A/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E5%BB%88%E9%96%80%E3%80%8B%E4%B8%8A.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 5, 
+                    title: "逼哥夜話 - 廈門 下", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E5%BB%88%E9%96%80%E4%B8%8B/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E5%BB%88%E9%96%80%E3%80%8B%E4%B8%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 6, 
+                    title: "逼哥夜話 - 昆明 上", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E6%98%86%E6%98%8E%E4%B8%8A/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E6%98%86%E6%98%8E%E3%80%8B%E4%B8%8A.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 7, 
+                    title: "逼哥夜話 - 昆明 下", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E6%98%86%E6%98%8E%E4%B8%8B/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E6%98%86%E6%98%8E%E3%80%8B%E4%B8%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 8, 
+                    title: "逼哥夜話 - 贵阳", 
+                    url: "https://r.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E8%B4%B5%E9%98%B3/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E8%B4%B5%E9%98%B3.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 9, 
+                    title: "逼哥夜話 - 重慶 上", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E9%87%8D%E6%85%B6%E4%B8%8A/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E9%87%8D%E6%85%B6%E3%80%8B%E4%B8%8A.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 10, 
+                    title: "逼哥夜話 - 重慶 下", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E9%87%8D%E6%85%B6%E4%B8%8B/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E9%87%8D%E6%85%B6%E3%80%8B%E4%B8%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                },
+                { 
+                    id: 11, 
+                    title: "逼哥夜話 - 香港", 
+                    url: "https://r2.1701701.xyz/bgyh/B%E5%93%A5%E5%A4%9C%E8%A9%B1%E9%A6%99%E6%B8%AF/%E3%80%8AB%E5%93%A5%E5%A4%9C%E8%A9%B1%E2%94%80%E2%94%80%E9%A6%99%E6%B8%AF%E3%80%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyhfm.png"
+                }
+            ],
+            bgyh2: [ // 逼哥夜話第二季 -> bgyh2
+                { 
+                    id: 201, 
+                    title: "逼哥夜話 第二季 01 - 深圳", 
+                    url: "https://r2.1701701.xyz/bgyh2/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8901%20-%20%E6%B7%B1%E5%9C%B3/playlist.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyh2fm.png"
+                },
+                { 
+                    id: 202, 
+                    title: "逼哥夜話 第二季 02 - 西安", 
+                    url: "https://r2.1701701.xyz/bgyh2/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8902%20-%20%E8%A5%BF%E5%AE%89/playlist.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyh2fm.png"
+                },
+                { 
+                    id: 203, 
+                    title: "逼哥夜話 第二季 03 - 上海", 
+                    url: "https://r2.1701701.xyz/bgyh2/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8903%20-%20%E4%B8%8A%E6%B5%B7/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8903%20-%20%E4%B8%8A%E6%B5%B7.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyh2fm.png"
+                },
+                { 
+                    id: 204, 
+                    title: "逼哥夜話 第二季 04 - 武漢", 
+                    url: "https://r2.1701701.xyz/bgyh2/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8904%20-%20%E6%AD%A6%E6%BC%A2/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8904%20-%20%E6%AD%A6%E6%BC%A2.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyh2fm.png"
+                },
+                { 
+                    id: 205, 
+                    title: "逼哥夜話 第二季 05 - 重慶", 
+                    url: "https://r2.1701701.xyz/bgyh2/%E6%9D%8E%E5%BF%97%E3%80%90%E9%%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8905%20-%20%E9%87%8D%E6%85%B6/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8905%20-%20%E9%87%8D%E6%85%B6.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyh2fm.png"
+                },
+                { 
+                    id: 206, 
+                    title: "逼哥夜話 第二季 06 - 北京", 
+                    url: "https://r2.1701701.xyz/bgyh2/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8906%20-%20%E5%8C%97%E4%BA%AC/%E6%9D%8E%E5%BF%97%E3%80%90%E9%80%BC%E5%93%A5%E5%A4%9C%E8%A9%B1%E3%80%91%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%AD%A3%EF%BC%8906%20-%20%E5%8C%97%E4%BA%AC.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/bgyh2fm.png"
+                }
+            ],
+          wmsss: [ // 我們的叁叁肆 -> wmsss
+                { 
+                    id: 301, 
+                    title: "安徽篇 - 预告", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%87%20-%20%E9%A2%84%E5%91%8A/playlist.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 302, 
+                    title: "安徽篇01 - 出發吧！還剩333", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8701%20-%20%E5%87%BA%E7%99%BC%E5%90%A7%EF%BC%81%E9%82%84%E5%89%A9333/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8701%20-%20%E5%87%BA%E7%99%BC%E5%90%A7%EF%BC%81%E9%82%84%E5%89%A9333.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 303, 
+                    title: "安徽篇02 - 我是巡演經理，也是道歉專業戶", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8702%20-%20%E6%88%91%E6%98%AF%E5%B7%A1%E6%BC%94%E7%B6%93%E7%90%86%EF%BC%8C%E4%B9%9F%E6%98%AF%E9%81%93%E6%AD%89%E5%B0%88%E6%A5%AD%E6%88%B6/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8702%20-%20%E6%88%91%E6%98%AF%E5%B7%A1%E6%BC%94%E7%B6%93%E7%90%86%EF%BC%8C%E4%B9%9F%E6%98%AF%E9%81%93%E6%AD%89%E5%B0%88%E6%A5%AD%E6%88%B6.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 304, 
+                    title: "安徽篇03 - 淮南事變", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8703%20-%20%E6%B7%AE%E5%8D%97%E4%BA%8B%E8%AE%8A/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8703%20-%20%E6%B7%AE%E5%8D%97%E4%BA%8B%E8%AE%8A.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 305, 
+                    title: "安徽篇04 - 留給音響師的時間不多了", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8704%20-%20%E7%95%99%E7%B5%A6%E9%9F%B3%E9%9F%BF%E5%B8%AB%E7%9A%84%E6%99%82%E9%96%93%E4%B8%8D%E5%A4%9A%E4%BA%86/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8704%20-%20%E7%95%99%E7%B5%A6%E9%9F%B3%E9%9F%BF%E5%B8%AB%E7%9A%84%E6%99%82%E9%96%93%E4%B8%8D%E5%A4%9A%E4%BA%86.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 306, 
+                    title: "安徽篇05 - 日落前抵達", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8705%20-%20%E6%97%A5%E8%90%BD%E5%89%8D%E6%8A%B5%E9%81%94/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%AE%89%E5%BE%BD%E7%AF%8705%20-%20%E6%97%A5%E8%90%BD%E5%89%8D%E6%8A%B5%E9%81%94.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 307, 
+                    title: "山東篇01 - 明日復明日", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8701%20-%20%E6%98%8E%E6%97%A5%E5%BE%A9%E6%98%8E%E6%97%A5/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8701%20-%20%E6%98%8E%E6%97%A5%E5%BE%A9%E6%98%8E%E6%97%A5.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 308, 
+                    title: "山東篇02 - 明日何其多", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8702%20-%20%E6%98%8E%E6%97%A5%E4%BD%95%E5%85%B6%E5%A4%9A/playlist.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 309, 
+                    title: "山東篇03 - 自來水公司的口琴手", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8703%20-%20%E8%87%AA%E4%BE%86%E6%B0%B4%E5%85%AC%E5%8F%B8%E7%9A%84%E5%8F%A3%E7%90%B4%E6%89%8B/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8703%20-%20%E8%87%AA%E4%BE%86%E6%B0%B4%E5%85%AC%E5%8F%B8%E7%9A%84%E5%8F%A3%E7%90%B4%E6%89%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 310, 
+                    title: "山東篇04 - 是誰還在唱歌", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8704%20-%20%E6%98%AF%E8%AA%B0%E9%82%84%E5%9C%A8%E5%94%B1%E6%AD%8C/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8704%20-%20%E6%98%AF%E8%AA%B0%E9%82%84%E5%9C%A8%E5%94%B1%E6%AD%8C.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 311, 
+                    title: "山東篇05 - 兩個好吉友", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8705%20-%20%E5%85%A9%E5%80%8B%E5%A5%BD%E5%90%89%E5%8F%8B/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8705%20-%20%E5%85%A9%E5%80%8B%E5%A5%BD%E5%90%89%E5%8F%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 312, 
+                    title: "山東篇06 - 這個世界會好的", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8706%20-%20%E9%80%99%E5%80%8B%E4%B8%96%E7%95%8C%E6%9C%83%E5%A5%BD%E7%9A%84/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E5%B1%B1%E6%9D%B1%E7%AF%8706%20-%20%E9%80%99%E5%80%8B%E4%B8%96%E7%95%8C%E6%9C%83%E5%A5%BD%E7%9A%84.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 313, 
+                    title: "陜寧篇01 - 票！", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8701%20-%20%E7%A5%A8%EF%BC%81/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8701%20-%20%E7%A5%A8%EF%BC%81.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 314, 
+                    title: "陜寧篇02 - 圍城", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8702%20-%20%E5%9C%8D%E5%9F%8E/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8702%20-%20%E5%9C%8D%E5%9F%8E.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 315, 
+                    title: "陜寧篇03 - 王洪宇", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8703%20-%20%E7%8E%8B%E6%B4%AA%E5%AE%87/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8703%20-%20%E7%8E%8B%E6%B4%AA%E5%AE%87.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 316, 
+                    title: "陜寧篇04 - 這個不好說", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8704%20-%20%E9%80%99%E5%80%8B%E4%B8%8D%E5%A5%BD%E8%AA%AA/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8704%20-%20%E9%80%99%E5%80%8B%E4%B8%8D%E5%A5%BD%E8%AA%AA.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 317, 
+                    title: "陜寧篇05 - 鍵盤俠", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8705%20-%20%E9%8D%B5%E7%9B%A4%E4%BF%A0/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8705%20-%20%E9%8D%B5%E7%9B%A4%E4%BF%A0.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 318, 
+                    title: "陜寧篇06 - 再見小村", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8706%20-%20%E5%86%8D%E8%A6%8B%E5%B0%8F%E6%9D%91/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8706%20-%20%E5%86%8D%E8%A6%8B%E5%B0%8F%E6%9D%91.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 319, 
+                    title: "陜寧篇07 - 西夏王陵", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8707%20-%20%E8%A5%BF%E5%A4%8F%E7%8E%8B%E9%99%B5/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%99%9C%E5%AF%A7%E7%AF%8707%20-%20%E8%A5%BF%E5%A4%8F%E7%8E%8B%E9%99%B5.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 320, 
+                    title: "雲南篇01 - 整裝再發", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8701%20-%20%E6%95%B4%E8%A3%9D%E5%86%8D%E7%99%BC/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8701%20-%20%E6%95%B4%E8%A3%9D%E5%86%8D%E7%99%BC.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 321, 
+                    title: "雲南篇02 - 我是新來的燈光師，請多關照", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8702%20-%20%E6%88%91%E6%98%AF%E6%96%B0%E4%BE%86%E7%9A%84%E7%87%88%E5%85%89%E5%B8%AB%EF%BC%8C%E8%AB%8B%E5%A4%9A%E9%97%9C%E7%85%A7/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8702%20-%20%E6%88%91%E6%98%AF%E6%96%B0%E4%BE%86%E7%9A%84%E7%87%88%E5%85%89%E5%B8%AB%EF%BC%8C%E8%AB%8B%E5%A4%9A%E9%97%9C%E7%85%A7.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 322, 
+                    title: "雲南篇03 - 一个異類和他的同路人", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8703%20-%20%E4%B8%80%E4%B8%AA%E7%95%B0%E9%A1%9E%E5%92%8C%E4%BB%96%E7%9A%84%E5%90%8C%E8%B7%AF%E4%BA%BA/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8703%20-%20%E4%B8%80%E4%B8%AA%E7%95%B0%E9%A1%9E%E5%92%8C%E4%BB%96%E7%9A%84%E5%90%8C%E8%B7%AF%E4%BA%BA.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 323, 
+                    title: "雲南篇04 - 大理想國", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8704%20-%20%E5%A4%A7%E7%90%86%E6%83%B3%E5%9C%8B/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8704%20-%20%E5%A4%A7%E7%90%86%E6%83%B3%E5%9C%8B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 324, 
+                    title: "雲南篇05 - 飛", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8705%20-%20%E9%A3%9B/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%8705%20-%20%E9%A3%9B.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                },
+                { 
+                    id: 325, 
+                    title: "雲南篇番外 - 荒", 
+                    url: "https://r2.1701701.xyz/334/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%87%E7%95%AA%E5%A4%96%20-%20%E8%8D%92/%E6%9D%8E%E5%BF%97%E3%80%90%E6%88%91%E5%80%91%E7%9A%84%E5%8F%81%E5%8F%81%E8%82%86%E3%80%91%E9%9B%B2%E5%8D%97%E7%AF%87%E7%95%AA%E5%A4%96%20-%20%E8%8D%92.m3u8", 
+                    thumb: "https://v.1701701.xyz/img/334.jpg"
+                }
+            ],
+                knxy: [ // 跨年音乐会 -> knxy
+                    { 
+                        id: 401, 
+                        title: "2009 我爱南京", 
+                        url: "https://2009.1701701.xyz/video/roadmap.js", 
+                        thumb: "https://v.1701701.xyz/img/bg.jpg"
+                    },
+                    { 
+                        id: 402, 
+                        title: "2014 I/O", 
+                        url: "https://2014.1701701.xyz/video/roadmap.js", 
+                        thumb: "https://v.1701701.xyz/img/bg.jpg"
+                    },
+                    { 
+                        id: 403, 
+                        title: "2015 看见", 
+                        url: "https://2015.1701701.xyz/video/roadmap.js", 
+                        thumb: "https://v.1701701.xyz/img/bg.jpg"
+                    },
+                    { 
+                        id: 404, 
+                        title: "2018  洗心革面", 
+                        url: "https://2018.1701701.xyz/video/roadmap.js", 
+                        thumb: "https://v.1701701.xyz/img/bg.jpg"
+                    },
+                    { 
+                        id: 405,
+                        title: "电声与管弦乐",
+                        isFolder: true,
+                        thumb: "https://v.1701701.xyz/img/bg.jpg", // 文件夹封面
+                        folderId: "dsygxl" // 文件夹ID，用于加载子文件夹内容
+                    }
+                ],
+                
+                // 添加电声与管弦乐子文件夹内容
+                dsygxl: [ // 电声与管弦乐子文件夹
+                    {
+                        id: 4051,
+                        title: "电声与管弦乐 - 序曲",
+                        url: "https://r2.1701701.xyz/dsygxl/xuqu.m3u8",
+                        thumb: "https://v.1701701.xyz/img/bg.jpg"
+                    },
+                    {
+                        id: 4052,
+                        title: "电声与管弦乐 - 第一乐章",
+                        url: "https://r2.1701701.xyz/dsygxl/dyyz.m3u8",
+                        thumb: "https://v.1701701.xyz/img/bg.jpg"
+                    },
+                    {
+                        id: 4053,
+                        title: "电声与管弦乐 - 第二乐章",
+                        url: "https://r2.1701701.xyz/dsygxl/deyz.m3u8",
+                        thumb: "https://v.1701701.xyz/img/bg.jpg"
+                    }
+                ],
+                jlp: [ // 紀錄片 -> jlp
+                   
+                ],
+                yjj: [ // 音乐节 -> yjj
+                   
+                ],
+                qt: [ // 其他 -> qt
+                   { 
+                        id: 601, 
+                        title: "回答", 
+                        url: "https://r2.1701701.xyz/%E5%9B%9E%E7%AD%94.mp4", 
+                        thumb: "https://v.1701701.xyz/img/huida.JPG"
+                    },
+                    {
+                        id: 602,
+                        title: "示例文件夹",
+                        isFolder: true,
+                        thumb: "https://v.1701701.xyz/img/folder.jpg", // 文件夹封面
+                        folderId: "qtfolder" // 文件夹ID，用于加载子文件夹内容
+                    }
+                ],
+                
+                // 添加qt分类下的示例文件夹内容
+                qtfolder: [ // qt分类下的示例文件夹
+                    {
+                        id: 6021,
+                        title: "示例视频1",
+                        url: "https://r2.1701701.xyz/qtfolder/video1.m3u8",
+                        thumb: "https://v.1701701.xyz/img/folder.jpg"
+                    },
+                    {
+                        id: 6022,
+                        title: "示例视频2",
+                        url: "https://r2.1701701.xyz/qtfolder/video2.m3u8",
+                        thumb: "https://v.1701701.xyz/img/folder.jpg"
+                    }
+                ]
+            };
+
+            // 分类列表
+            const categories = [
+                 { id: 'knxy', name: '跨年音乐会', icon: 'fas fa-film' },
+                 { id: 'bgyh', name: '逼哥夜話', icon: 'fas fa-microphone-alt' },
+                { id: 'bgyh2', name: '逼哥夜話第二季', icon: 'fas fa-microphone-alt' },
+                { id: 'wmsss', name: '我們的叁叁肆', icon: 'fa-solid fa-clapperboard' },
+                { id: 'jlp', name: '紀錄片', icon: 'fas fa-video' },
+                { id: 'yjj', name: '音乐节', icon: 'fas fa-music' },
+                { id: 'qt', name: '其他', icon: 'fa-solid fa-file-video' }
+            ];
+
+            // 全局 DPlayer 实例
+            let dp = null;
+            let currentVideoUrl = '';
+
+            // 初始化 DPlayer 播放器
+            function initDPlayer() {
+                if (dp) return dp;
+                
+                dp = new DPlayer({
+                    container: document.getElementById('dplayer-container'),
+                    live: false,
+                    autoplay: false,
+                    theme: '#d4af37', // 金色主题
+                    loop: false,
+                    lang: 'zh-cn',
+                    hotkey: true,
+                    volume: 0.7,
+                    playbackSpeed: [0.5, 0.75, 1, 1.25, 1.5, 2],
+                    mutex: true,
+                    video: {
+                        url: '',
+                        pic: 'https://v.1701701.xyz/img/bg.jpg' // 默认封面
+                    },
+                    errorHandler: function(error) {
+                        console.error('DPlayer error:', error);
+                        showCompatibilityAlert('视频播放失败: ' + error.message);
+                    },
+                    // 添加移动端优化配置
+                    mobileControls: true,
+                    hideControlsAfter: 1000, // 1秒后自动隐藏控制按钮
+                    autoHide: true // 默认自动隐藏控制栏
+                });
+                
+                // 初始化后立即隐藏控制栏
+                setTimeout(() => {
+                    if (dp && dp.controller) {
+                        dp.controller.hide();
+                    }
+                }, 1000);
+                
+                return dp;
+            }
+
+            // 初始化分类导航
+            function initCategories() {
+                const container = document.getElementById('categories-container');
+                container.innerHTML = '';
+                
+                categories.forEach(category => {
+                    const btn = document.createElement('button');
+                    btn.className = 'category-btn';
+                    btn.dataset.category = category.id;
+                    
+                    const icon = document.createElement('i');
+                    icon.className = category.icon;
+                    btn.appendChild(icon);
+                    
+                    const text = document.createTextNode(` ${category.name}`);
+                    btn.appendChild(text);
+                    
+                    if (category.id === 'knxy') {
+                        btn.classList.add('active');
+                    }
+                    
+                    container.appendChild(btn);
+                });
+            }
+
+            // 当前分类和路径追踪
+            let currentCategory = 'knxy';
+            let folderHistory = [];
+            
+            // 加载分类下的视频
+            function loadCategoryVideos(categoryId, isSubFolder = false) {
+                const listContainer = document.getElementById('videos-list');
+                listContainer.innerHTML = '';
+                
+                // 更新当前分类
+                if (!isSubFolder) {
+                    currentCategory = categoryId;
+                    folderHistory = [];
+                }
+                
+                if (!videoData[categoryId] || videoData[categoryId].length === 0) {
+                    listContainer.innerHTML = `
+                        <div class="no-videos">
+                            <i class="fas fa-video-slash"></i>
+                            <div>此分类下暂无视频内容</div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // 如果有文件夹历史，添加返回按钮
+                if (folderHistory.length > 0) {
+                    const backItem = document.createElement('div');
+                    backItem.className = 'video-item folder-item back-folder';
+                    backItem.innerHTML = `
+                        <div class="thumbnail">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='124' viewBox='0 0 220 124'%3E%3Crect width='220' height='124' fill='%231a1a2e'/%3E%3C/svg%3E" 
+                                 data-src="./img/back.jpg" 
+                                 alt="返回上一级" 
+                                 class="lazyload">
+                            <div class="folder-icon"><i class="fas fa-arrow-left"></i></div>
+                            <div class="progress-bar" style="height:2px"><div class="progress" style="width:100%"></div></div>
+                        </div>
+                        <div class="video-title">返回上一级</div>
+                    `;
+                    listContainer.appendChild(backItem);
+                }
+                
+                // 添加新内容
+                videoData[categoryId].forEach(video => {
+                    const item = document.createElement('div');
+                    
+                    // 判断是否为文件夹
+                    if (video.isFolder) {
+                        item.className = 'video-item folder-item';
+                        item.dataset.id = video.id;
+                        item.dataset.folderId = video.folderId;
+                        item.dataset.thumb = video.thumb;
+                        
+                        item.innerHTML = `
+                            <div class="thumbnail">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='124' viewBox='0 0 220 124'%3E%3Crect width='220' height='124' fill='%231a1a2e'/%3E%3C/svg%3E" 
+                                     data-src="${video.thumb}" 
+                                     alt="${video.title}" 
+                                     class="lazyload">
+                                <div class="folder-icon"><i class="fas fa-folder-open"></i></div>
+                                <div class="progress-bar" style="height:2px"><div class="progress" style="width:100%"></div></div>
+                            </div>
+                            <div class="video-title">${video.title}</div>
+                        `;
+                    } else {
+                        item.className = 'video-item';
+                        item.dataset.id = video.id;
+                        item.dataset.url = video.url;
+                        item.dataset.thumb = video.thumb;
+                        
+                        item.innerHTML = `
+                            <div class="thumbnail">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='124' viewBox='0 0 220 124'%3E%3Crect width='220' height='124' fill='%231a1a2e'/%3E%3C/svg%3E" 
+                                     data-src="${video.thumb}" 
+                                     alt="${video.title}" 
+                                     class="lazyload">
+                                <div class="play-icon"><i class="fas fa-play"></i></div>
+                                <div class="progress-bar" style="height:2px"><div class="progress" style="width:100%"></div></div>
+                            </div>
+                            <div class="video-title">${video.title}</div>
+                        `;
+                    }
+                    
+                    listContainer.appendChild(item);
+                });
+                
+                // 初始化懒加载
+                initLazyLoad();
+            }
+            
+            // 添加懒加载函数
+            function initLazyLoad() {
+                const lazyImages = document.querySelectorAll('img.lazyload');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.classList.remove('lazyload');
+                            observer.unobserve(img);
+                        }
+                    });
+                }, { rootMargin: '200px 0px' });
+                
+                lazyImages.forEach(img => observer.observe(img));
+            }
+
+            // 播放视频
+            function playVideo(url, thumb = '', title = '精彩视频') {
+                if (!url) {
+                    showCompatibilityAlert('此视频源不可用，请选择其他视频');
+                    return;
+                }
+                
+                // 避免重复加载相同视频
+                if (currentVideoUrl === url) {
+                    dp.play();
+                    return;
+                }
+                
+                currentVideoUrl = url;
+                
+                // 显示加载状态
+                const playerContainer = document.querySelector('.player-section');
+                playerContainer.classList.add('loading');
+                
+                
+                
+                // 设置超时处理
+                const loadTimeout = setTimeout(() => {
+                    playerContainer.classList.remove('loading');
+                    showCompatibilityAlert('视频加载时间较长，请耐心等待');
+                }, 15000);
+                
+                try {
+                    // 确保播放器已初始化
+                    const player = initDPlayer();
+                    
+                    // 销毁旧播放器实例
+                    if (player && player.video) {
+                        player.destroy();
+                        dp = null;
+                    }
+                    
+                    // 检测是否为 iOS 设备
+                    const isIOSMain = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                                 (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                    
+                    // 检查是否为MP4文件
+                    const isMP4 = url.toLowerCase().endsWith('.mp4');
+                    
+                    // 对于iOS设备的处理
+                    if (isIOSMain) {
+                        if (!isMP4 && Hls.isSupported()) {
+                            // 对于HLS流使用hls.js
+                            const hls = new Hls({
+                                enableWorker: false, // iOS 禁用 Worker
+                                maxBufferLength: 30,
+                                lowLatencyMode: false
+                            });
+                            
+                            hls.loadSource(url);
+                            hls.attachMedia(document.createElement('video'));
+                            
+                            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                                clearTimeout(loadTimeout);
+                                playerContainer.classList.remove('loading');
+                                
+                                // 检测是否为iOS设备
+                                const isIOSPlayer = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                                
+                                dp = new DPlayer({
+                                    container: document.getElementById('dplayer-container'),
+                                    video: {
+                                        url: url,
+                                        pic: thumb,
+                                        type: 'customHls',
+                                        customType: {
+                                            'customHls': function (video, player) {
+                                                hls.attachMedia(video);
+                                            }
+                                        }
+                                    },
+                                    autoplay: true,
+                                    autoHide: true,
+                                    hideControlsAfter: 3000 // 3秒后自动隐藏控制按钮
+                                });
+                                dp.on('play', function(){
+                                    setTimeout(function(){
+                                        document.getElementById('dplayer-container').classList.add('dplayer-hide-controller');
+                                        
+                                        // 检测是否为iOS设备
+                                        const isIOSPlayback = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                                        if (isIOSPlayback) {
+                                            // 为iOS设备添加额外的控制器自动隐藏功能
+                                            const dplayerVideo = document.querySelector('.dplayer-video-current');
+                                            if (dplayerVideo) {
+                                                // 确保视频元素已加载
+                                                setupIOSAutoHide(dplayerVideo);
+                                            }
+                                        }
+                                    }, 1000)
+                                });
+                            });
+                            
+                            hls.on(Hls.Events.ERROR, (event, data) => {
+                                console.error('HLS 错误:', data);
+                                clearTimeout(loadTimeout);
+                                playerContainer.classList.remove('loading');
+                            });
+                            
+                            return;
+                        } else {
+                            // 对于MP4文件使用原生播放
+                            clearTimeout(loadTimeout);
+                            playerContainer.classList.remove('loading');
+                            
+                            // 检测是否为iOS设备
+                            const isIOSNative = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                            
+                            dp = new DPlayer({
+                                container: document.getElementById('dplayer-container'),
+                                video: {
+                                    url: url,
+                                    pic: thumb,
+                                    type: 'auto'
+                                },
+                                autoplay: true,
+                                autoHide: true,
+                                hideControlsAfter: 3000 // 3秒后自动隐藏控制按钮
+                            });
+                            dp.on('play', function(){
+                                setTimeout(function(){
+                                    document.getElementById('dplayer-container').classList.add('dplayer-hide-controller');
+                                    
+                                    // 检测是否为iOS设备
+                                    const isIOSControl = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                                    if (isIOSControl) {
+                                        // 为iOS设备添加额外的控制器自动隐藏功能
+                                        const dplayerVideo = document.querySelector('.dplayer-video-current');
+                                        if (dplayerVideo) {
+                                            // 确保视频元素已加载
+                                            setupIOSAutoHide(dplayerVideo);
+                                        }
+                                    }
+                                }, 1000)
+                            });
+                            return;
+                        }
+                    }
+                    
+                    // 非 iOS 或其他情况使用默认逻辑
+                    // 检测是否为iOS设备
+                    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                    
+                    dp = new DPlayer({
+                        container: document.getElementById('dplayer-container'),
+                        contextmenu: [], // 禁用右键菜单
+                        video: {
+                            url: url,
+                            pic: thumb,
+                            type: (url.toLowerCase().endsWith('.m3u8') || url.toLowerCase().endsWith('.js')) ? 'hls' : 'auto'
+                        },
+                        
+                        // 添加HLS配置优化
+                        hls: {
+                            liveSyncDurationCount: 3,
+                            maxMaxBufferLength: 30,
+                            enableWorker: true
+                        },
+                        autoHide: true, // 默认自动隐藏控制栏
+                        hideControlsAfter: isIOSDevice ? 3000 : 3000, // 3秒后自动隐藏控制按钮
+                        errorHandler: function(error) {
+                            console.error('播放错误:', error);
+                            showCompatibilityAlert('视频播放失败，请重试');
+                            clearTimeout(loadTimeout);
+                            playerContainer.classList.remove('loading');
+                        }
+                    });
+                    
+                    // 添加时长稳定处理
+                    let durationStabilized = false;
+                    let lastDuration = 0;
+                    
+                    // 播放成功回调
+                    dp.on('canplay', function() {
+                        clearTimeout(loadTimeout);
+                        playerContainer.classList.remove('loading');
+                        document.getElementById('compatibility-alert').style.display = 'none';
+                        
+                        // 立即隐藏控制栏
+                        setTimeout(() => {
+                            dp.controller.hide();
+                           
+                            
+                            // 检测是否为iOS设备
+                            const isIOSCanPlay = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                            if (isIOSCanPlay) {
+                                // 为iOS设备添加额外的控制器自动隐藏功能
+                                const dplayerVideo = document.querySelector('.dplayer-video-current');
+                                if (dplayerVideo) {
+                                    // 确保视频元素已加载
+                                    setupIOSAutoHide(dplayerVideo);
+                                }
+                            }
+                        }, 100);
+                        
+                        // 添加时长稳定处理
+                        if (!durationStabilized) {
+                            // 获取初始时长
+                            const initialDuration = dp.video.duration;
+                            lastDuration = initialDuration;
+                            
+                            // 设置定时器检查时长变化
+                            const durationCheck = setInterval(() => {
+                                if (dp.video.duration !== lastDuration) {
+                                    lastDuration = dp.video.duration;
+                                } else {
+                                    // 时长稳定后更新UI
+                                    updateDurationDisplay(lastDuration);
+                                    durationStabilized = true;
+                                    clearInterval(durationCheck);
+                                }
+                            }, 500);
+                        }
+                    });
+                    
+                 
+                    
+                    // 播放失败回调
+                    dp.on('error', function() {
+                        clearTimeout(loadTimeout);
+                        playerContainer.classList.remove('loading');
+                    });
+                    
+                    // 开始播放
+                    dp.play();
+                    
+                    // 设置移动端控制器自动隐藏
+                    setupMobileControlsAutoHide();
+                    
+                } catch (error) {
+                    console.error('播放错误:', error);
+                    showCompatibilityAlert('视频播放失败: ' + error.message);
+                    clearTimeout(loadTimeout);
+                    playerContainer.classList.remove('loading');
+                }
+            }
+
+          
+
+            // 设置移动端控制器自动隐藏安卓端
+        
+            function setupMobileControlsAutoHide() {
+                if (!dp || window.innerWidth > 768) return;
+                
+                const dplayerContainer = document.getElementById('dplayer-container');
+                let controlsHideTimer;
+                
+                // 检测是否为iOS设备
+                const isIOSMobile = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                
+                // 监听触摸事件
+                dplayerContainer.addEventListener('touchstart', function() {
+                    // 清除之前的定时器
+                    clearTimeout(controlsHideTimer);
+                    
+                    // 设置新的定时器，3秒后自动隐藏控制器
+                    controlsHideTimer = setTimeout(() => {
+                        if (dp && !dp.video.paused) {
+                            dp.controller.hide();
+                        }
+                    }, 3000);
+                });
+                
+                // 针对iOS设备的特殊处理
+                if (isIOSMobile) {
+                    // 监听视频播放器的点击事件
+                    const dplayerVideo = document.querySelector('.dplayer-video-current');
+                    if (dplayerVideo) {
+                        dplayerVideo.addEventListener('click', function() {
+                            // 清除之前的定时器
+                            clearTimeout(controlsHideTimer);
+                            
+                            // 设置新的定时器，3秒后自动隐藏控制器
+                            controlsHideTimer = setTimeout(() => {
+                                if (dp && !dp.video.paused) {
+                                    dp.controller.hide();
+                                }
+                            }, 3000);
+                        });
+                    }
+                    
+                    // 添加额外的事件监听器，确保控制器会自动隐藏
+                    document.addEventListener('touchend', function() {
+                        if (dp && !dp.video.paused) {
+                            clearTimeout(controlsHideTimer);
+                            controlsHideTimer = setTimeout(() => {
+                                dp.controller.hide();
+                            }, 3000);
+                        }
+                    });
+                }
+            }
+            
+            // 显示兼容性提示
+            function showCompatibilityAlert(message) {
+                const alert = document.getElementById('compatibility-alert');
+                const messageElement = document.getElementById('compatibility-message');
+                
+                messageElement.textContent = message;
+                alert.style.display = 'flex';
+                
+                // 3秒后自动隐藏
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 3000);
+            }
+
+            // 为iOS设备设置自动隐藏控制器无操作自动隐藏
+            function setupIOSAutoHide(videoElement) {
+                if (!dp || !videoElement) return;
+                
+                let iosControlsHideTimer;
+                
+                // 监听视频元素的点击事件
+                videoElement.addEventListener('click', function() {
+                    // 清除之前的定时器
+                    clearTimeout(iosControlsHideTimer);
+                    
+                    // 设置新的定时器，3秒后自动隐藏控制器
+                    iosControlsHideTimer = setTimeout(() => {
+                        if (dp && !dp.video.paused) {
+                            dp.controller.hide();
+                        }
+                    }, 3000);
+                });
+           
+                
+                // 观察播放器元素的class变化
+                observer.observe(document.querySelector('.dplayer'), { attributes: true });
+            }
+            
+            // 检测设备兼容性
+            function detectCompatibility() {
+                // 仅在确实需要时显示提示
+                const video = document.createElement('video');
+                if (!video.canPlayType('application/vnd.apple.mpegurl') && 
+                    !Hls.isSupported()) {
+                    showCompatibilityAlert('您的设备可能需要JavaScript兼容模式播放视频');
+                }
+            }
+
+            // 显示占位内容
+            function showPlaceholderContent(menuType) {
+                const placeholder = document.getElementById('placeholder-content');
+                const icon = document.getElementById('placeholder-icon');
+                const title = document.getElementById('placeholder-title');
+                const text = document.getElementById('placeholder-text');
+                
+                // 隐藏视频部分
+                document.querySelector('.player-section').style.display = 'none';
+                document.querySelector('.categories-container').style.display = 'none';
+                document.querySelector('.videos-section').style.display = 'none';
+                
+                // 显示占位内容
+                placeholder.classList.add('active');
+                
+                // 根据菜单类型设置内容
+                switch(menuType) {
+                           case 'home':
+                        icon.innerHTML = '<i class="fas fa-home"></i>'; 
+                        title.textContent = '首页';
+                        text.textContent = 'welcome';
+                        break;  
+
+                    case 'music':
+                        icon.innerHTML = '<i class="fas fa-music"></i>';
+                        title.textContent = '音乐';
+                        text.textContent = '暂无音乐，后续将更新，敬请期待！';
+                        break;
+                    
+                    case 'guitar':
+                        icon.innerHTML = '<i class="fas fa-guitar"></i>';
+                        title.textContent = '吉他谱';
+                        text.textContent = '暂无吉他谱，后续将更新，敬请期待！';
+                        
+                        break;
+                        
+                  
+
+                    case 'autobiography':
+                        icon.innerHTML = '<i class="fas fa-book"></i>';
+                        title.textContent = '自传';
+                        text.textContent = '自传内容整理中，即将上线...';
+                        break;
+                    case 'message':
+                        icon.innerHTML = '<i class="fas fa-comments"></i>';
+                        title.textContent = '留言';
+                        text.textContent = '留言功能正在开发中...';
+      
+                        break;
+                    case 'about':
+                        icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+                        title.textContent = '关于';
+                        text.textContent = '欢迎关注我们的公众号，获取更多相关内容';
+                        
+                        // 添加公众号二维码图片
+                        const placeholderContent = document.getElementById('placeholder-content');
+                        const existingImage = document.getElementById('about-image');
+                        
+                        if (!existingImage) {
+                            const image = document.createElement('img');
+                            image.id = 'about-image';
+                            image.className = 'placeholder-image';
+                            image.src = 'https://v.1701701.xyz/img/qrcode.jpg'; // 替换为您的公众号二维码图片URL
+                            image.alt = '民谣俱乐部公众号二维码';
+                            placeholderContent.insertBefore(image, text);
+                        }
+                        break;
+                }
+            }
+            
+            // 显示视频内容
+            function showVideoContent() {
+                // 隐藏占位内容
+                document.getElementById('placeholder-content').classList.remove('active');
+                
+                // 显示视频部分
+                document.querySelector('.player-section').style.display = 'block';
+                document.querySelector('.categories-container').style.display = 'block';
+                document.querySelector('.videos-section').style.display = 'flex'; // 修改为flex以保持居中
+            }
+
+            // 应用初始化
+            function initAppUI() {
+                // 初始化播放器
+                initDPlayer();
+                initCategories();
+                loadCategoryVideos('knxy');
+                detectCompatibility();
+                
+                // 移动端菜单功能 - 优化设计
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileMenuClose = document.getElementById('mobile-menu-close');
+                const closeAlertBtn = document.getElementById('close-alert');
+                const menuLinks = document.querySelectorAll('.mobile-menu .nav-link');
+                
+                // 为菜单项添加索引
+                menuLinks.forEach((link, index) => {
+                    link.style.setProperty('--index', index);
+                });
+                
+                mobileMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    mobileMenu.classList.toggle('active');
+                    mobileMenuBtn.classList.toggle('active');
+                });
+                
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                });
+                
+                closeAlertBtn.addEventListener('click', () => {
+                    document.getElementById('compatibility-alert').style.display = 'none';
+                });
+                
+                // 点击菜单外区域关闭菜单
+                document.addEventListener('click', (event) => {
+                    if (!mobileMenu.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                        mobileMenu.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    }
+                });
+                
+                // 使用事件委托处理分类点击
+                document.getElementById('categories-container').addEventListener('click', (e) => {
+                    const btn = e.target.closest('.category-btn');
+                    if (btn) {
+                        document.querySelectorAll('.category-btn.active').forEach(e => e.classList.remove('active'));
+                        btn.classList.add('active');
+                        loadCategoryVideos(btn.dataset.category);
+                    }
+                });
+                
+                // 使用事件委托处理视频和文件夹点击
+                document.getElementById('videos-list').addEventListener('click', (e) => {
+                    const item = e.target.closest('.video-item');
+                    if (!item) return;
+                    
+                    // 处理返回上一级
+                    if (item.classList.contains('back-folder')) {
+                        if (folderHistory.length > 0) {
+                            const prevFolder = folderHistory.pop();
+                            loadCategoryVideos(prevFolder, true);
+                        } else {
+                            loadCategoryVideos(currentCategory);
+                        }
+                        return;
+                    }
+                    
+                    // 处理文件夹点击
+                    if (item.classList.contains('folder-item')) {
+                        const folderId = item.dataset.folderId;
+                        if (folderId && videoData[folderId]) {
+                            folderHistory.push(currentCategory);
+                            loadCategoryVideos(folderId, true);
+                        }
+                        return;
+                    }
+                    
+                    // 处理视频点击
+                    const url = item.dataset.url;
+                    const thumb = item.querySelector('img').dataset.src;
+                    playVideo(url, thumb, item.querySelector('.video-title').textContent);
+                });
+                
+                // 使用事件委托处理菜单点击
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        // 获取菜单类型
+                        const menuType = link.dataset.menu;
+                        
+                        // 如果是音乐或吉他谱链接，允许默认跳转行为
+                        if (menuType === 'music' || menuType === 'guitar') {
+                            // 移除所有菜单项的active类
+                            document.querySelectorAll('.nav-link.active').forEach(e => e.classList.remove('active'));
+                            
+                            // 给当前点击的菜单项添加active类
+                            link.classList.add('active');
+                            
+                            // 如果是移动端，关闭菜单
+                            if (mobileMenu.classList.contains('active')) {
+                                mobileMenu.classList.remove('active');
+                                mobileMenuBtn.classList.remove('active');
+                            }
+                            // 允许链接跳转，不阻止默认行为
+                            return;
+                        }
+                        
+                        // 对于其他链接，阻止默认行为
+                        e.preventDefault();
+                        
+                        // 移除所有菜单项的active类
+                        document.querySelectorAll('.nav-link.active').forEach(e => e.classList.remove('active'));
+                        
+                        // 给当前点击的菜单项添加active类
+                        link.classList.add('active');
+                        
+                        // 根据菜单类型显示内容
+                        if (menuType === 'videos') {
+                            showVideoContent();
+                        } else {
+                            showPlaceholderContent(menuType);
+                        }
+                        
+                        // 如果是移动端，关闭菜单
+                        if (mobileMenu.classList.contains('active')) {
+                            mobileMenu.classList.remove('active');
+                            mobileMenuBtn.classList.remove('active');
+                        }
+                    });
+                });
+                
+            
+            }
+
+            // 执行初始化
+            initAppUI();
+        }
+    </script>
+</body>
+</html>
