@@ -332,7 +332,7 @@
             display: none;
             background: transparent;
             border: none;
-            color: var(--primary);
+            color: var(--text-secondary);
             font-size: 24px;
             cursor: pointer;
             padding: 8px;
@@ -346,7 +346,7 @@
         }
         
         .mobile-menu-btn:hover {
-            background: rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.1);
             color: var(--primary);
         }
         
@@ -1253,24 +1253,42 @@
             .song-title {
                 font-size: 20px;
             }
+            
+            /* 进一步缩小专辑封面和黑胶唱片 */
+            .album-cover {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .vinyl-record {
+                width: 200px;
+                height: 200px;
+                right: -100px;
+            }
+            
+            .vinyl-record .label {
+                width: 60px;
+                height: 60px;
+                font-size: 6px;
+            }
         }
         
         @media (max-width: 480px) {
             .album-cover {
-                width: 180px;
-                height: 180px;
+                width: 160px;
+                height: 160px;
             }
             
             /* 移动端黑胶唱片适配 */
             .vinyl-record {
-                width: 180px;
-                height: 180px;
-                right: -90px;
+                width: 160px;
+                height: 160px;
+                right: -80px;
             }
             
             .vinyl-record .label {
-                width: 55px;
-                height: 55px;
+                width: 50px;
+                height: 50px;
                 font-size: 5px;
             }
             
@@ -1278,24 +1296,6 @@
             .album-cover.playing .particle {
                 animation: particle-float 3s infinite ease-in-out;
                 will-change: transform, opacity;
-            }
-            
-            @keyframes particle-float {
-                0% {
-                    transform: translate(-50%, -50%) scale(0);
-                    opacity: 0;
-                }
-                10% {
-                    opacity: 1;
-                }
-                90% {
-                    opacity: 0.5;
-                }
-                100% {
-                    /* 从中心向外移动 */
-                    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
-                    opacity: 0;
-                }
             }
             
             .player-controls {
@@ -1340,6 +1340,44 @@
                 display: none;
             }
         }
+        
+        /* 针对更小屏幕的进一步调整 */
+        @media (max-width: 375px) {
+            .album-cover {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .vinyl-record {
+                width: 140px;
+                height: 140px;
+                right: -70px;
+            }
+            
+            .vinyl-record .label {
+                width: 45px;
+                height: 45px;
+                font-size: 4px;
+            }
+        }
+        
+        @keyframes particle-float {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                /* 从中心向外移动 */
+                transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1379,7 +1417,7 @@
                 <div class="mobile-menu-center-logo">
                     <i class="fa-solid fa-champagne-glasses"></i>
                 </div>
-                <!-- 移除了重复的关闭按钮 -->
+                <!-- 移除了关闭按钮 -->
             </div>
             <div class="mobile-menu-links">
                 <a href="#" class="nav-link" data-menu="home"><i class="fas fa-home"></i> 首页</a>
@@ -1490,7 +1528,7 @@
         
         <!-- 页脚 -->
         <footer>
-            <p>© 2024 民谣俱乐部 - 音乐爱好者的聚集地</p>
+            <p>© 2025 民谣俱乐部 - 音乐爱好者的聚集地</p>
         </footer>
     </div>
     
