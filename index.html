@@ -1045,10 +1045,7 @@
             border: 1px solid rgba(212, 175, 55, 0.15);
             box-shadow: var(--shadow);
             width: 100%;
-            max-width: none;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+            
         }
         
         .album-item::before {
@@ -1082,6 +1079,14 @@
             aspect-ratio: 1/1;
             position: relative;
             overflow: hidden;
+            margin-bottom: 0;
+        }
+        
+        @media (max-width: 414px) {
+            .album-image {
+                margin-bottom: 0;
+                border-radius: var(--radius-md);
+            }
         }
         
         .album-image img {
@@ -1249,8 +1254,7 @@
                 max-width: none;
                 width: 100%;
                 padding: 0;
-                height: auto;
-                min-height: 0;
+               
             }
             
             .album-info {
@@ -1341,8 +1345,7 @@
                 max-width: none;
                 width: 100%;
                 padding: 0;
-                height: auto;
-                min-height: 0;
+               
             }
             
             .album-info {
@@ -1373,6 +1376,27 @@
                 height: 45px;
                 font-size: 4px;
             }
+            
+            /* 确保在小屏幕设备上隐藏album-info和album-title */
+            .album-info, .album-title {
+                display: none !important;
+                height: 0;
+                padding: 0;
+                margin: 0;
+                border: none;
+            }
+        }
+        
+        /* 针对iPhone 8和iPhone 11等设备的特殊处理 */
+        @media (min-width: 375px) and (max-width: 414px) {
+            .album-info, .album-title {
+                display: none !important;
+                height: 0;
+                padding: 0;
+                margin: 0;
+                border: none;
+            }
+        }
         }
         
         @keyframes particle-float {
