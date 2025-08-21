@@ -1094,12 +1094,7 @@
             flex-shrink: 0;
         }
         
-        @media (max-width: 414px) {
-            .album-image {
-                margin-bottom: 0;
-                border-radius: var(--radius-md);
-            }
-        }
+ 
         
         .album-image img {
             width: 100%;
@@ -1266,7 +1261,7 @@
                 max-width: none;
                 width: 100%;
                 padding: 0;
-               
+               height: auto;
             }
             
             .album-info {
@@ -1276,6 +1271,14 @@
             
             .album-title {
                 display: none;
+            }
+            .album-image {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                position: relative;
+                overflow: hidden;
+                margin-bottom: 0;
+                flex-shrink: 0;
             }
             
             .song-title {
@@ -1373,48 +1376,7 @@
             }
         }
         
-        /* 针对更小屏幕的进一步调整 */
-        @media (max-width: 375px) {
-            .album-cover {
-                width: 140px;
-                height: 140px;
-            }
-            
-            .vinyl-record {
-                width: 140px;
-                height: 140px;
-                right: -70px;
-            }
-            
-            .vinyl-record .label {
-                width: 45px;
-                height: 45px;
-                font-size: 4px;
-            }
-            
-            /* 确保在小屏幕设备上隐藏album-info和album-title */
-            .album-info, .album-title {
-                display: none !important;
-                height: 0 !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                border: none !important;
-                overflow: hidden !important;
-            }
-        }
-        
-        /* 针对iPhone 8和iPhone 11等设备的特殊处理 */
-        @media (min-width: 375px) and (max-width: 414px) {
-            .album-info, .album-title {
-                display: none !important;
-                height: 0 !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                border: none !important;
-                overflow: hidden !important;
-            }
-        }
-        
+
 
 
 
