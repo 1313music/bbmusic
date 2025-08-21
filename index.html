@@ -1080,6 +1080,8 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 0;
+            /* 确保在所有设备上保持正确的宽高比 */
+            flex-shrink: 0;
         }
         
         @media (max-width: 414px) {
@@ -1345,7 +1347,10 @@
                 max-width: none;
                 width: 100%;
                 padding: 0;
-               
+                /* 确保在小屏幕上正确显示 */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
             
             .album-info {
@@ -1380,10 +1385,11 @@
             /* 确保在小屏幕设备上隐藏album-info和album-title */
             .album-info, .album-title {
                 display: none !important;
-                height: 0;
-                padding: 0;
-                margin: 0;
-                border: none;
+                height: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                border: none !important;
+                overflow: hidden !important;
             }
         }
         
@@ -1391,10 +1397,11 @@
         @media (min-width: 375px) and (max-width: 414px) {
             .album-info, .album-title {
                 display: none !important;
-                height: 0;
-                padding: 0;
-                margin: 0;
-                border: none;
+                height: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                border: none !important;
+                overflow: hidden !important;
             }
         }
         
