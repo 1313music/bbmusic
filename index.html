@@ -110,6 +110,12 @@
             color: var(--primary);
         }
         
+        @media (min-width: 1024px) {
+            .logo {
+                font-size: 24px;
+            }
+        }
+        
         .logo i {
             color: var(--primary);
             font-size: 28px;
@@ -1039,7 +1045,10 @@
             border: 1px solid rgba(212, 175, 55, 0.15);
             box-shadow: var(--shadow);
             width: 100%;
-            max-width: none; /* 移除最大宽度限制以适应6列布局 */
+            max-width: none;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         .album-item::before {
@@ -1087,16 +1096,16 @@
         }
         
         .album-info {
-            padding: 15px;
+            padding: 6px;
             text-align: center;
-            border-top: 2px solid #d4af37;
+            border-top: 2px solid #fdd504;
         }
         
         .album-title {
             font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 5px;
+            margin-bottom: 2px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -1195,8 +1204,8 @@
             text-align: center;
             padding: 30px 0 15px;
             color: var(--text-secondary);
-            font-size: 14px;
-            margin-top: 20px;
+            font-size: 14px;    
+            margin-top: 5px;
             border-top: 1px solid rgba(212, 175, 55, 0.1);
         }
         
@@ -1240,6 +1249,8 @@
                 max-width: none;
                 width: 100%;
                 padding: 0;
+                height: auto;
+                min-height: 0;
             }
             
             .album-info {
@@ -1330,6 +1341,8 @@
                 max-width: none;
                 width: 100%;
                 padding: 0;
+                height: auto;
+                min-height: 0;
             }
             
             .album-info {
