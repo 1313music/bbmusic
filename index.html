@@ -1321,6 +1321,18 @@
                 font-size: 5px;
             }
         }
+        @media (max-width: 767px) {
+  .album-item {
+    width: 100%;
+    aspect-ratio: 1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .album-image img {
+    height: 100% !important;
+    object-fit: cover;
+  }
+}
         
         @media (max-width: 480px) {
             .album-cover {
