@@ -395,10 +395,25 @@
 @media (max-width: 767px) {
   .album-item {
     flex-direction: column !important;
-    height: auto !important;
-  
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
+  .album-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .album-image img {
+    object-fit: cover;
+    height: 100% !important;
+    border-radius: 8px;
+  }
 }
 
 /* 音乐播放器样式 */
@@ -1307,6 +1322,7 @@
             }
         }
         
+        
         @media (max-width: 480px) {
             .album-cover {
                 width: 160px;
@@ -1363,7 +1379,8 @@
                 max-width: none;
                 width: 100%;
                 padding: 0;
-            
+                /* 确保在小屏幕上正确显示 */
+                display: flex;
                 flex-direction: column;
                 align-items: center;
             }
@@ -1416,7 +1433,7 @@
             <!-- 桌面端导航菜单 -->
             <nav class="nav-menu">
                 <a href="#" class="nav-link" data-menu="home"><i class="fas fa-home"></i> 首页</a>
-                <a href="https://v.1701701.xyz/" class="nav-link" data-menu="videos"><i class="fas fa-video"></i> 视频</a>
+                <a href="#" class="nav-link" data-menu="videos"><i class="fas fa-video"></i> 视频</a>
                 <a class="nav-link active" data-menu="music"><i class="fas fa-music"></i> 音乐</a>
                 <a href="https://www.weiyun.com/document?fileId=1482357921_a1fc5a585a38e55958695081d555a4b0_af5f417e-e61a-4d9d-9b97-9ca1614eb22b&officeType=pdf&tdsourcetag=s_weiyun_file" class="nav-link" data-menu="guitar" target="_blank"><i class="fas fa-guitar"></i> 吉他谱</a>
                 <a href="#" class="nav-link" data-menu="autobiography"><i class="fas fa-book"></i> 自传</a>
@@ -1445,7 +1462,7 @@
             </div>
             <div class="mobile-menu-links">
                 <a href="#" class="nav-link" data-menu="home"><i class="fas fa-home"></i> 首页</a>
-                <a href="https://v.1701701.xyz/" class="nav-link" data-menu="videos"><i class="fas fa-video"></i> 视频</a>
+                <a href="#" class="nav-link" data-menu="videos"><i class="fas fa-video"></i> 视频</a>
                 <a class="nav-link active" data-menu="music"><i class="fas fa-music"></i> 音乐</a>
                 <a href="https://www.weiyun.com/document?fileId=1482357921_a1fc5a585a38e55958695081d555a4b0_af5f417e-e61a-4d9d-9b97-9ca1614eb22b&officeType=pdf&tdsourcetag=s_weiyun_file" class="nav-link" data-menu="guitar" target="_blank"><i class="fas fa-guitar"></i> 吉他谱</a>
                 <a href="#" class="nav-link" data-menu="autobiography"><i class="fas fa-book"></i> 自传</a>
