@@ -430,7 +430,7 @@
                 align-items: stretch; /* 修改为stretch使子元素高度拉伸 */
                 justify-content: space-between;
                 gap: 30px; /* 增加间距 */
-                height: 600px; /* 设置固定高度 */
+                height: 680px; /* 设置固定高度 */
                 max-width: 1400px; /* 增加总宽度 */
                 margin: 10px auto; /* 居中显示 */
             }
@@ -763,7 +763,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin: 20px auto;
+            margin: 0 auto;
         }
         
         /* 控制按钮样式 - 磨砂玻璃效果 */
@@ -1322,7 +1322,18 @@
             }
         }
         
-        
+        @media (max-width: 767px) {
+  .album-item {
+    width: 100%;
+    aspect-ratio: 1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .album-image img {
+    height: 100% !important;
+    object-fit: cover;
+  }
+}
         @media (max-width: 480px) {
             .album-cover {
                 width: 160px;
@@ -1418,6 +1429,20 @@
                 transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
                 opacity: 0;
             }
+        }
+        
+        /* 频谱分析器样式 */
+        .visualizer-container {
+           
+        
+            margin-bottom: 2px;
+        }
+        
+        #visualizer {
+            width: 100%;
+            height: 100px;
+       
+        
         }
     </style>
 </head>
@@ -1518,6 +1543,8 @@
                         <p class="song-artist" id="song-artist">周杰伦</p>
                     </div>
                 </div>
+                     <!-- 频谱容器 -->
+               
                 
                 <!-- 播放进度条 -->
                 <div class="progress-container">
@@ -1528,6 +1555,7 @@
                     <span class="time" id="total-time">00:00</span>
                 </div>
                 
+           
                 <!-- 播放控制按钮 -->
                 <div class="player-controls">
                     <button class="control-btn" id="play-mode-btn">
@@ -1546,6 +1574,9 @@
                     <button class="control-btn" id="share-btn">
                         <i class="fa fa-share-alt"></i>
                     </button>
+                </div>
+                 <div class="visualizer-container">
+                    <canvas id="visualizer"></canvas>
                 </div>
             </main>
         </div>
@@ -2186,6 +2217,98 @@
             if (filteredSongs.length > 0) {
                 loadSong(filteredSongs[0]);
             }
+            
+            // 频谱分析器代码
+            const canvas = document.getElementById('visualizer');
+            const ctx = canvas.getContext('2d');
+            let analyser, dataArray, audioContext;
+            
+            // 初始化频谱分析器（需在播放器初始化时调用）
+            function initSpectrumAnalyzer(audioElement) {
+                // 创建音频上下文
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // 创建分析器节点
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 2048;  // 提高频谱分辨率，必须是2的幂次方
+                analyser.minDecibels = -90;  // 降低最小分贝值，捕获更微弱的声音
+                analyser.maxDecibels = -20;  // 调整最大分贝值，增加动态范围
+                analyser.smoothingTimeConstant = 0.8;
+                
+                // 连接音频节点
+                const source = audioContext.createMediaElementSource(audioElement);
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+                
+                // 初始化数据数组
+                const bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+                
+                // 调整画布尺寸
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                
+                // 启动频谱绘制
+                drawSpectrum();
+            }
+            
+            // 响应式画布调整
+            function resizeCanvas() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+            }
+            
+            // 频谱绘制核心逻辑
+            function drawSpectrum() {
+                requestAnimationFrame(drawSpectrum);
+                
+                if (!analyser) return;
+                
+                // 获取实时频谱数据
+                analyser.getByteFrequencyData(dataArray);
+                
+                const bufferLength = analyser.frequencyBinCount;
+                const barWidth = canvas.width / bufferLength * 2;  // 更细的频谱条
+                const heightRatio = canvas.height / 180;  // 调整分母让频谱显示更高，充分利用100px空间
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // 三频段着色（全金色）
+                for (let i = 0; i < bufferLength / 2; i++) {
+                    const barHeight = dataArray[i] * heightRatio;
+                    const x = i * barWidth;
+                    const y = canvas.height - barHeight;
+                    
+                    // 频段颜色分配
+                    if (i < bufferLength / 4) {
+                        ctx.fillStyle = '#ffd700'; // 低频金色
+                    } else if (i < bufferLength / 2) {
+                        ctx.fillStyle = '#ffd700'; // 中频金色
+                    } else {
+                        ctx.fillStyle = '#ffd700'; // 高频金色
+                    }
+                    
+                    ctx.fillRect(x, y, barWidth, barHeight);  // 移除0.8缩放，使用完整宽度
+                }
+            }
+            
+            // 频谱分析器初始化标志
+            let spectrumInitialized = false;
+            
+            // 在播放时初始化频谱分析器
+            function initSpectrumOnPlay() {
+                if (!spectrumInitialized) {
+                    initSpectrumAnalyzer(audioPlayer);
+                    spectrumInitialized = true;
+                }
+            }
+            
+            // 修改播放函数以包含频谱初始化
+            const originalPlaySong = playSong;
+            playSong = function() {
+                initSpectrumOnPlay();
+                originalPlaySong();
+            };
         });
     </script>
 </body>
