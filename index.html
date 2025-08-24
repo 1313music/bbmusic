@@ -430,7 +430,7 @@
                 align-items: stretch; /* 修改为stretch使子元素高度拉伸 */
                 justify-content: space-between;
                 gap: 30px; /* 增加间距 */
-                height: 700px; /* 设置固定高度 */
+                height: 600px; /* 设置固定高度 */
                 max-width: 1400px; /* 增加总宽度 */
                 margin: 10px auto; /* 居中显示 */
             }
@@ -466,11 +466,7 @@
             flex-direction: column;
             gap: 20px;
         }
-        @media (max-width: 480px) {
-            .main-player {
-                gap: 10px;
-            }
-        }
+        
         .player-header {
             display: flex;
             flex-direction: column;
@@ -639,9 +635,9 @@
         .particles {
             position: absolute;
             top: 50%;
-            right: -30px;
-            width: 100px;
-            height: 100px;
+            right: -35px;
+            width: 110px;
+            height: 110px;
             transform: translateY(-50%);
             z-index: 0;
             pointer-events: none;
@@ -767,7 +763,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin: 0 auto;
+            margin: 20px auto;
         }
         
         /* 控制按钮样式 - 磨砂玻璃效果 */
@@ -890,7 +886,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin: 0 auto;
+            margin: 1px auto;
         }
         
         .progress-bar {
@@ -1325,7 +1321,6 @@
                 font-size: 5px;
             }
         }
-        
         @media (max-width: 767px) {
   .album-item {
     width: 100%;
@@ -1338,6 +1333,7 @@
     object-fit: cover;
   }
 }
+        
         @media (max-width: 480px) {
             .album-cover {
                 width: 160px;
@@ -1434,22 +1430,6 @@
                 opacity: 0;
             }
         }
-        
-        /* 频谱分析器样式 */
-     
-        #visualizer {
-            width: 100%;
-            height: 100px;
-        
-        }
-           @media (max-width: 480px) {
-   #visualizer {
-            width: 100%;
-            height: 60px;
-        
-        }
-            
-          }
     </style>
 </head>
 <body>
@@ -1549,10 +1529,6 @@
                         <p class="song-artist" id="song-artist">周杰伦</p>
                     </div>
                 </div>
-                     <!-- 频谱容器 -->
-             
-                    <canvas id="visualizer"></canvas>
-               
                 
                 <!-- 播放进度条 -->
                 <div class="progress-container">
@@ -1563,7 +1539,6 @@
                     <span class="time" id="total-time">00:00</span>
                 </div>
                 
-           
                 <!-- 播放控制按钮 -->
                 <div class="player-controls">
                     <button class="control-btn" id="play-mode-btn">
@@ -1583,7 +1558,6 @@
                         <i class="fa fa-share-alt"></i>
                     </button>
                 </div>
-                
             </main>
         </div>
         
@@ -1610,7 +1584,8 @@
         </footer>
     </div>
     
-    <!-- 音乐播放元素将通过JavaScript动态创建 -->
+    <!-- 音乐播放元素 -->
+    <audio id="audio-player" preload="metadata"></audio>
     
     <!-- JavaScript -->
     <script src="MusicList.js"></script>
@@ -1618,6 +1593,7 @@
         // 等待DOM加载完成
         document.addEventListener('DOMContentLoaded', function() {
             // 获取DOM元素
+                const audioPlayer = document.getElementById('audio-player');
                 const playPauseBtn = document.getElementById('play-pause-btn');
                 const playIcon = document.getElementById('play-icon');
                 const pauseIcon = document.getElementById('pause-icon');
@@ -1649,10 +1625,6 @@
             let playMode = 0; // 0: 顺序播放, 1: 随机播放, 2: 单曲循环, 3: 列表循环
             let currentAlbumId = null;
             let filteredSongs = window.localMusicList || [];
-            
-            // 动态创建音频元素以支持跨域
-            let audioPlayer = new Audio();
-            audioPlayer.crossOrigin = "anonymous";
             
             // 设置默认音量
             const defaultVolume = 80; // 默认音量80%
@@ -1691,15 +1663,7 @@
                 if (albumId === currentAlbumId) {
                     // 如果点击的是当前专辑，则显示所有歌曲
                     currentAlbumId = null;
-                    // 从所有专辑中收集所有歌曲
-                    filteredSongs = [];
-                    if (musicAlbums) {
-                        musicAlbums.forEach(album => {
-                            if (album.songs) {
-                                filteredSongs = filteredSongs.concat(album.songs);
-                            }
-                        });
-                    }
+                    filteredSongs = [...localMusicList];
                 } else {
                     // 否则显示该专辑的歌曲
                     currentAlbumId = albumId;
@@ -1841,12 +1805,6 @@
                 audioPlayer.onloadedmetadata = function() {
                     updateTotalTime();
                 };
-                
-                // 音频加载错误处理
-                audioPlayer.onerror = function() {
-                    console.error('音频加载失败:', song.src);
-                    // 可以在这里添加用户提示，比如显示错误信息
-                };
             }
             
             // 更新列表中激活的歌曲
@@ -1861,11 +1819,6 @@
             // 播放歌曲
             function playSong() {
                 if (filteredSongs.length === 0) return;
-                
-                // 在用户交互时初始化频谱分析器
-                if (!spectrumInitialized) {
-                    initSpectrumAnalyzer(audioPlayer);
-                }
                 
                 const playPromise = audioPlayer.play();
                 if (playPromise !== undefined) {
@@ -2226,11 +2179,6 @@
                 mobileMenuClose.addEventListener('click', toggleMobileMenu);
             }
             
-            // 页面卸载时清理资源
-            window.addEventListener('beforeunload', () => {
-                cleanupSpectrumAnalyzer();
-            });
-            
             // 初始化
             initAlbums();
             
@@ -2248,116 +2196,6 @@
             // 加载第一首歌曲
             if (filteredSongs.length > 0) {
                 loadSong(filteredSongs[0]);
-            }
-            
-            // 频谱分析器代码
-        const canvas = document.getElementById('visualizer');
-        const ctx = canvas.getContext('2d');
-        let analyser, dataArray, audioContext;
-        let spectrumInitialized = false;
-            
-            // 初始化频谱分析器
-            function initSpectrumAnalyzer(audioElement) {
-                try {
-                    // 如果已经初始化，直接返回
-                    if (spectrumInitialized) return;
-                    
-                    // 创建音频上下文
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    
-                    // 创建分析器节点
-                    analyser = audioContext.createAnalyser();
-                    analyser.fftSize = 2048;
-                    analyser.minDecibels = -90;
-                    analyser.maxDecibels = -20;
-                    analyser.smoothingTimeConstant = 0.8;
-                    
-                    // 连接音频节点
-                    const source = audioContext.createMediaElementSource(audioElement);
-                    source.connect(analyser);
-                    analyser.connect(audioContext.destination);
-                    
-                    // 初始化数据数组
-                    const bufferLength = analyser.frequencyBinCount;
-                    dataArray = new Uint8Array(bufferLength);
-                    
-                    // 调整画布尺寸
-                    resizeCanvas();
-                    window.addEventListener('resize', resizeCanvas);
-                    
-                    // 启动频谱绘制
-                    drawSpectrum();
-                    
-                    // 标记为已初始化
-                    spectrumInitialized = true;
-                    console.log('频谱分析器初始化成功');
-                } catch (error) {
-                    console.error('频谱分析器初始化失败:', error);
-                    // 不关闭音频上下文，只是标记初始化失败
-                    spectrumInitialized = false;
-                }
-            }
-            
-            // 响应式画布调整
-            function resizeCanvas() {
-                if (canvas) {
-                    canvas.width = canvas.clientWidth;
-                    canvas.height = canvas.clientHeight;
-                }
-            }
-            
-            // 频谱绘制核心逻辑
-            function drawSpectrum() {
-                requestAnimationFrame(drawSpectrum);
-                
-                if (!analyser || !dataArray) return;
-                
-                try {
-                    // 获取实时频谱数据
-                    analyser.getByteFrequencyData(dataArray);
-                    
-                    const bufferLength = analyser.frequencyBinCount;
-                    const barWidth = canvas.width / bufferLength * 2;
-                    const heightRatio = canvas.height / 180;
-                    
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    // 三频段着色（全金色）
-                    for (let i = 0; i < bufferLength / 2; i++) {
-                        const barHeight = dataArray[i] * heightRatio;
-                        const x = i * barWidth;
-                        const y = canvas.height - barHeight;
-                        
-                        // 频段颜色分配
-                        if (i < bufferLength / 4) {
-                            ctx.fillStyle = '#ffd700'; // 低频金色
-                        } else if (i < bufferLength / 2) {
-                            ctx.fillStyle = '#ffd700'; // 中频金色
-                        } else {
-                            ctx.fillStyle = '#ffd700'; // 高频金色
-                        }
-                        
-                        ctx.fillRect(x, y, barWidth, barHeight);
-                    }
-                } catch (error) {
-                    console.error('频谱绘制错误:', error);
-                    // 继续绘制，不中断动画循环
-                }
-            }
-            
-            // 清理频谱分析器资源
-            function cleanupSpectrumAnalyzer() {
-                if (audioContext) {
-                    try {
-                        audioContext.close();
-                    } catch (error) {
-                        console.error('关闭音频上下文失败:', error);
-                    }
-                    audioContext = null;
-                }
-                analyser = null;
-                dataArray = null;
-                spectrumInitialized = false;
             }
         });
     </script>
