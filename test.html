@@ -1589,7 +1589,7 @@
     </div>
     
     <!-- 音乐播放元素 -->
-    <audio id="audio-player" preload="metadata"></audio>
+    <audio id="audio-player" preload="metadata" playsinline webkit-playsinline></audio>
     
     <!-- p5.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
@@ -1941,6 +1941,26 @@
                     });
                 }
                 
+                // 设置Media Session API支持移动端锁屏播放
+                if ('mediaSession' in navigator) {
+                    const currentSong = filteredSongs[currentSongIndex];
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: currentSong.name,
+                        artist: currentSong.id,
+                        album: '民谣俱乐部',
+                        artwork: [
+                            { src: elements.coverImage.src || 'img/default.jpg', sizes: '96x96', type: 'image/jpeg' },
+                            { src: elements.coverImage.src || 'img/default.jpg', sizes: '128x128', type: 'image/jpeg' },
+                            { src: elements.coverImage.src || 'img/default.jpg', sizes: '192x192', type: 'image/jpeg' },
+                            { src: elements.coverImage.src || 'img/default.jpg', sizes: '256x256', type: 'image/jpeg' },
+                            { src: elements.coverImage.src || 'img/default.jpg', sizes: '384x384', type: 'image/jpeg' },
+                            { src: elements.coverImage.src || 'img/default.jpg', sizes: '512x512', type: 'image/jpeg' }
+                        ]
+                    });
+                    
+                    navigator.mediaSession.playbackState = 'playing';
+                }
+                
                 const playPromise = elements.audioPlayer.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
@@ -1990,6 +2010,11 @@
                 elements.playIcon.style.display = 'block';
                 elements.pauseIcon.style.display = 'none';
                 elements.albumCover.classList.remove('playing');
+                
+                // 更新Media Session播放状态
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.playbackState = 'paused';
+                }
             }
             
 
@@ -2267,6 +2292,31 @@
             
             // 初始化
             initAlbums();
+            
+            // 设置Media Session API控制处理器
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.setActionHandler('play', () => {
+                    playSong();
+                });
+                
+                navigator.mediaSession.setActionHandler('pause', () => {
+                    pauseSong();
+                });
+                
+                navigator.mediaSession.setActionHandler('previoustrack', () => {
+                    prevSong();
+                });
+                
+                navigator.mediaSession.setActionHandler('nexttrack', () => {
+                    nextSong();
+                });
+                
+                navigator.mediaSession.setActionHandler('seekto', (details) => {
+                    if (details.seekTime && elements.audioPlayer.duration) {
+                        elements.audioPlayer.currentTime = details.seekTime;
+                    }
+                });
+            }
             
             // 默认加载第一张专辑
             if (musicAlbums && musicAlbums.length > 0) {
