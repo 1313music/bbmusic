@@ -465,6 +465,10 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+        }@media (max-width: 768px) {
+            .main-player {
+               gap: 10px;
+            }
         }
         
         .player-header {
@@ -693,6 +697,11 @@
             justify-content: center;
             gap: 15px;
             margin: 20px auto;
+        }
+        @media (max-width: 768px) {
+            .player-controls {
+                gap: 10px;margin: 10px auto;
+            }
         }
     
         
@@ -1193,7 +1202,7 @@
             .vinyl-record .label {
                 width: 65px;
                 height: 65px;
-                font-size: 6px;
+                font-size: 5px;
             }
         }
         
@@ -1248,7 +1257,7 @@
             .vinyl-record .label {
                 width: 60px;
                 height: 60px;
-                font-size: 5px;
+                font-size: 4px;
             }
         }
         
@@ -1280,14 +1289,10 @@
             .vinyl-record .label {
                 width: 50px;
                 height: 50px;
-                font-size: 4px;
+                font-size: 3px;
             }
             
-            /* 移动端减少粒子数量 */
-            .album-cover.playing .particle {
-                animation: particle-float 3s infinite ease-in-out;
-                will-change: transform, opacity;
-            }
+
             
             .player-controls {
                 gap: 15px;
@@ -1343,23 +1348,7 @@
 
 
         
-        @keyframes particle-float {
-            0% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                /* 从中心向外移动 */
-                transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
-                opacity: 0;
-            }
-        }
+
         
         /* 加载状态样式 */
         .play-pause-btn.loading {
