@@ -1593,7 +1593,7 @@
     </div>
     
     <!-- 音乐播放元素 -->
-    <audio id="audio-player" preload="metadata" playsinline webkit-playsinline crossorigin="anonymous" muted></audio>
+    <audio id="audio-player" preload="metadata" playsinline webkit-playsinline crossorigin="anonymous" muted x-webkit-airplay="deny" webkit-playsinline="true"></audio>
     
     <!-- p5.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
@@ -1932,19 +1932,33 @@
                 currentItems.forEach(item => item.classList.add('active'));
             }
             
-            // 播放歌曲
+            // 播放歌曲 - 增强iOS支持
             function playSong() {
                 if (filteredSongs.length === 0) return;
                 
                 showLoadingState();
                 
+                // iOS设备检测
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                
                 // iOS播放处理：确保音频上下文正确初始化
-                if (audioContext && audioContext.state === 'suspended') {
-                    audioContext.resume().then(() => {
-                        console.log('音频上下文已恢复');
-                    }).catch(err => {
-                        console.log('音频上下文恢复失败:', err);
-                    });
+                if (audioContext) {
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume().then(() => {
+                            console.log('音频上下文已恢复');
+                        }).catch(err => {
+                            console.log('音频上下文恢复失败:', err);
+                        });
+                    }
+                } else {
+                    // 如果音频上下文不存在，尝试初始化
+                    try {
+                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        console.log('创建新的音频上下文');
+                    } catch (e) {
+                        console.log('音频上下文创建失败:', e);
+                    }
                 }
                 
                 // 初始化频谱
@@ -1952,9 +1966,30 @@
                     initSpectrum();
                 }
                 
-                // iOS处理：先解除静音
-                if (elements.audioPlayer.muted) {
-                    elements.audioPlayer.muted = false;
+                // iOS特殊处理
+                if (isIOS) {
+                    console.log('iOS设备播放处理');
+                    
+                    // 先解除静音
+                    if (elements.audioPlayer.muted) {
+                        elements.audioPlayer.muted = false;
+                    }
+                    
+                    // 设置音量
+                    elements.audioPlayer.volume = defaultVolume / 100;
+                    
+                    // iOS后台播放：确保音频元素具有正确的属性
+                    elements.audioPlayer.setAttribute('playsinline', '');
+                    elements.audioPlayer.setAttribute('webkit-playsinline', '');
+                    
+                    // 尝试设置音频会话
+                    try {
+                        if (typeof elements.audioPlayer.webkitSetPlaybackTarget === 'function') {
+                            elements.audioPlayer.webkitSetPlaybackTarget('device');
+                        }
+                    } catch (e) {
+                        console.log('iOS播放目标设置失败:', e);
+                    }
                 }
                 
                 // 设置Media Session API支持移动端锁屏播放
@@ -1977,6 +2012,7 @@
                     navigator.mediaSession.playbackState = 'playing';
                 }
                 
+                // iOS设备需要用户交互才能播放，所以先检查是否可以播放
                 const playPromise = elements.audioPlayer.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
@@ -1989,6 +2025,26 @@
                         // iOS后台播放：确保音量正确设置
                         elements.audioPlayer.volume = defaultVolume / 100;
                         
+                        // iOS设备播放成功后的额外处理
+                        if (isIOS) {
+                            console.log('iOS设备播放成功');
+                            
+                            // 确保音频上下文运行
+                            if (audioContext && audioContext.state === 'suspended') {
+                                audioContext.resume();
+                            }
+                            
+                            // 设置一个定时器来检查播放状态
+                            setTimeout(() => {
+                                if (elements.audioPlayer.paused) {
+                                    console.log('检测到iOS播放暂停，尝试恢复');
+                                    elements.audioPlayer.play().catch(err => {
+                                        console.log('iOS播放恢复失败:', err);
+                                    });
+                                }
+                            }, 1000);
+                        }
+                        
                     }).catch(error => {
                         hideLoadingState();
                         console.error('播放失败:', error);
@@ -2000,6 +2056,12 @@
                             errorMessage = '音频格式不支持';
                         } else {
                             errorMessage = '播放失败，请重试';
+                        }
+                        
+                        // iOS设备特殊错误处理
+                        if (isIOS) {
+                            console.log('iOS设备播放错误:', error.name, error.message);
+                            errorMessage += ' (iOS设备可能需要手动点击播放)';
                         }
                         
                         showErrorMessage(errorMessage);
@@ -2016,10 +2078,28 @@
                         
                         // iOS后台播放：确保音量正确设置
                         elements.audioPlayer.volume = defaultVolume / 100;
+                        
+                        // iOS设备播放成功后的额外处理
+                        if (isIOS) {
+                            console.log('iOS设备播放成功(非Promise)');
+                            
+                            // 确保音频上下文运行
+                            if (audioContext && audioContext.state === 'suspended') {
+                                audioContext.resume();
+                            }
+                        }
+                        
                     } catch (error) {
                         hideLoadingState();
                         console.error('播放失败:', error);
-                        showErrorMessage('播放失败，请重试');
+                        
+                        // iOS设备特殊错误处理
+                        if (isIOS) {
+                            console.log('iOS设备播放错误(非Promise):', error.name, error.message);
+                            showErrorMessage('播放失败，iOS设备可能需要手动点击播放');
+                        } else {
+                            showErrorMessage('播放失败，请重试');
+                        }
                     }
                 }
             }
@@ -2314,6 +2394,105 @@
             // 初始化
             initAlbums();
             
+            // iOS设备检测和初始化
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            
+            if (isIOS) {
+                console.log('检测到iOS设备，进行特殊初始化');
+                
+                // iOS音频预加载处理
+                function preloadAudioForIOS() {
+                    // 创建一个静音音频来预加载音频上下文
+                    const preloadAudio = new Audio();
+                    preloadAudio.volume = 0;
+                    preloadAudio.preload = 'auto';
+                    
+                    // 设置iOS特定属性
+                    preloadAudio.setAttribute('playsinline', '');
+                    preloadAudio.setAttribute('webkit-playsinline', '');
+                    preloadAudio.setAttribute('x-webkit-airplay', 'deny');
+                    
+                    // 尝试播放静音音频来初始化音频上下文
+                    const playPromise = preloadAudio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            console.log('iOS音频预加载成功');
+                            // 播放100ms后停止
+                            setTimeout(() => {
+                                preloadAudio.pause();
+                                preloadAudio.remove();
+                            }, 100);
+                        }).catch(err => {
+                            console.log('iOS音频预加载失败:', err);
+                            preloadAudio.remove();
+                        });
+                    }
+                }
+                
+                // 在用户交互后预加载音频
+                function setupIOSAudioPreload() {
+                    preloadAudioForIOS();
+                    // 移除事件监听器
+                    document.removeEventListener('click', setupIOSAudioPreload);
+                    document.removeEventListener('touchstart', setupIOSAudioPreload);
+                }
+                
+                // 监听用户交互来预加载音频
+                document.addEventListener('click', setupIOSAudioPreload, { once: true });
+                document.addEventListener('touchstart', setupIOSAudioPreload, { once: true });
+                
+                // iOS后台播放状态监控
+                function monitorIOSPlaybackState() {
+                    // 每10秒检查一次播放状态
+                    setInterval(() => {
+                        if (isPlaying && document.visibilityState === 'hidden') {
+                            if (elements.audioPlayer.paused) {
+                                console.log('检测到iOS后台播放暂停，尝试恢复');
+                                elements.audioPlayer.play().catch(err => {
+                                    console.log('iOS后台播放恢复失败:', err);
+                                });
+                            }
+                        }
+                    }, 10000);
+                }
+                
+                // 启动iOS后台播放状态监控
+                monitorIOSPlaybackState();
+                
+                // iOS音频焦点处理
+                function handleIOSAudioFocus() {
+                    // 监听音频焦点变化
+                    document.addEventListener('visibilitychange', () => {
+                        if (document.visibilityState === 'visible') {
+                            // 页面可见时，如果之前在播放，尝试恢复
+                            if (isPlaying && elements.audioPlayer.paused) {
+                                console.log('页面可见，尝试恢复iOS音频播放');
+                                // 延迟恢复播放，确保页面完全加载
+                                setTimeout(() => {
+                                    elements.audioPlayer.play().catch(err => {
+                                        console.log('iOS音频恢复失败:', err);
+                                    });
+                                }, 500);
+                            }
+                        }
+                    });
+                    
+                    // 监听页面激活事件
+                    window.addEventListener('focus', () => {
+                        if (isPlaying && elements.audioPlayer.paused) {
+                            console.log('窗口激活，尝试恢复iOS音频播放');
+                            elements.audioPlayer.play().catch(err => {
+                                console.log('iOS音频恢复失败:', err);
+                            });
+                        }
+                    });
+                }
+                
+                // 启动iOS音频焦点处理
+                handleIOSAudioFocus();
+            }
+            
             // 设置Media Session API控制处理器
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.setActionHandler('play', () => {
@@ -2339,49 +2518,141 @@
                 });
             }
             
-            // iOS后台播放处理
+            // iOS后台播放处理 - 增强版
             // 处理页面可见性变化
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'visible') {
                     // 页面变为可见时，如果之前在播放，尝试恢复播放
                     if (isPlaying && elements.audioPlayer.paused) {
-                        // iOS需要用户交互才能播放，所以先暂停
-                        elements.audioPlayer.pause();
-                        // 显示提示让用户点击恢复
+                        // iOS需要用户交互才能播放，显示提示
                         showErrorMessage('点击播放按钮恢复音乐');
+                    }
+                    
+                    // 恢复音频上下文
+                    if (audioContext && audioContext.state === 'suspended') {
+                        audioContext.resume().then(() => {
+                            console.log('页面可见，音频上下文已恢复');
+                        }).catch(err => {
+                            console.log('音频上下文恢复失败:', err);
+                        });
                     }
                 } else {
                     // 页面隐藏时，确保音频上下文处于正确状态
                     if (audioContext && audioContext.state === 'running') {
                         // iOS后台时保持音频上下文运行
                         console.log('页面隐藏，保持音频上下文状态');
+                        
+                        // 确保音频继续播放
+                        if (isPlaying && elements.audioPlayer.paused) {
+                            // 尝试恢复播放
+                            elements.audioPlayer.play().catch(err => {
+                                console.log('后台播放恢复失败:', err);
+                            });
+                        }
                     }
                 }
             });
             
-            // iOS特定的音频会话处理
+            // iOS特定的音频会话处理 - 增强版
             function setupIOSSession() {
-                // 尝试启用iOS后台播放
-                if (typeof elements.audioPlayer.webkitSetPlaybackTarget === 'function') {
-                    try {
-                        elements.audioPlayer.webkitSetPlaybackTarget('device');
-                    } catch (e) {
-                        console.log('iOS播放目标设置失败:', e);
+                // 检测iOS设备
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                
+                if (isIOS) {
+                    console.log('检测到iOS设备，启用特殊后台播放处理');
+                    
+                    // 尝试启用iOS后台播放
+                    if (typeof elements.audioPlayer.webkitSetPlaybackTarget === 'function') {
+                        try {
+                            elements.audioPlayer.webkitSetPlaybackTarget('device');
+                        } catch (e) {
+                            console.log('iOS播放目标设置失败:', e);
+                        }
                     }
+                    
+                    // 设置音频会话类别（iOS特有）
+                    try {
+                        if (window.webkit && window.webkit.messageHandlers) {
+                            // 通过webkit消息处理器设置音频会话
+                            window.webkit.messageHandlers.audioSessionHandler.postMessage({
+                                action: 'setCategory',
+                                category: 'playback',
+                                options: ['mixWithOthers']
+                            });
+                        }
+                    } catch (e) {
+                        console.log('音频会话设置失败:', e);
+                    }
+                    
+                    // iOS后台播放权限请求
+                    function requestIOSBackgroundPermission() {
+                        // 创建一个隐藏的音频元素来请求后台播放权限
+                        const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAA');
+                        silentAudio.loop = true;
+                        silentAudio.volume = 0;
+                        
+                        // 尝试播放静音音频来获取权限
+                        const playPromise = silentAudio.play();
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                console.log('iOS后台播放权限获取成功');
+                                // 播放1秒后停止
+                                setTimeout(() => {
+                                    silentAudio.pause();
+                                    silentAudio.remove();
+                                }, 1000);
+                            }).catch(err => {
+                                console.log('iOS后台播放权限获取失败:', err);
+                                silentAudio.remove();
+                            });
+                        }
+                    }
+                    
+                    // 在用户交互后请求后台播放权限
+                    function requestPermissionOnInteraction() {
+                        requestIOSBackgroundPermission();
+                        // 移除事件监听器
+                        document.removeEventListener('click', requestPermissionOnInteraction);
+                        document.removeEventListener('touchstart', requestPermissionOnInteraction);
+                    }
+                    
+                    // 监听用户交互来请求权限
+                    document.addEventListener('click', requestPermissionOnInteraction, { once: true });
+                    document.addEventListener('touchstart', requestPermissionOnInteraction, { once: true });
+                    
+                    // 移除muted属性（需要用户交互后）
+                    function unmuteOnInteraction() {
+                        elements.audioPlayer.muted = false;
+                        elements.audioPlayer.volume = defaultVolume / 100;
+                        console.log('iOS设备已解除静音');
+                        // 移除事件监听器
+                        document.removeEventListener('click', unmuteOnInteraction);
+                        document.removeEventListener('touchstart', unmuteOnInteraction);
+                    }
+                    
+                    // 监听用户交互来解除静音
+                    document.addEventListener('click', unmuteOnInteraction, { once: true });
+                    document.addEventListener('touchstart', unmuteOnInteraction, { once: true });
+                    
+                    // iOS后台播放保持机制
+                    function keepIOSAudioAlive() {
+                        if (isIOS && isPlaying && document.visibilityState === 'hidden') {
+                            // 每30秒检查一次音频状态
+                            setInterval(() => {
+                                if (elements.audioPlayer.paused) {
+                                    console.log('检测到iOS后台音频暂停，尝试恢复');
+                                    elements.audioPlayer.play().catch(err => {
+                                        console.log('iOS后台音频恢复失败:', err);
+                                    });
+                                }
+                            }, 30000);
+                        }
+                    }
+                    
+                    // 启动iOS后台播放保持机制
+                    keepIOSAudioAlive();
                 }
-                
-                // 移除muted属性（需要用户交互后）
-                function unmuteOnInteraction() {
-                    elements.audioPlayer.muted = false;
-                    elements.audioPlayer.volume = defaultVolume / 100;
-                    // 移除事件监听器
-                    document.removeEventListener('click', unmuteOnInteraction);
-                    document.removeEventListener('touchstart', unmuteOnInteraction);
-                }
-                
-                // 监听用户交互来解除静音
-                document.addEventListener('click', unmuteOnInteraction, { once: true });
-                document.addEventListener('touchstart', unmuteOnInteraction, { once: true });
             }
             
             // 初始化iOS会话设置
