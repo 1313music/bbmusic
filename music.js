@@ -933,8 +933,10 @@
             // 初始化移动端歌曲列表收起展开功能
             initMobileSongsToggle();
             
-            // 默认加载第一张专辑
-            if (musicAlbums && musicAlbums.length > 0) {
+            // 默认加载第一个网易云歌单，如果没有则加载第一张专辑
+            if (neteasePlaylists && neteasePlaylists.length > 0) {
+                filterSongsByAlbum(neteasePlaylists[0].id);
+            } else if (musicAlbums && musicAlbums.length > 0) {
                 filterSongsByAlbum(musicAlbums[0].id);
             } else {
                 renderSongsList();
