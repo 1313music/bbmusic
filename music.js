@@ -951,4 +951,32 @@
                 loadSong(filteredSongs[0]);
             }
         });
-   
+         // 留言板展开收起功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const commentsToggleBtn = document.getElementById('comments-toggle-btn');
+            const walineContainer = document.getElementById('waline');
+            
+            if (commentsToggleBtn && walineContainer) {
+                commentsToggleBtn.addEventListener('click', function() {
+                    const isHidden = !walineContainer.classList.contains('show');
+                    
+                    if (isHidden) {
+                        // 展开留言板
+                        walineContainer.classList.add('show');
+                        commentsToggleBtn.innerHTML = '<i class="fas fa-comments"></i> 收起留言板';
+                        commentsToggleBtn.classList.add('active');
+                        
+                        // 如果留言板尚未初始化，可以在这里触发初始化
+                        if (!window.walineInitialized) {
+                            // Waline会在其自己的脚本中初始化
+                            window.walineInitialized = true;
+                        }
+                    } else {
+                        // 收起留言板
+                        walineContainer.classList.remove('show');
+                        commentsToggleBtn.innerHTML = '<i class="fas fa-comments"></i> 展开留言板';
+                        commentsToggleBtn.classList.remove('active');
+                    }
+                });
+            }
+        });
