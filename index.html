@@ -8,7 +8,7 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="music.css">
- 
+    <link rel="stylesheet" href="waline.css">
 </head>
 <body>
     <div class="container">
@@ -155,6 +155,14 @@
             </div>
         </section>
         
+        <!-- Waline 留言板 -->
+        <div class="comments-toggle-container">
+            <button id="comments-toggle-btn" class="comments-toggle-btn">
+                <i class="fas fa-comments"></i> 展开留言板
+            </button>
+        </div>
+        <div id="waline">留言板</div>
+        
         <!-- 页脚 -->
         <footer>
             <p>© 2025 民谣俱乐部 - 音乐爱好者的聚集地</p>
@@ -169,5 +177,23 @@
     <!-- JavaScript -->
     <script src="MusicList.js"></script>
     <script src="music.js"></script>
+    
+    <!-- Waline 初始化脚本 -->
+    <script type="module">
+     import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+     init({
+       el: '#waline',
+       serverURL: 'https://hello.1701701.xyz',
+       emoji: [
+       'https://unpkg.com/@waline/emojis@1.2.0/weibo',
+       'https://unpkg.com/@waline/emojis@1.2.0/qq',
+       'https://unpkg.com/@waline/emojis@1.2.0/alus',
+       'https://unpkg.com/@waline/emojis@1.2.0/bmoji',
+       'https://unpkg.com/@waline/emojis@1.2.0/tieba',
+     ],
+        search: false,
+      });
+    </script>
 </body>
 </html>
