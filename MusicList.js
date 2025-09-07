@@ -1,3 +1,13 @@
+// 网易云歌单ID配置 - 支持多个歌单
+const neteasePlaylists = [
+  {
+    id: 'netease_playlist_1',
+    name: '网易云歌单',
+    playlistId: '8865774369',
+    cover: 'https://p3.music.126.net/gFyEEWNoBqjp90pU2dm5TA==/109951170673632981.jpg?param=800y800'
+  }
+  // 可以继续添加更多网易云歌单...
+];
 // 音乐专辑列表 - 按专辑分类
 const musicAlbums = [
   {
