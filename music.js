@@ -1,5 +1,5 @@
 
-        // 等待DOM加载完成
+// 等待DOM加载完成
         document.addEventListener('DOMContentLoaded', function() {
             // 获取DOM元素 - 使用对象组织提高可读性
             const elements = {
@@ -81,7 +81,32 @@
                 if (musicAlbums && musicAlbums.length > 0) {
                     elements.albumsList.innerHTML = '';
                     
+                    // 动态创建网易云歌单专辑项
+                    if (neteasePlaylists && neteasePlaylists.length > 0) {
+                        neteasePlaylists.forEach(playlist => {
+                            const albumItem = document.createElement('div');
+                            albumItem.className = 'album-item';
+                            albumItem.dataset.id = playlist.id;
+                            
+                            albumItem.innerHTML = `
+                                <div class="album-image">
+                                    <img src="${playlist.cover}" alt="${playlist.name}">
+                                </div>
+                                <div class="album-info">
+                                    <h3 class="album-title">${playlist.name}</h3>
+                                </div>
+                            `;
+                            
+                            albumItem.addEventListener('click', () => {
+                                filterSongsByAlbum(playlist.id);
+                            });
+                            
+                            elements.albumsList.appendChild(albumItem);
+                        });
+                    }
+                    
                     musicAlbums.forEach(album => {
+                        // 不再跳过网易云歌单，让它正常显示
                         const albumItem = document.createElement('div');
                         albumItem.className = 'album-item';
                         albumItem.dataset.id = album.id;
@@ -109,7 +134,98 @@
                 if (albumId === currentAlbumId) {
                     // 如果点击的是当前专辑，则显示所有歌曲
                     currentAlbumId = null;
-                    filteredSongs = [...localMusicList];
+                    // 从所有专辑中提取歌曲列表
+                    filteredSongs = [];
+                    musicAlbums.forEach(album => {
+                        if (album.songs && Array.isArray(album.songs)) {
+                            filteredSongs.push(...album.songs);
+                        }
+                    });
+                    
+                    // 更新歌曲列表显示
+                    renderSongsList();
+                    
+                    // 如果当前播放的歌曲不在过滤后的列表中，则播放第一首
+                    if (filteredSongs.length > 0) {
+                        const currentSong = elements.audioPlayer.src;
+                        const songExists = filteredSongs.some(song => song.src === currentSong);
+                        
+                        if (!songExists) {
+                            currentSongIndex = 0;
+                            loadSong(filteredSongs[currentSongIndex]);
+                            if (isPlaying) {
+                                // 等待音频加载完成后再播放
+                                elements.audioPlayer.addEventListener('loadedmetadata', function onLoaded() {
+                                    playSong();
+                                    elements.audioPlayer.removeEventListener('loadedmetadata', onLoaded);
+                                });
+                            }
+                        }
+                    }
+                } else if (albumId.startsWith('netease_playlist_')) {
+                    // 处理网易云歌单 - 支持多个歌单
+                    currentAlbumId = albumId;
+                    
+                    // 从MusicList.js导入的网易云歌单配置中找到对应的歌单
+                    const playlistConfig = neteasePlaylists.find(playlist => playlist.id === albumId);
+                    
+                    if (!playlistConfig) {
+                        // 如果找不到对应的歌单配置，显示错误
+                        elements.songsListDesktop.innerHTML = '<div class="song-item"><div class="song-details"><div class="song-name">未找到网易云歌单配置</div></div></div>';
+                        elements.songsListMobile.innerHTML = '<div class="song-item"><div class="song-details"><div class="song-name">未找到网易云歌单配置</div></div></div>';
+                        return;
+                    }
+                    
+                    // 显示加载状态
+                    elements.songsListDesktop.innerHTML = '<div class="song-item"><div class="song-details"><div class="song-name">正在加载网易云歌单...</div></div></div>';
+                    elements.songsListMobile.innerHTML = '<div class="song-item"><div class="song-details"><div class="song-name">正在加载网易云歌单...</div></div></div>';
+                    
+                    // 通过API获取网易云歌单数据，使用从MusicList.js导入的歌单ID
+                    fetch('https://music.zhheo.com/meting-api/?server=netease&type=playlist&id=' + playlistConfig.playlistId + '&r=' + Math.random())
+                        .then(response => response.json())
+                        .then(data => {
+                            // 处理Meting.js API返回的数据
+                            if (data && data.length > 0) {
+                                // 转换网易云歌单数据格式
+                                filteredSongs = data.map((song, index) => ({
+                                    name: song.name || '未知歌曲',
+                                    artist: song.artist || '未知艺术家',
+                                    src: song.url || '', // 使用Meting.js API返回的歌曲URL
+                                    cover: song.pic || 'img/default.jpg',
+                                    id: `netease_${playlistConfig.id}_${index}`
+                                }));
+                                
+                                // 更新歌曲列表显示
+                                renderSongsList();
+                                
+                                // 如果当前播放的歌曲不在过滤后的列表中，则播放第一首
+                                if (filteredSongs.length > 0) {
+                                    const currentSong = elements.audioPlayer.src;
+                                    const songExists = filteredSongs.some(song => song.src === currentSong);
+                                    
+                                    if (!songExists) {
+                                        currentSongIndex = 0;
+                                        loadSong(filteredSongs[currentSongIndex]);
+                                        if (isPlaying) {
+                                            // 等待音频加载完成后再播放
+                                            elements.audioPlayer.addEventListener('loadedmetadata', function onLoaded() {
+                                                playSong();
+                                                elements.audioPlayer.removeEventListener('loadedmetadata', onLoaded);
+                                            });
+                                        }
+                                    }
+                                }
+                            } else {
+                                // 加载失败
+                                elements.songsListDesktop.innerHTML = '<div class="song-item"><div class="song-details"><div class="song-name">加载网易云歌单失败</div></div></div>';
+                                elements.songsListMobile.innerHTML = '<div class="song-item"><div class="song-details"><div class="song-name">加载网易云歌单失败</div></div></div>';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('加载网易云歌单失败:', error);
+                            elements.songsListDesktop.innerHTML = '<div class="song-item"><div class="song-details"><div class="song-name">加载网易云歌单失败</div></div></div>';
+                            elements.songsListMobile.innerHTML = '<div class="song-item"><div class="song-details"><div class="song-name">加载网易云歌单失败</div></div></div>';
+                        });
                 } else {
                     // 否则显示该专辑的歌曲
                     currentAlbumId = albumId;
@@ -119,25 +235,25 @@
                             filteredSongs = [...album.songs];
                         }
                     }
-                }
-                
-                // 更新歌曲列表显示
-                renderSongsList();
-                
-                // 如果当前播放的歌曲不在过滤后的列表中，则播放第一首
-                if (filteredSongs.length > 0) {
-                    const currentSong = elements.audioPlayer.src;
-                    const songExists = filteredSongs.some(song => song.src === currentSong);
                     
-                    if (!songExists) {
-                        currentSongIndex = 0;
-                        loadSong(filteredSongs[currentSongIndex]);
-                        if (isPlaying) {
-                            // 等待音频加载完成后再播放
-                            elements.audioPlayer.addEventListener('loadedmetadata', function onLoaded() {
-                                playSong();
-                                elements.audioPlayer.removeEventListener('loadedmetadata', onLoaded);
-                            });
+                    // 更新歌曲列表显示
+                    renderSongsList();
+                    
+                    // 如果当前播放的歌曲不在过滤后的列表中，则播放第一首
+                    if (filteredSongs.length > 0) {
+                        const currentSong = elements.audioPlayer.src;
+                        const songExists = filteredSongs.some(song => song.src === currentSong);
+                        
+                        if (!songExists) {
+                            currentSongIndex = 0;
+                            loadSong(filteredSongs[currentSongIndex]);
+                            if (isPlaying) {
+                                // 等待音频加载完成后再播放
+                                elements.audioPlayer.addEventListener('loadedmetadata', function onLoaded() {
+                                    playSong();
+                                    elements.audioPlayer.removeEventListener('loadedmetadata', onLoaded);
+                                });
+                            }
                         }
                     }
                 }
@@ -180,7 +296,7 @@
                         <div class="song-number">${index + 1}</div>
                         <div class="song-details">
                             <div class="song-name">${song.name}</div>
-                            <div class="song-artist-name">${song.id}</div>
+                            <div class="song-artist-name">${song.artist || song.id}</div>
                         </div>
                     `;
                     
@@ -297,7 +413,7 @@
                 showLoadingState();
                 
                 elements.songTitleElement.textContent = song.name;
-                elements.songArtistElement.textContent = song.id;
+                elements.songArtistElement.textContent = song.artist || song.id;
                 elements.coverImage.src = song.cover || 'img/default.jpg';
                 elements.audioPlayer.src = song.src;
                 
@@ -552,11 +668,12 @@
                         elements.modeIcon.className = 'fa fa-repeat';
                         elements.playModeBtn.style.backgroundColor = 'transparent';
                         elements.playModeBtn.style.color = 'var(--text-secondary)';
-                        // 添加一个小圆点表示单曲循环
+                        // 添加数字1表示单曲循环
                         if (!elements.playModeBtn.querySelector('.loop-dot')) {
                             const dot = document.createElement('span');
                             dot.className = 'loop-dot';
-                            dot.style.cssText = 'position: absolute; width: 6px; height: 6px; background-color: var(--primary); border-radius: 50%; bottom: 8px; right: 8px;';
+                            dot.style.cssText = 'position: absolute; font-size: 8px; font-weight: bold; color: var(--text-secondary); top: 50%; left: 50%; transform: translate(-50%, -50%);';
+                            dot.textContent = '1';
                             elements.playModeBtn.appendChild(dot);
                         }
                         break;
@@ -718,6 +835,39 @@
                 
                 eventListeners.playMode = togglePlayMode;
                 elements.playModeBtn.addEventListener('click', eventListeners.playMode);
+                
+                // 添加播放模式按钮的悬停效果
+                elements.playModeBtn.addEventListener('mouseenter', function() {
+                    // 应用与控制按钮相同的悬停效果
+                    this.style.background = 'rgba(212, 175, 55, 0.15)';
+                    this.style.color = 'var(--primary)';
+                    this.style.border = '1px solid rgba(212, 175, 55, 0.4)';
+                    this.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.3)';
+                    this.style.borderRadius = 'var(--radius-md)';
+                    this.style.transform = 'translateY(-2px)';
+                    
+                    // 同时更新数字1的颜色
+                    const dot = this.querySelector('.loop-dot');
+                    if (dot && playMode === 2) {
+                        dot.style.color = 'var(--primary)';
+                    }
+                });
+                
+                elements.playModeBtn.addEventListener('mouseleave', function() {
+                    // 恢复默认样式
+                    this.style.background = 'rgba(255, 255, 255, 0.05)';
+                    this.style.color = 'var(--text-secondary)';
+                    this.style.border = '1px solid rgba(212, 175, 55, 0.2)';
+                    this.style.boxShadow = 'none';
+                    this.style.borderRadius = 'var(--radius-md)';
+                    this.style.transform = 'none';
+                    
+                    // 同时恢复数字1的颜色
+                    const dot = this.querySelector('.loop-dot');
+                    if (dot && playMode === 2) {
+                        dot.style.color = 'var(--text-secondary)';
+                    }
+                });
                 
                 eventListeners.share = shareMusic;
                 elements.shareBtn.addEventListener('click', eventListeners.share);
