@@ -351,8 +351,6 @@
  
   border: var(--waline-border);
   border-radius: 12px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 [data-theme='dark'] .wl-panel {
@@ -818,8 +816,6 @@
   margin-bottom: .3em;
   border-radius: 12px;
   border: 1px solid rgba(212, 175, 55, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 [data-theme='dark'] .wl-card {
@@ -1465,8 +1461,6 @@
     cursor: pointer;
     transition: var(--transition);
     box-shadow: var(--shadow);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
 .comments-toggle-btn:hover {
