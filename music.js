@@ -50,9 +50,27 @@
                 if (!elements.mobileSongsCollapse || !elements.mobileSongsContainer) return;
                 
                 let isCollapsed = false;
+                let isAnimating = false;
+                let animationTimeout = null;
+                
+                // 防抖函数，防止快速多次点击导致动画卡顿
+                function debounce(func, wait) {
+                    return function() {
+                        const context = this;
+                        const args = arguments;
+                        clearTimeout(animationTimeout);
+                        animationTimeout = setTimeout(() => {
+                            func.apply(context, args);
+                        }, wait);
+                    };
+                }
                 
                 function toggleCollapse() {
+                    // 如果正在动画中，则不执行新的动画
+                    if (isAnimating) return;
+                    
                     isCollapsed = !isCollapsed;
+                    isAnimating = true;
                     
                     // 使用requestAnimationFrame确保动画流畅
                     requestAnimationFrame(() => {
@@ -61,11 +79,19 @@
                         } else {
                             elements.mobileSongsContainer.classList.remove('collapsed');
                         }
+                        
+                        // 动画结束后重置状态
+                        setTimeout(() => {
+                            isAnimating = false;
+                        }, 450); // 略大于CSS过渡时间(0.4s)，确保动画完成
                     });
                 }
                 
+                // 使用防抖处理点击事件
+                const debouncedToggleCollapse = debounce(toggleCollapse, 50);
+                
                 elements.mobileSongsCollapse.addEventListener('click', function() {
-                    toggleCollapse();
+                    debouncedToggleCollapse();
                 });
                 
                 // 也可以点击标题区域来收起展开
@@ -73,7 +99,7 @@
                     // 如果点击的是收起按钮，不触发标题点击事件
                     if (e.target.closest('.collapse-btn')) return;
                     
-                    toggleCollapse();
+                    debouncedToggleCollapse();
                 });
             }
             
