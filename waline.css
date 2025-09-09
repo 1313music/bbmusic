@@ -173,8 +173,7 @@
   position: relative;
   z-index: 1;
   overflow: hidden;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
 }
 
 .wl-btn::before {
@@ -222,7 +221,7 @@
 
 .wl-btn.primary {
   border-color: var(--waline-border-color);
-  background: rgba(255, 255, 255, 0.05);
+ 
   color: #a0a8c0;
   font-weight: 500;
   box-shadow: none;
@@ -351,8 +350,7 @@
  
   border: var(--waline-border);
   border-radius: 12px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
 }
 
 [data-theme='dark'] .wl-panel {
@@ -818,8 +816,7 @@
   margin-bottom: .3em;
   border-radius: 12px;
   border: 1px solid rgba(212, 175, 55, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
 }
 
 [data-theme='dark'] .wl-card {
