@@ -511,26 +511,20 @@
         /* 黑胶唱片样式 */
         .vinyl-record {
             position: absolute;
-            width: 280px; /* 从200px增大到280px */
-            height: 280px; /* 从200px增大到280px */
-            background: radial-gradient(circle, #000 0%, #000 60%, #333 100%);
+            width: 280px; 
+            height: 280px; 
+            background: url('../img/cd.png') center/cover no-repeat;
             border-radius: 50%;
             border: 2px solid #222;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             top: 50%;
-            right: -140px; /* 调整位置以适应增大后的尺寸 */
+            right: -130px; /* 调整位置以适应增大后的尺寸 */
             transform: translateY(-50%);
             z-index: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            /* 添加唱片纹理效果 */
-            background-image: 
-                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px, 40px 40px, 25px 25px;
         }
         
         .vinyl-record::before {
@@ -548,41 +542,9 @@
                 inset 0 0 5px rgba(255, 255, 255, 0.3);
         }
         
-        .vinyl-record .label {
-            width: 85px; /* 从60px增大到85px */
-            height: 85px; /* 从60px增大到85px */
-            background: #d4af37;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            color: #000;
-            font-weight: bold;
-            font-size: 8px; /* 调整字体大小为8px */
-            text-align: center;
-            z-index: 2;
-            border: 2px solid #222;
-            /* 添加标签细节 */
-            box-shadow: 
-                inset 0 0 5px rgba(0, 0, 0, 0.5),
-                0 0 2px rgba(0, 0, 0, 0.3);
-            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-            line-height: 1.2;
-        }
+
         
-        .label-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: -2px; /* 将整个组向上移动一点 */
-            margin-left: -14px; /* 根据用户要求修改 */
-        }
-        
-        .second-group {
-            /* 调整第二组位置使其对称 */
-            margin-right: -14px; /* 根据用户要求修改 */
-            
-        }
+
         
         /* 添加唱片高光效果 */
         .vinyl-record::after {
@@ -595,10 +557,14 @@
             pointer-events: none;
         }
         
-        /* 播放时黑胶旋转动画 */
+        /* 播放时黑胶旋转动画 - 优化版 */
         .album-cover.playing .vinyl-record {
-            animation: rotate 3s linear infinite;
+            animation: rotate 5s linear infinite; /* 减慢旋转速度 */
             will-change: transform;
+            transform: translateY(-50%); /* 分离定位变换 */
+            backface-visibility: hidden; /* 防止动画闪烁 */
+            perspective: 1000px; /* 提高3D性能 */
+            transform-style: preserve-3d; /* 启用3D变换 */
         }
         
         @keyframes rotate {
@@ -613,7 +579,7 @@
         /* 移动端优化动画 */
         @media (max-width: 768px) {
             .album-cover.playing .vinyl-record {
-                animation: rotate 4s linear infinite; /* 移动端减慢旋转速度 */
+                animation: rotate 6s linear infinite; /* 移动端进一步减慢旋转速度 */
             }
             
             /* 移动端播放动画已移除 */
@@ -1220,14 +1186,11 @@
             .vinyl-record {
                 width: 220px;
                 height: 220px;
-                right: -110px;
+                right: -100px;
+                background: url('../img/cd.png') center/cover no-repeat;
             }
             
-            .vinyl-record .label {
-                width: 65px;
-                height: 65px;
-                font-size: 5px;
-            }
+
         }
         
         @media (max-width: 768px) {
@@ -1275,14 +1238,11 @@
             .vinyl-record {
                 width: 200px;
                 height: 200px;
-                right: -100px;
+                right: -90px;
+                background: url('../img/cd.png') center/cover no-repeat;
             }
             
-            .vinyl-record .label {
-                width: 60px;
-                height: 60px;
-                font-size: 4px;
-            }
+
         }
         
         @media (max-width: 767px) {
@@ -1305,16 +1265,13 @@
             
             /* 移动端黑胶唱片适配 */
             .vinyl-record {
-                width: 160px;
-                height: 160px;
-                right: -80px;
+                width: 155px;
+                height: 155px;
+                right: -68px;
+                background: url('../img/cd.png') center/cover no-repeat;
             }
             
-            .vinyl-record .label {
-                width: 50px;
-                height: 50px;
-                font-size: 3px;
-            }
+
             
 
             
