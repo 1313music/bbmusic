@@ -11,7 +11,7 @@
             }
             
             // 先加载视频数据
-            loadScript('./js/videoData.js', function() {
+            loadScript('https://r2.1701701.xyz/jscss/videoData.js', function() {
                 // 加载核心功能
                 loadScript('https://cdn.jsdelivr.net/npm/hls.js', function() {
                     // 配置 hls.js，但仅对HLS流使用，不影响MP4播放
