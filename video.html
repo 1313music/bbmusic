@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>民谣俱乐部 | 李志视频合集 - 跨年演唱会/巡演/音乐节/纪录片/叁叁肆/逼哥夜话</title>
+    <meta name="description" content="李志视频合集，收录跨年演唱会、全国巡演、音乐节现场、纪录片《我们的叁叁肆》、逼哥夜话等高清视频内容，让你感受最真实的民谣音乐现场。">
+    <meta name="keywords" content="李志,李志视频,李志演唱会,李志巡演,李志音乐节,李志纪录片,李志跨年,1701,我爱南京,南京市民,叁叁肆,逼哥夜话,逼哥,民谣视频">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="css/video.css">
+    <link rel="stylesheet" href="css/nightsky.css">
+    <link rel="stylesheet" href="css/waline.css"
+  />
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
+        <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+</head>
+<body >
+    
+    <div class="compatibility-alert" id="compatibility-alert">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="compatibility-message">正在检测您的设备兼容性...</span>
+        <button class="close" id="close-alert">&times;</button>
+    </div>
+    
+    
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-guitar"></i>
+               <a href="https://1701701.xyz/" style="color: inherit; text-decoration: none;"><span>民谣俱乐部</span></a>
+            </div>
+            <!-- 导航菜单 -->
+            <div class="nav-menu">
+                <a href="music.html" class="nav-item" title="音乐">
+                    <i class="fas fa-music"></i>
+                </a>
+                <a href="video.html" class="nav-item" title="视频">
+                    <i class="fas fa-video"></i>
+                </a>
+                <a href="album.html" class="nav-item" title="相册">
+                    <i class="fas fa-images"></i>
+                </a>
+                <a href="about.html" class="nav-item" title="关于我们">
+                    <i class="fas fa-info-circle"></i>
+                </a>
+            </div>
+        </header>
+        
+        <!-- DPlayer 播放器区域 -->
+        <section class="player-section">
+            <div id="dplayer-container" oncontextmenu="return false;"></div>
+        </section>
+        
+        <!-- 分类导航 -->
+        <section class="categories-container">
+            <div class="categories-scroll" id="categories-container">
+                <!-- 分类会通过JS动态添加 -->
+            </div>
+        </section>
+        
+        <!-- 视频列表 -->
+        <section class="videos-section">
+            <div class="videos-list" id="videos-list">
+                <div class="no-videos">
+                    <i class="fas fa-film"></i>
+                    <div>请选择分类浏览视频内容</div>
+                </div>
+            </div>
+        </section>
+<!-- Waline 留言板 -->
+        <div class="comments-toggle-container">
+            <button id="comments-toggle-btn" class="comments-toggle-btn">
+                <i class="fas fa-edit"></i> 展开留言板 <i class="fa fa-chevron-down"></i>
+            </button>
+        </div>
+        <div id="waline">留言板</div>
+        
+        <!-- Waline 初始化脚本 -->
+        <script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
+        <script src="js/hello.js"></script>
+
+        
+        <footer>
+            © 2025 民谣俱乐部 - 视频播放器
+            <p style="font-size:smaller;">本站资源来自互联网 仅供试看学习交流 不涉及任何商业用途</p>
+            <p style="font-size: smaller;">版权属于李志先生 请至现场感受live <a href="https://mp.weixin.qq.com/s/n9U1FQS0pLjVh_TzeO2JHw" style="color: inherit; text-decoration: none;" target="_blank">最新巡演 : 叁缺壹 吉隆坡站</a></p>
+        
+        </footer>
+    </div>
+
+    
+
+    
+
+    
+
+      <script src="js/video.js"></script>
+      <script defer src="https://tongji.1701701.xyz/1701701.xyz" data-website-id="e8f49cd1-85d5-4df9-b41a-051cb4d3a78b"></script>
+      
+      <!-- 回到顶部按钮 -->
+      <button id="back-to-top" class="back-to-top" aria-label="回到顶部">
+          <i class="fas fa-arrow-up"></i>
+      </button>
+      
+      <!-- 夜间模式背景 -->
+      <canvas id="universe"></canvas>
+      
+      <!-- 引入星空效果脚本 -->
+      <script src="js/nightsky.js"></script>
+      
+      
+</body>
+</html>
