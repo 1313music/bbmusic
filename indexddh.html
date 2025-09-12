@@ -19,47 +19,24 @@
                 <i class="fas fa-guitar"></i>
                 <a href="https://v.1701701.xyz/" style="color: inherit; text-decoration: none;"><span>民谣俱乐部</span></a>
             </div>
-            
-            <!-- 桌面端导航菜单 -->
-            <nav class="nav-menu">
-                <a href="#" class="nav-link" data-menu="home"><i class="fas fa-home"></i> 首页</a>
-                <a href="https://v.1701701.xyz/" class="nav-link" data-menu="videos"><i class="fas fa-video"></i> 视频</a>
-                <a class="nav-link active" data-menu="music"><i class="fas fa-music"></i> 音乐</a>
-                <a href="https://www.weiyun.com/document?fileId=1482357921_a1fc5a585a38e55958695081d555a4b0_af5f417e-e61a-4d9d-9b97-9ca1614eb22b&officeType=pdf&tdsourcetag=s_weiyun_file" class="nav-link" data-menu="guitar" target="_blank"><i class="fas fa-guitar"></i> 吉他谱</a>
-                <a href="https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg" class="nav-link" data-menu="message" target="_blank"><i class="fa-solid fa-cloud-arrow-up "></i>一键上传网易云</a>
-                <a href="https://mp.weixin.qq.com/s/DXdydTJnx_tG92TMxtMa9w" class="nav-link" data-menu="about" target="_blank"><i class="fas fa-info-circle"></i> 关于</a>
-            </nav>
-            
-            <!-- 移动端菜单按钮 -->
-            <button class="mobile-menu-btn" id="mobile-menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <!-- 导航菜单 -->
+            <div class="nav-menu">
+                <a href="music.html" class="nav-item" title="音乐">
+                    <i class="fas fa-music"></i>
+                </a>
+                <a href="video.html" class="nav-item" title="视频">
+                    <i class="fas fa-video"></i>
+                </a>
+                <a href="album.html" class="nav-item" title="相册">
+                    <i class="fas fa-images"></i>
+                </a>
+                <a href="about.html" class="nav-item" title="关于我们">
+                    <i class="fas fa-info-circle"></i>
+                </a>
+            </div>
         </header>
         
-        <!-- 移动端导航菜单 -->
-        <div class="mobile-menu" id="mobile-menu">
-            <div class="mobile-menu-header">
-                <div class="mobile-menu-logo">
-                    <i class="fas fa-guitar"></i> 民谣俱乐部
-                </div>
-                <div class="mobile-menu-center-logo">
-                    <i class="fa-solid fa-champagne-glasses"></i>
-                </div>
-            </div>
-            <div class="mobile-menu-links">
-                <a href="#" class="nav-link" data-menu="home"><i class="fas fa-home"></i> 首页</a>
-                <a href="https://v.1701701.xyz/" class="nav-link" data-menu="videos"><i class="fas fa-video"></i> 视频</a>
-                <a class="nav-link active" data-menu="music"><i class="fas fa-music"></i> 音乐</a>
-                <a href="https://www.weiyun.com/document?fileId=1482357921_a1fc5a585a38e55958695081d555a4b0_af5f417e-e61a-4d9d-9b97-9ca1614eb22b&officeType=pdf&tdsourcetag=s_weiyun_file" class="nav-link" data-menu="guitar" target="_blank"><i class="fas fa-guitar"></i> 吉他谱</a>
-                <a href="https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg" class="nav-link" data-menu="message" target="_blank"><i class="fa-solid fa-cloud-arrow-up "></i>一键上传网易云</a>
-                <a href="https://mp.weixin.qq.com/s/DXdydTJnx_tG92TMxtMa9w" class="nav-link" data-menu="about" target="_blank"><i class="fas fa-info-circle"></i> 关于</a>
-            </div>
-            <div class="mobile-menu-footer">
-                © 2025 民谣俱乐部
-            </div>
-        </div>
+        
         
         <!-- 音乐播放器容器 -->
         <div class="player-container">
@@ -162,42 +139,22 @@
         </footer>
     </div>
     
+    
+
+    
+    
     <!-- 音乐播放元素 -->
     <audio id="audio-player" preload="metadata"></audio>
     
     <!-- JavaScript -->
-    <script src="js/MusicList.js"></script>
+    <script src="https://r2.1701701.xyz/jscss/MusicList.js"></script>
     <script src="js/music.js"></script>
     
+    <!-- Waline 库 -->
+    <script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
+    
     <!-- Waline 初始化脚本 -->
-    <script type="module">
-     import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
-
-     init({
-       el: '#waline',
-       serverURL: 'https://hello.1701701.xyz',
-       emoji: [
-       'https://unpkg.com/@waline/emojis@1.2.0/weibo',
-       'https://unpkg.com/@waline/emojis@1.2.0/qq',
-       'https://unpkg.com/@waline/emojis@1.2.0/alus',
-       'https://unpkg.com/@waline/emojis@1.2.0/bmoji',
-       'https://unpkg.com/@waline/emojis@1.2.0/tieba',
-     ],
-        search: false,
-        lang: 'zh',
-        locale: {
-        placeholder: '来到城市已经八百九十六天 热河路一直是相同的容颜 偶尔有干净的潘西路过 她不会说你好再见',
-        level0: '潜水',
-        level1: '冒泡',
-        level2: '吐槽',
-        level3: '活跃',
-        level4: '话痨',
-        level5: '传说',
-        }
-
-
-      });
-    </script>
+    <script src="js/hello.js"></script>
     <script defer src="https://tongji.1701701.xyz/1701701.xyz" data-website-id="620f8452-9530-409a-9fa5-909ea0297d88"></script>
     
     <!-- 回到顶部按钮 -->
@@ -210,5 +167,10 @@
     
     <!-- 引入星空效果脚本 -->
     <script src="js/nightsky.js"></script>
+    
+    <!-- 导航菜单交互脚本 -->
+    <script>
+        
+    </script>
 </body>
 </html>
