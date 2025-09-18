@@ -13,7 +13,7 @@
             // 先加载视频数据
             loadScript('js/videoData.js', function() {
                 // 加载核心功能
-                loadScript('js/hls.js', function() {
+                loadScript('https://cdn.jsdelivr.net/npm/hls.js', function() {
                     // 配置 hls.js，但仅对HLS流使用，不影响MP4播放
                     if (Hls.isSupported()) {
                         Hls.DefaultConfig.enableWorker = true;
@@ -22,7 +22,7 @@
                         Hls.DefaultConfig.maxMaxBufferLength = 60;
                         Hls.DefaultConfig.liveSyncDurationCount = 3;
                     }
-                    loadScript('js/DPlayer.min.js', initializeApp);
+                    loadScript('https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js', initializeApp);
                 });
             });
         });
