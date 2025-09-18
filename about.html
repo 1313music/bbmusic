@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="team-content">
-                    <p>李志，中国内地男歌手，独立音乐人。1978年生于江苏常州，以其独特的音乐风格和深刻的歌词创作，被誉为"南京市民"，成为中国独立音乐界的标志性人物。</p>
+                    <p>李志，中国内地男歌手，独立音乐人。1978年生于江苏常州，以其独特的音乐风格和深刻的歌词创作，被判为"南京市民"，成为中国独立音乐界的标志性人物。</p>
                     <p>他的音乐融合了民谣、摇滚、布鲁斯等多种元素，歌词直白而深刻，常常反映社会现实和个人情感，作品充满人文关怀和思想深度。李志的音乐不追求华丽的外表，而是以真诚和质朴打动人心。</p>
                     <p>代表作品包括《天空之城》、《关于郑州的记忆》、《梵高先生》、《和你在一起》、《热河》等经典歌曲。</p>
                     <p>本站收录了李志先生的音乐作品，纪录片《我们的叁叁肆》、《逼哥夜话》系列以及跨年演唱会、巡演、音乐节等现场视频，让你感受最真实的音乐现场。</p>
@@ -67,11 +67,11 @@
         <p class="support-intro">如果你想通过<img src="https://s1.music.126.net/style/favicon.ico?v20180823">听李志 请使用下方小程序一键上传云盘</p>
                 
         <div class="qr-code-container">
-            <div class="qr-code-item">
+            <div class="qr-code-item" data-qr="gzh.jpg">
                 <img src="img/gzh.jpg" alt="公众号二维码" class="qr-code-img">
                 <p class="qr-code-label">公众号</p>
             </div>
-            <div class="qr-code-item">
+            <div class="qr-code-item" data-qr="xcx.jpg">
                 <img src="img/xcx.jpg" alt="小程序二维码" class="qr-code-img">
                 <p class="qr-code-label">一键上传网易云</p>
             </div>
@@ -166,6 +166,8 @@
             const qrModal = document.getElementById('qr-modal');
             // 只选择不是超链接子元素的qr-btn
             const qrBtns = document.querySelectorAll('.qr-btn:not(a .qr-btn)');
+            // 添加二维码项的点击事件
+            const qrCodeItems = document.querySelectorAll('.qr-code-item[data-qr]');
             const qrClose = document.querySelector('.qr-close');
             const qrImage = qrModal.querySelector('.qr-image img');
             const qrTitle = qrModal.querySelector('.qr-title');
@@ -177,7 +179,7 @@
                 'gzh.jpg': '民谣俱乐部',
                 'zs.jpg': '请站长喝一杯🍺',
                 'xcx.jpg': '搜歌传歌小程序',
-                'wx.jpg': '加好友请备注 如“进群”'
+                'wx.jpg': '加好友请备注 如"进群"'
             };
             
             // 点击按钮显示二维码
@@ -189,6 +191,19 @@
                     if (qrFile === 'cd.png' || qrFile === 'qrcode.jpg') {
                         return;
                     }
+                    
+                    // 阻止默认行为，显示二维码
+                    e.preventDefault();
+                    qrImage.src = `img/${qrFile}`;
+                    qrTitle.textContent = qrTitles[qrFile];
+                    qrModal.classList.add('active');
+                });
+            });
+            
+            // 点击二维码项显示二维码
+            qrCodeItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const qrFile = item.getAttribute('data-qr');
                     
                     // 阻止默认行为，显示二维码
                     e.preventDefault();
