@@ -364,7 +364,7 @@ header {
 .team-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 25px;
     flex-wrap: wrap;
     gap: 20px;
@@ -443,7 +443,22 @@ header {
     color: var(--text-secondary);
     font-size: 16px;
     line-height: 1.8;
-    
+}
+
+.support-intro {
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.support-intro img {
+    height: 1em;
+    width: auto;
+    vertical-align: baseline;
+    margin: 0 3px;
+    position: relative;
+    top: 0.1em;
 }
 
 .support-section {
@@ -715,25 +730,11 @@ header {
 
 /* 页脚样式 */
 footer {
-    color: rgba(255, 255, 255, 0.7);
     text-align: center;
-    padding: 20px;
-    border-top: 1px solid rgba(212, 175, 55, 0.2);
-}
-
-footer p {
-    margin: 5px 0;
-    font-size: 14px;
-}
-
-footer a {
-    color: var(--primary);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: var(--accent);
+    padding: 30px 0 15px;
+    color: var(--text-secondary);
+    font-size: 14px;    
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 /* 返回顶部按钮 */
@@ -817,16 +818,16 @@ footer a:hover {
     }
     
     .about-card-icon {
-        width: 70px;
-        height: 70px;
+        width: 50px;
+        height: 50px;
     }
     
     .about-card-icon i {
-        font-size: 28px;
+        font-size: 20px;
     }
     
     .about-card h2 {
-        font-size: 22px;
+        font-size: 20px;
     }
     
     .about-card p {
@@ -934,20 +935,11 @@ footer a:hover {
         padding: 20px;
     }
     
-    .about-card-icon {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 15px;
-    }
+  
     
-    .about-card-icon i {
-        font-size: 24px;
-    }
+ 
     
-    .about-card h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
+  
     
     .about-card p {
         font-size: 14px;
