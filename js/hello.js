@@ -15,10 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
         ],
         search: false,
         lang: 'zh',
-        pageSize: 10, // 每页显示的评论数量
         locale: {
           placeholder: ' 保持理智 相信未来',
-         
         }
       });
     } else {
