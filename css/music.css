@@ -11,7 +11,7 @@
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
-            --transition: all 0.3s ease;
+            --transition: all 1.2s ease;
             --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
             --glass: rgba(255, 255, 255, 0.05);
             --glow: 0 0 15px rgba(212, 175, 55, 0.3);
@@ -42,6 +42,10 @@
             transition: all 0.3s ease;
             position: relative;
             text-decoration: none;
+            /* 添加淡入动画 */
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: both;
+            opacity: 0;
         }
 
         .nav-item:hover {
@@ -58,6 +62,12 @@
             color: var(--accent);
             transform: scale(1.1);
         }
+        
+        /* 为导航菜单项添加不同的动画延迟 */
+        .nav-item:nth-child(1) { animation-delay: 0.1s; }
+        .nav-item:nth-child(2) { animation-delay: 0.2s; }
+        .nav-item:nth-child(3) { animation-delay: 0.3s; }
+        .nav-item:nth-child(4) { animation-delay: 0.4s; }
 
         /* 二维码弹窗样式 */
         
@@ -118,6 +128,9 @@
             align-items: center;
             padding: 0;
             position: relative;
+            /* 添加淡入动画 */
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
         }
         
         .logo {
@@ -136,6 +149,9 @@
             color: var(--primary);
             font-size: 28px;
             transition: transform 0.5s ease;
+            /* 添加旋转动画 */
+            animation: logoRotate 2s ease-in-out;
+            animation-fill-mode: both;
         }
         
         .logo:hover i {
@@ -192,6 +208,10 @@
             flex-direction: column;
             gap: 2px;
             z-index: 10;
+            /* 添加缩放动画 */
+            animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation-fill-mode: both;
+            animation-delay: 0.3s;
         }
         
         @media (min-width: 1024px) {
@@ -623,7 +643,7 @@
             margin-bottom: 5px;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             display: flex;
             align-items: center;
             gap: 15px;
@@ -697,14 +717,166 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
+            /* 添加动画效果 */
+            animation: fadeInScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
         }
+        
+        /* 专辑列表弹出动画 */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        /* 添加Logo旋转动画定义 */
+        @keyframes logoRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(15deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+        
+        /* 添加缩放动画定义 */
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* 添加脉冲动画定义 */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05) translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        /* 专辑项动画效果 */
+        .album-item {
+            background: transparent;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            position: relative;
+            backdrop-filter: none;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: none;
+            width: 100%;
+            /* 添加弹出动画效果 */
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation-fill-mode: both;
+            /* 为每个专辑项添加不同的延迟，创建波浪效果 */
+            opacity: 0;
+        }
+        
+        /* 专辑项弹出动画 */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* 为专辑项添加不同的动画延迟 */
+        .album-item:nth-child(1) { animation-delay: 0.1s; }
+        .album-item:nth-child(2) { animation-delay: 0.2s; }
+        .album-item:nth-child(3) { animation-delay: 0.3s; }
+        .album-item:nth-child(4) { animation-delay: 0.4s; }
+        .album-item:nth-child(5) { animation-delay: 0.5s; }
+        .album-item:nth-child(6) { animation-delay: 0.6s; }
+        .album-item:nth-child(7) { animation-delay: 0.7s; }
+        .album-item:nth-child(8) { animation-delay: 0.8s; }
+        .album-item:nth-child(9) { animation-delay: 0.9s; }
+        .album-item:nth-child(10) { animation-delay: 1.0s; }
+        .album-item:nth-child(11) { animation-delay: 0.1s; }
+        .album-item:nth-child(12) { animation-delay: 0.2s; }
+        
+        /* 歌曲列表弹出动画 */
+        .songs-list {
+            animation: slideInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes slideInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 歌曲项动画效果 */
+        .song-item {
+            animation: fadeInRight 0.5s ease-out;
+            animation-fill-mode: both;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* 为歌曲项添加不同的动画延迟 */
+        .song-item:nth-child(1) { animation-delay: 0.05s; }
+        .song-item:nth-child(2) { animation-delay: 0.1s; }
+        .song-item:nth-child(3) { animation-delay: 0.15s; }
+        .song-item:nth-child(4) { animation-delay: 0.2s; }
+        .song-item:nth-child(5) { animation-delay: 0.25s; }
+        .song-item:nth-child(6) { animation-delay: 0.3s; }
+        .song-item:nth-child(7) { animation-delay: 0.35s; }
+        .song-item:nth-child(8) { animation-delay: 0.4s; }
+        .song-item:nth-child(9) { animation-delay: 0.45s; }
+        .song-item:nth-child(10) { animation-delay: 0.5s; }
         
         .albums-list {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 20px;
     justify-items: center;
-    max-width: 1300px; /* 增加最大宽度以容纳6列 */
+    max-width: 1400px; /* 增加最大宽度以容纳6列 */
     width: 100%;
     /* 添加硬件加速以优化iOS上的动画性能 */
     will-change: transform;
@@ -717,17 +889,23 @@
 }
         
         .album-item {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: var(--radius-md);
             overflow: hidden;
-            transition: var(--transition);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: pointer;
             position: relative;
-            backdrop-filter: none;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            box-shadow: none;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             width: 100%;
-            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            contain: layout; /* 添加性能优化 */
+            will-change: transform; /* 优化变换性能 */
+            transform: translateZ(0); /* 启用硬件加速 */
         }
         
         .album-item::before {
@@ -745,10 +923,13 @@
         }
         
         .album-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.4);
             z-index: 2;
-            border-color: var(--primary);
+            margin-top: -8px; /* 使用margin实现上浮效果 */
+            margin-bottom: 8px; /* 补偿下方空间，避免布局偏移 */
         }
         
         .album-item:hover::before {
@@ -762,8 +943,11 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 0;
-            /* 确保在所有设备上保持正确的宽高比 */
             flex-shrink: 0;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            transform-origin: center; /* 修改缩放原点为中心点向四周 */
+            z-index: 1; /* 确保缩放图片在album-info之下 */
         }
         
  
@@ -772,17 +956,26 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 1.2s ease;
+        }
+        
+        .album-item:hover .album-image {
+            transform: scale(1.1);
         }
         
         .album-item:hover .album-image img {
-            transform: scale(1.05);
+            filter: brightness(1.05);
         }
         
         .album-info {
             padding: 6px;
             text-align: center;
             border-top: 2px solid #fdd504;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            width: 100%;
+            position: relative;
+            z-index: 2; /* 确保黄线在缩放图片之上 */
+            background: rgba(25, 28, 36, 0.95); /* 添加背景色，防止图片透过 */
         }
         
         .album-title {
@@ -793,11 +986,12 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            transition: color 0.3s ease;
+            transition: color 1.2s ease;
         }
         
         .album-item:hover .album-title {
             color: var(--primary);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
         
         /* 移动端歌曲列表样式 */
@@ -952,6 +1146,11 @@
             font-size: 14px;    
             
             border-top: 1px solid rgba(212, 175, 55, 0.1);
+            /* 添加淡入动画 */
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
+            animation-delay: 0.8s;
+            opacity: 0;
         }
         
         /* 响应式设计 */
@@ -1271,6 +1470,7 @@ img.lazy-loaded {
     background: var(--bg-hover);
     transform: translateY(-5px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .back-to-top i {

@@ -80,9 +80,6 @@ header {
     color: var(--primary);
     font-size: 28px;
     transition: transform 0.5s ease;
-    /* 添加旋转动画 */
-    animation: logoRotate 2s ease-in-out;
-    animation-fill-mode: both;
 }
 
 .logo:hover i {
@@ -110,10 +107,6 @@ header {
     transition: all 0.3s ease;
     position: relative;
     text-decoration: none;
-    /* 添加淡入动画 */
-    animation: fadeIn 0.8s ease-out;
-    animation-fill-mode: both;
-    opacity: 0;
 }
 
 .nav-item:hover {
@@ -130,12 +123,6 @@ header {
     color: var(--accent);
     transform: scale(1.1);
 }
-
-/* 为导航菜单项添加不同的动画延迟 */
-.nav-item:nth-child(1) { animation-delay: 0.1s; }
-.nav-item:nth-child(2) { animation-delay: 0.2s; }
-.nav-item:nth-child(3) { animation-delay: 0.3s; }
-.nav-item:nth-child(4) { animation-delay: 0.4s; }
 /* 移动端导航栏样式优化 */
 @media (max-width: 768px) {
     /* 减小logo尺寸 */
@@ -174,9 +161,6 @@ header {
     font-weight: 700;
     position: relative;
     display: inline-block;
-    /* 添加淡入动画 */
-    animation: fadeInDown 1s ease-out;
-    animation-fill-mode: both;
 }
 
 .about-header h1::after {
@@ -194,10 +178,6 @@ header {
     color: var(--text-secondary);
     font-size: 18px;
     margin-top: 20px;
-    /* 添加淡入动画 */
-    animation: fadeInUp 1s ease-out 0.3s;
-    animation-fill-mode: both;
-    opacity: 0;
 }
 
 .about-content-container {
@@ -369,10 +349,6 @@ header {
     margin-bottom: 40px;
     overflow: hidden;
     position: relative;
-    /* 添加滑入动画 */
-    animation: slideInLeft 0.8s ease-out 0.5s;
-    animation-fill-mode: both;
-    opacity: 0;
 }
 
 .about-team::before {
@@ -388,7 +364,7 @@ header {
 .team-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 25px;
     flex-wrap: wrap;
     gap: 20px;
@@ -409,10 +385,6 @@ header {
     border: 3px solid var(--primary);
     box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
     flex-shrink: 0;
-    /* 添加3D变换效果 */
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .team-image img {
@@ -423,9 +395,7 @@ header {
 }
 
 .team-image:hover img {
-    transform: scale(1.05) rotateY(5deg);
-    /* 添加金色光晕效果 */
-    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
+    transform: scale(1.05);
 }
 
 .team-content {
@@ -450,10 +420,6 @@ header {
     text-align: center;
     position: relative;
     overflow: hidden;
-    /* 添加滑入动画 */
-    animation: slideInRight 0.8s ease-out 0.7s;
-    animation-fill-mode: both;
-    opacity: 0;
 }
 
 .support-section::before {
@@ -477,26 +443,11 @@ header {
     color: var(--text-secondary);
     font-size: 16px;
     line-height: 1.8;
-}
-
-.support-intro {
-    color: var(--text-secondary);
-    font-size: 16px;
-    line-height: 1.8;
- 
-}
-
-.support-intro img {
-    height: 1em;
-    width: auto;
-    vertical-align: baseline;
-    margin: 0 3px;
-    position: relative;
-    top: 0.1em;
+    
 }
 
 .support-section {
-    padding: 20px 0;
+    padding: 30px 0;
    
     border-radius: 12px;
     
@@ -523,8 +474,6 @@ header {
     position: relative;
     overflow: hidden;
     transition: all 0.4s ease;
-    /* 添加波纹效果 */
-    z-index: 1;
 }
 
 .qr-btn::before {
@@ -629,7 +578,7 @@ header {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    
+    margin-top: 20px;
 }
 
 /* 二维码直接展示样式 */
@@ -650,20 +599,12 @@ header {
     border-radius: 12px;
     padding: 10px;
     transition: all 0.3s ease;
-    cursor: pointer;
-    /* 添加3D翻转效果 */
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .qr-code-item:hover {
-    transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
-    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
     border-color: var(--primary);
-    /* 添加金色光晕效果 */
-    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4), 
-                0 0 20px rgba(212, 175, 55, 0.3);
 }
 
 .qr-code-img {
@@ -751,7 +692,7 @@ header {
 .qr-title {
     margin: 0 0 20px;
     color: #fff;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
 }
 
@@ -774,15 +715,25 @@ header {
 
 /* 页脚样式 */
 footer {
+    color: rgba(255, 255, 255, 0.7);
     text-align: center;
-    padding: 30px 0 15px;
-    color: var(--text-secondary);
-    font-size: 14px;    
-    border-top: 1px solid rgba(212, 175, 55, 0.1);
-    /* 添加淡入动画 */
-    animation: fadeIn 1s ease-out 1s;
-    animation-fill-mode: both;
-    opacity: 0;
+    padding: 20px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+footer p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+footer a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--accent);
 }
 
 /* 返回顶部按钮 */
@@ -816,8 +767,6 @@ footer {
     background: var(--bg-hover);
     transform: translateY(-5px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-    /* 添加平滑过渡效果 */
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .back-to-top i {
@@ -868,16 +817,16 @@ footer {
     }
     
     .about-card-icon {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
     }
     
     .about-card-icon i {
-        font-size: 20px;
+        font-size: 28px;
     }
     
     .about-card h2 {
-        font-size: 20px;
+        font-size: 22px;
     }
     
     .about-card p {
@@ -985,11 +934,20 @@ footer {
         padding: 20px;
     }
     
-  
+    .about-card-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 15px;
+    }
     
- 
+    .about-card-icon i {
+        font-size: 24px;
+    }
     
-  
+    .about-card h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
     
     .about-card p {
         font-size: 14px;
@@ -1067,7 +1025,7 @@ footer {
     
     .qr-btn i {
         font-size: 26px;
-        margin-bottom: 4px;
+        margin-bottom: 8px;
     }
     
     .qr-btn span {
@@ -1105,89 +1063,4 @@ footer {
     flex-direction: column;
     align-items: center;
     color: inherit;
-}
-
-/* 动画关键帧定义 */
-@keyframes logoRotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(15deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* 按钮波纹效果 */
-.qr-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(212, 175, 55, 0.5);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.qr-btn:active::after {
-    width: 300px;
-    height: 300px;
 }

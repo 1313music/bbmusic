@@ -160,91 +160,97 @@
             let folderHistory = [];
             
             // 加载分类下的视频
-            function loadCategoryVideos(categoryId, isSubFolder = false) {
-                const listContainer = document.getElementById('videos-list');
-                listContainer.innerHTML = '';
+        function loadCategoryVideos(categoryId, isSubFolder = false) {
+            const listContainer = document.getElementById('videos-list');
+            listContainer.innerHTML = '';
+            
+            // 重置动画效果，确保每次加载都有动画
+            listContainer.style.animation = 'none';
+            listContainer.offsetHeight; // 触发重排
+            listContainer.style.animation = 'fadeInScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            
+            // 更新当前分类
+        if (!isSubFolder) {
+            currentCategory = categoryId;
+            folderHistory = [];
+        }
+            
+            if (!videoData[categoryId] || videoData[categoryId].length === 0) {
+                listContainer.innerHTML = `
+                    <div class="no-videos">
+                        <i class="fas fa-video-slash"></i>
+                        <div>此分类下暂无视频内容</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 如果有文件夹历史，添加返回按钮
+            if (folderHistory.length > 0) {
+                const backItem = document.createElement('div');
+                backItem.className = 'video-item folder-item back-folder';
+                backItem.innerHTML = `
+                    <div class="thumbnail">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='124' viewBox='0 0 220 124'%3E%3Crect width='220' height='124' fill='%231a1a2e'/%3E%3C/svg%3E" 
+                             data-src="./img/back.jpg" 
+                             alt="返回上一级" 
+                             class="lazyload">
+                        <div class="folder-icon"><i class="fas fa-arrow-left"></i></div>
+                    </div>
+                    <div class="video-title">返回上一级</div>
+                `;
+                listContainer.appendChild(backItem);
+            }
+            
+            // 添加新内容
+            videoData[categoryId].forEach((video, index) => {
+                const item = document.createElement('div');
                 
-                // 更新当前分类
-                if (!isSubFolder) {
-                    currentCategory = categoryId;
-                    folderHistory = [];
-                }
-                
-                if (!videoData[categoryId] || videoData[categoryId].length === 0) {
-                    listContainer.innerHTML = `
-                        <div class="no-videos">
-                            <i class="fas fa-video-slash"></i>
-                            <div>此分类下暂无视频内容</div>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // 如果有文件夹历史，添加返回按钮
-                if (folderHistory.length > 0) {
-                    const backItem = document.createElement('div');
-                    backItem.className = 'video-item folder-item back-folder';
-                    backItem.innerHTML = `
+                // 判断是否为文件夹
+                if (video.isFolder) {
+                    item.className = 'video-item folder-item';
+                    item.dataset.id = video.id;
+                    item.dataset.folderId = video.folderId;
+                    item.dataset.thumb = video.thumb;
+                    
+                    item.innerHTML = `
                         <div class="thumbnail">
                             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='124' viewBox='0 0 220 124'%3E%3Crect width='220' height='124' fill='%231a1a2e'/%3E%3C/svg%3E" 
-                                 data-src="./img/back.jpg" 
-                                 alt="返回上一级" 
+                                 data-src="${video.thumb}" 
+                                 alt="${video.title}" 
                                  class="lazyload">
-                            <div class="folder-icon"><i class="fas fa-arrow-left"></i></div>
-                            <div class="progress-bar" style="height:2px"><div class="progress" style="width:100%"></div></div>
+                            <div class="folder-icon"><i class="fas fa-folder-open"></i></div>
                         </div>
-                        <div class="video-title">返回上一级</div>
+                        <div class="video-title">${video.title}</div>
                     `;
-                    listContainer.appendChild(backItem);
+                } else {
+                    item.className = 'video-item';
+                    item.dataset.id = video.id;
+                    item.dataset.url = video.url;
+                    item.dataset.thumb = video.thumb;
+                    
+                    item.innerHTML = `
+                        <div class="thumbnail">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='124' viewBox='0 0 220 124'%3E%3Crect width='220' height='124' fill='%231a1a2e'/%3E%3C/svg%3E" 
+                                 data-src="${video.thumb}" 
+                                 alt="${video.title}" 
+                                 class="lazyload">
+                            <div class="play-icon"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="video-title">${video.title}</div>
+                    `;
                 }
                 
-                // 添加新内容
-                videoData[categoryId].forEach(video => {
-                    const item = document.createElement('div');
-                    
-                    // 判断是否为文件夹
-                    if (video.isFolder) {
-                        item.className = 'video-item folder-item';
-                        item.dataset.id = video.id;
-                        item.dataset.folderId = video.folderId;
-                        item.dataset.thumb = video.thumb;
-                        
-                        item.innerHTML = `
-                            <div class="thumbnail">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='124' viewBox='0 0 220 124'%3E%3Crect width='220' height='124' fill='%231a1a2e'/%3E%3C/svg%3E" 
-                                     data-src="${video.thumb}" 
-                                     alt="${video.title}" 
-                                     class="lazyload">
-                                <div class="folder-icon"><i class="fas fa-folder-open"></i></div>
-                                <div class="progress-bar" style="height:2px"><div class="progress" style="width:100%"></div></div>
-                            </div>
-                            <div class="video-title">${video.title}</div>
-                        `;
-                    } else {
-                        item.className = 'video-item';
-                        item.dataset.id = video.id;
-                        item.dataset.url = video.url;
-                        item.dataset.thumb = video.thumb;
-                        
-                        item.innerHTML = `
-                            <div class="thumbnail">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='124' viewBox='0 0 220 124'%3E%3Crect width='220' height='124' fill='%231a1a2e'/%3E%3C/svg%3E" 
-                                     data-src="${video.thumb}" 
-                                     alt="${video.title}" 
-                                     class="lazyload">
-                                <div class="play-icon"><i class="fas fa-play"></i></div>
-                                <div class="progress-bar" style="height:2px"><div class="progress" style="width:100%"></div></div>
-                            </div>
-                            <div class="video-title">${video.title}</div>
-                        `;
-                    }
-                    
-                    listContainer.appendChild(item);
-                });
+                // 为每个视频项添加不同的动画延迟，创建波浪效果
+                const delay = (index % 12) * 0.1 + 0.1; // 循环使用0.1-1.2秒的延迟
+                item.style.animationDelay = `${delay}s`;
                 
-                // 初始化懒加载
-                initLazyLoad();
-            }
+                listContainer.appendChild(item);
+            });
+            
+            // 初始化懒加载
+            initLazyLoad();
+        }
             
             // 添加懒加载函数
             function initLazyLoad() {
@@ -634,7 +640,12 @@
                 // 初始化播放器
                 initDPlayer();
                 initCategories();
-                loadCategoryVideos('knxy');
+                
+                // 确保页面加载时视频列表显示动画效果
+                setTimeout(() => {
+                    loadCategoryVideos('knxy');
+                }, 100);
+                
                 detectCompatibility();
                 
                 // 使用事件委托处理分类点击

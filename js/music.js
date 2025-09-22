@@ -277,7 +277,29 @@
                     
                     // 初始化图片懒加载
                     initLazyLoading();
+                    
+                    // 触发专辑列表动画
+                    triggerAlbumsAnimation();
                 }
+            }
+            
+            // 触发专辑列表动画
+            function triggerAlbumsAnimation() {
+                // 获取所有专辑项
+                const albumItems = elements.albumsList.querySelectorAll('.album-item');
+                
+                // 重置动画
+                albumItems.forEach((album, index) => {
+                    // 重置动画
+                    album.style.animation = 'none';
+                    album.style.opacity = '0';
+                    
+                    // 强制重排，确保重置生效
+                    void album.offsetWidth;
+                    
+                    // 应用新的动画，根据索引添加延迟
+                    album.style.animation = `bounceIn 0.6s ease-out ${index * 0.1}s both`;
+                });
             }
             
             // 根据专辑过滤歌曲
@@ -293,8 +315,11 @@
                         }
                     });
                     
-                    // 更新歌曲列表显示
-                    renderSongsList();
+                    // 重置歌曲列表动画
+                    resetSongsListAnimation();
+                    
+                    // 更新歌曲列表显示，添加动画效果
+                    renderSongsListWithAnimation();
                     
                     // 如果当前播放的歌曲不在过滤后的列表中，则播放第一首
                     if (filteredSongs.length > 0) {
@@ -346,8 +371,11 @@
                                     id: `netease_${playlistConfig.id}_${index}`
                                 }));
                                 
-                                // 更新歌曲列表显示
-                                renderSongsList();
+                                // 重置歌曲列表动画
+                                resetSongsListAnimation();
+                                
+                                // 更新歌曲列表显示，添加动画效果
+                                renderSongsListWithAnimation();
                                 
                                 // 如果当前播放的歌曲不在过滤后的列表中，则播放第一首
                                 if (filteredSongs.length > 0) {
@@ -387,8 +415,11 @@
                         }
                     }
                     
-                    // 更新歌曲列表显示
-                    renderSongsList();
+                    // 重置歌曲列表动画
+                    resetSongsListAnimation();
+                    
+                    // 更新歌曲列表显示，添加动画效果
+                    renderSongsListWithAnimation();
                     
                     // 如果当前播放的歌曲不在过滤后的列表中，则播放第一首
                     if (filteredSongs.length > 0) {
@@ -408,6 +439,109 @@
                         }
                     }
                 }
+            }
+            
+            // 重置歌曲列表动画
+            function resetSongsListAnimation() {
+                // 获取歌曲列表容器
+                const songsListDesktop = elements.songsListDesktop;
+                const songsListMobile = elements.songsListMobile;
+                
+                // 重置动画
+                songsListDesktop.style.animation = 'none';
+                songsListMobile.style.animation = 'none';
+                
+                // 强制重排，确保重置生效
+                void songsListDesktop.offsetWidth;
+                void songsListMobile.offsetWidth;
+                
+                // 应用新的动画
+                songsListDesktop.style.animation = 'slideInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                songsListMobile.style.animation = 'slideInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            }
+            
+            // 渲染歌曲列表（带动画效果）
+            function renderSongsListWithAnimation() {
+                // 清空现有列表
+                elements.songsListDesktop.innerHTML = '';
+                elements.songsListMobile.innerHTML = '';
+                
+                // 如果没有歌曲，显示提示
+                if (filteredSongs.length === 0) {
+                    const emptyMessage = document.createElement('div');
+                    emptyMessage.className = 'song-item';
+                    emptyMessage.innerHTML = `
+                        <div class="song-details">
+                            <div class="song-name">暂无歌曲</div>
+                        </div>
+                    `;
+                    elements.songsListDesktop.appendChild(emptyMessage);
+                    elements.songsListMobile.appendChild(emptyMessage.cloneNode(true));
+                    return;
+                }
+                
+                // 使用文档片段优化DOM操作
+                const desktopFragment = document.createDocumentFragment();
+                const mobileFragment = document.createDocumentFragment();
+                
+                // 一次性创建所有歌曲项
+                filteredSongs.forEach((song, index) => {
+                    // 检查是否是当前播放的歌曲
+                    const isCurrentSong = elements.audioPlayer.src.includes(song.src);
+                    if (isCurrentSong) {
+                        currentSongIndex = index;
+                    }
+                    
+                    // 创建歌曲项HTML
+                    const songHTML = `
+                        <div class="song-number">${index + 1}</div>
+                        <div class="song-details">
+                            <div class="song-name">${song.name}</div>
+                            <div class="song-artist-name">${song.artist || song.id}</div>
+                        </div>
+                    `;
+                    
+                    // 创建桌面端歌曲项
+                    const desktopItem = document.createElement('div');
+                    desktopItem.className = 'song-item';
+                    desktopItem.dataset.index = index;
+                    if (isCurrentSong) {
+                        desktopItem.classList.add('active');
+                    }
+                    desktopItem.innerHTML = songHTML;
+                    desktopFragment.appendChild(desktopItem);
+                    
+                    // 创建移动端歌曲项（克隆桌面端）
+                    const mobileItem = desktopItem.cloneNode(true);
+                    mobileFragment.appendChild(mobileItem);
+                });
+                
+                // 一次性添加到DOM
+                elements.songsListDesktop.appendChild(desktopFragment);
+                elements.songsListMobile.appendChild(mobileFragment);
+                
+                // 触发动画效果
+                triggerSongsListAnimation();
+            }
+            
+            // 触发歌曲列表动画
+            function triggerSongsListAnimation() {
+                // 获取所有歌曲项
+                const desktopSongs = elements.songsListDesktop.querySelectorAll('.song-item');
+                const mobileSongs = elements.songsListMobile.querySelectorAll('.song-item');
+                
+                // 重置动画
+                [...desktopSongs, ...mobileSongs].forEach((song, index) => {
+                    // 重置动画
+                    song.style.animation = 'none';
+                    song.style.opacity = '0';
+                    
+                    // 强制重排，确保重置生效
+                    void song.offsetWidth;
+                    
+                    // 应用新的动画
+                    song.style.animation = `fadeInRight 0.5s ease-out ${index * 0.05}s both`;
+                });
             }
             
             // 渲染歌曲列表
