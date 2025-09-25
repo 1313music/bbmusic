@@ -1,0 +1,13 @@
+;FFMETADATA1
+major_brand=M4A 
+minor_version=512
+compatible_brands=M4A isomiso2
+album_artist=李志
+disc=2
+track=4
+artist=李志
+album=THREE MISSING ONE JAPAN Tour 2024 in Tokyo
+comment=资源由lizhinb.com整理，请勿贩卖
+date=2025
+title=探しもの:Seek+突然:Suddenly
+encoder=Lavf61.7.100
