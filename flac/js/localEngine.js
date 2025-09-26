@@ -10,8 +10,8 @@ if (Array.isArray(localMusic)) {
     console.log('Using new album format');
     localMusic.forEach(album => {
       if (album.songs && Array.isArray(album.songs)) {
-        // 自动生成专辑封面路径，格式为/music/[专辑名]/Cover.jpg
-        const albumCoverPath = `/music/${album.albumName}/Cover.jpg`;
+        // 只使用JSON文件中手动配置的封面，不再自动生成
+        const albumCoverPath = album.cover;
         
         // 保存专辑信息
         albums.push({
@@ -25,7 +25,7 @@ if (Array.isArray(localMusic)) {
             name: song.title,
             artist: song.artist,
             url: song.url,
-            cover: song.cover || albumCoverPath, // 如果歌曲没有封面，使用专辑封面
+            cover: song.cover || albumCoverPath, // 如果歌曲有单独封面则使用，否则使用专辑封面
             lrc: song.lrc,
             album: album.albumName // 添加专辑信息
           });
@@ -93,8 +93,8 @@ function createAlbumList() {
     albumButton.className = 'aplayer-icon aplayer-icon-album';
     albumButton.innerHTML = `
       <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/>
-        <path d="M12 12c0-1.66-1.34-3-3-3s-3 1.34-3 3 1.34 3 3 3 3-1.34 3-3zm-3-1c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/>
+        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        <circle cx="10" cy="17" r="2"/>
       </svg>
     `;
     albumButton.style.cssText = `
@@ -120,12 +120,282 @@ function createAlbumList() {
     albumButton.addEventListener('mouseleave', function() {
       this.style.color = '#666';
     });
+
+    // 创建二维码按钮
+    const qrButton = document.createElement('button');
+    qrButton.className = 'aplayer-icon aplayer-icon-qr';
+    qrButton.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM13 13h2v2h-2zM15 13h2v2h-2zM13 15h2v2h-2zM17 13h2v2h-2zM19 13h2v2h-2zM17 15h2v2h-2zM13 17h2v2h-2zM15 17h2v2h-2zM17 17h2v2h-2zM19 17h2v2h-2zM19 15h2v2h-2zM21 13h2v2h-2zM21 17h2v2h-2zM21 15h2v2h-2z"/>
+      </svg>
+    `;
+    qrButton.style.cssText = `
+      width: 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: #666;
+      margin: 0 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+      flex-shrink: 0;
+    `;
+    
+    // 添加二维码按钮悬停效果
+    qrButton.addEventListener('mouseenter', function() {
+      this.style.color = '#1e88e5';
+    });
+    
+    qrButton.addEventListener('mouseleave', function() {
+      this.style.color = '#666';
+    });
     
     // 将专辑按钮添加到播放器时间控制区域
     const aplayerTime = document.querySelector('.aplayer-time');
     if (aplayerTime) {
       aplayerTime.appendChild(albumButton);
+      aplayerTime.appendChild(qrButton); // 添加二维码按钮
     }
+
+    // 创建二维码弹窗
+    const qrModal = document.createElement('div');
+    qrModal.className = 'qr-modal';
+    qrModal.style.cssText = `
+      position: fixed;
+      z-index: 1003;
+      width: 100vw;
+      top: 0px;
+      left: 0;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 0px 0px 20px 20px;
+      padding: 20px 0px;
+      max-width: 100vw;
+      height: calc(100dvh - 240px);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+      border-top: none;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-origin: top center;
+      display: none;
+      opacity: 0;
+      transform: scaleY(0.8);
+    `;
+    
+    // 初始状态添加隐藏类（确保第一次点击有动画）
+    qrModal.classList.add('qr-modal-hide');
+    
+    // 添加遮罩层 - 完全模仿APlayer列表
+    const qrModalMask = document.createElement('div');
+    qrModalMask.className = 'qr-modal-mask';
+    qrModalMask.style.cssText = `
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: none;
+    `;
+    
+    // 初始状态添加隐藏类
+    qrModalMask.classList.add('qr-modal-mask-hide');
+
+    // 创建二维码容器
+    const qrContainer = document.createElement('div');
+    qrContainer.style.cssText = `
+      padding: 30px;
+      text-align: center;
+      max-width: 90vw;
+      max-height: 90vh;
+      margin: 50px auto;
+    `;
+
+    // 创建标题
+    const qrTitle = document.createElement('h3');
+    qrTitle.textContent = '上传歌曲至网易云盘';
+    qrTitle.style.cssText = `
+      margin: 0 0 20px 0;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 500;
+    `;
+
+    // 创建二维码图片
+    const qrImage = document.createElement('img');
+    qrImage.src = 'img/xcx.jpg'; // 使用真实的小程序二维码
+    qrImage.alt = '小程序二维码';
+    qrImage.style.cssText = `
+      width: 200px;
+      height: 200px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      object-fit: cover;
+    `;
+
+    // 创建说明文字
+    const qrDescription = document.createElement('p');
+    qrDescription.textContent = '扫码使用小程序上传歌曲';
+    qrDescription.style.cssText = `
+      margin: 20px 0 0 0;
+      color: #fff;
+      font-size: 16px;
+      line-height: 1.5;
+    `;
+
+    // 创建使用指南链接
+    const qrGuideLink = document.createElement('a');
+    qrGuideLink.textContent = '使用指南';
+    qrGuideLink.href = 'https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg';
+    qrGuideLink.target = '_blank';
+    qrGuideLink.style.cssText = `
+      display: inline-block;
+      margin-top: 15px;
+      padding: 8px 16px;
+      background: #3385ff;
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    `;
+
+    // 添加链接悬停效果
+    qrGuideLink.addEventListener('mouseenter', function() {
+      this.style.background = '#1a6cff';
+    });
+
+    qrGuideLink.addEventListener('mouseleave', function() {
+      this.style.background = '#3385ff';
+    });
+
+    // 创建关闭按钮
+    const qrClose = document.createElement('button');
+    qrClose.innerHTML = '×';
+    qrClose.style.cssText = `
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+      z-index: 1004;
+    `;
+
+    // 关闭按钮悬停效果
+    qrClose.addEventListener('mouseenter', function() {
+      this.style.background = 'rgba(0, 0, 0, 0.5)';
+    });
+
+    qrClose.addEventListener('mouseleave', function() {
+      this.style.background = 'rgba(0, 0, 0, 0.3)';
+    });
+
+    // 组装弹窗
+    qrModal.appendChild(qrContainer);
+    qrModal.appendChild(qrClose);
+    document.body.appendChild(qrModal);
+    document.body.appendChild(qrModalMask);
+
+    // 二维码弹窗显示/隐藏函数 - 使用类切换机制确保第一次点击也有动画
+    function showQrModal() {
+      // 先设置display，然后移除隐藏类来触发动画（模仿APlayer的机制）
+      qrModal.style.display = 'block';
+      qrModalMask.style.display = 'block';
+      
+      // 强制重绘，确保display生效
+      void qrModal.offsetHeight;
+      
+      // 移除隐藏类来触发动画
+      qrModal.classList.remove('qr-modal-hide');
+      qrModalMask.classList.remove('qr-modal-mask-hide');
+      
+      // 添加内容到容器
+      qrContainer.appendChild(qrTitle);
+      qrContainer.appendChild(qrImage);
+      qrContainer.appendChild(qrDescription);
+      qrContainer.appendChild(qrGuideLink);
+    }
+
+    function hideQrModal() {
+      // 添加隐藏类来触发动画
+      qrModal.classList.add('qr-modal-hide');
+      qrModalMask.classList.add('qr-modal-mask-hide');
+      
+      // 动画完成后隐藏元素
+      setTimeout(() => {
+        qrModal.style.display = 'none';
+        qrModalMask.style.display = 'none';
+        // 清空容器内容
+        qrContainer.innerHTML = '';
+      }, 400);
+    }
+
+    // 二维码按钮点击事件
+    qrButton.addEventListener('click', function(event) {
+      event.stopPropagation();
+      console.log('QR button clicked');
+      
+      // 隐藏歌曲列表和专辑列表
+      if (window.ap) {
+        window.ap.list.hide();
+      }
+      if (albumListContainer && albumListContainer.style.display === 'block') {
+        hideAlbumList();
+      }
+      
+      // 切换二维码弹窗显示状态
+      if (qrModal.style.display === 'none') {
+        console.log('QR modal shown');
+        showQrModal();
+      } else {
+        console.log('QR modal hidden');
+        hideQrModal();
+      }
+    });
+
+    // 关闭按钮点击事件
+    qrClose.addEventListener('click', function(event) {
+      event.stopPropagation();
+      hideQrModal();
+    });
+
+    // 点击弹窗背景关闭
+    qrModalMask.addEventListener('click', function(event) {
+      hideQrModal();
+    });
+
+    // 监听菜单按钮点击事件，关闭二维码弹窗
+    document.addEventListener('click', function(event) {
+      if (event.target.closest('.aplayer-icon-menu')) {
+        if (qrModal && qrModal.style.display === 'block') {
+          hideQrModal();
+        }
+      }
+    });
+
+    // ESC键关闭弹窗
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && qrModal.style.display === 'block') {
+        hideQrModal();
+      }
+    });
     
     // 创建专辑列表容器 - 完全复制APlayer列表结构
     const albumListContainer = document.createElement('div');
@@ -238,6 +508,11 @@ function createAlbumList() {
         window.ap.list.hide();
       }
       
+      // 隐藏二维码弹窗
+      if (qrModal && qrModal.style.display === 'block') {
+        hideQrModal();
+      }
+      
       // 切换专辑列表显示状态
       if (albumListContainer.style.display === 'none') {
         console.log('Album list shown');
@@ -283,6 +558,30 @@ function createAlbumList() {
       
       /* 遮罩层显示状态 */
       .album-list-mask:not(.album-list-mask-hide) {
+        opacity: 1 !important;
+      }
+      
+      /* 二维码弹窗隐藏状态 - 模仿APlayer的动画 */
+      .qr-modal-hide {
+        top: -100% !important;
+        opacity: 0 !important;
+        transform: scaleY(0.8) !important;
+      }
+      
+      /* 二维码遮罩层隐藏状态 */
+      .qr-modal-mask-hide {
+        opacity: 0 !important;
+      }
+      
+      /* 二维码弹窗显示状态 */
+      .qr-modal:not(.qr-modal-hide) {
+        top: 0px !important;
+        opacity: 1 !important;
+        transform: scaleY(1) !important;
+      }
+      
+      /* 二维码遮罩层显示状态 */
+      .qr-modal-mask:not(.qr-modal-mask-hide) {
         opacity: 1 !important;
       }
       

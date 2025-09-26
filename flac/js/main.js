@@ -1,4 +1,4 @@
-console.log("\n %c HeoMusic 开源静态音乐播放器 %c https://github.com/zhheo/HeoMusic \n", "color: #fadfa3; background: #030307; padding:5px 0;", "background: #fadfa3; padding:5px 0;")
+console.log("\n %c 民谣俱乐部 1701701.xyz 无损专辑 音乐播放器 %c https://1701701.xyz \n", "color: #fadfa3; background: #030307; padding:5px 0;", "background: #fadfa3; padding:5px 0;")
 var local = false;
 var isScrolling = false; // 添加全局变量 isScrolling，默认为 false
 var scrollTimer = null; // 添加定时器变量
@@ -452,8 +452,7 @@ setTimeout(function() {
       }
     });
     
-    // 修复专辑列表按钮第一次点击没有动画的问题
-    // 确保列表初始状态有正确的CSS类，这样第一次点击就有动画
+    
     if (ap.list && ap.list.element) {
       // 如果列表当前是隐藏的，确保有aplayer-list-hide类
       if (ap.list.element.classList.contains('aplayer-list-hide') === false && 
