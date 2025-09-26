@@ -126,7 +126,7 @@ function createAlbumList() {
     qrButton.className = 'aplayer-icon aplayer-icon-qr';
     qrButton.innerHTML = `
       <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM13 13h2v2h-2zM15 13h2v2h-2zM13 15h2v2h-2zM17 13h2v2h-2zM19 13h2v2h-2zM17 15h2v2h-2zM13 17h2v2h-2zM15 17h2v2h-2zM17 17h2v2h-2zM19 17h2v2h-2zM19 15h2v2h-2zM21 13h2v2h-2zM21 17h2v2h-2zM21 15h2v2h-2z"/>
+        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
       </svg>
     `;
     qrButton.style.cssText = `

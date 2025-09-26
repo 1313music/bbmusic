@@ -300,7 +300,7 @@ body #nav-music {
   align-items: center;
 }
 #heoMusic-page .aplayer-info .aplayer-controller .aplayer-bar-wrap {
-  margin: 0 170px 0 150px;
+  margin: 0 210px 0 170px;
 }
 #heoMusic-page .aplayer-info .aplayer-controller .aplayer-played {
   background: var(--heo-white) !important;
@@ -667,7 +667,7 @@ body .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon.apla
     bottom: 100px;
   }
   #heoMusic-page .aplayer-info .aplayer-controller .aplayer-bar-wrap {
-    margin: 0 32px;
+    margin: 0 32px 0 40px;
   }
   #heoMusic-page .aplayer-info .aplayer-time {
     bottom: -40px;
@@ -712,7 +712,7 @@ body .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon.apla
   }
   #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-loop {
     position: absolute;
-    right: 25px;
+    left: 60px;
     width: 24px;
     height: 24px;
     opacity: 0.4;
@@ -720,7 +720,7 @@ body .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon.apla
   #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-menu {
     display: inline;
     position: absolute;
-    right: 30px;
+    right: 25px;
     top: -100px;
     width: 28px;
     height: 28px;
@@ -732,7 +732,7 @@ body .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon.apla
   #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-album {
     display: inline;
     position: absolute;
-    right: 70px;
+    right: 65px;
     top: -100px;
     width: 28px;
     height: 28px;
@@ -744,8 +744,8 @@ body .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon.apla
   #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-qr {
     display: inline;
     position: absolute;
-    right: 110px;
-    top: -100px;
+    right: 65px;
+    
     width: 28px;
     height: 28px;
     opacity: 0.7;
