@@ -22,7 +22,8 @@
                 songsListDesktop: document.getElementById('songs-list-desktop'),
                 songsListMobile: document.getElementById('songs-list-mobile'),
                 albumsList: document.getElementById('albums-list'),
-                shareBtn: document.getElementById('share-btn'),
+                cloudBtn: document.getElementById('cloud-btn'),
+                
                 
                 mobileSongsCollapse: document.getElementById('mobile-songs-collapse'),
                 mobileSongsContainer: document.getElementById('mobile-songs-container'),
@@ -994,7 +995,7 @@
                 // 更新按钮样式和图标
                 switch (playMode) {
                     case 0: // 顺序播放
-                        elements.modeIcon.className = 'fa fa-list';
+                        elements.modeIcon.innerHTML = '<path d="M17 3.99998V2.0675C17 1.79136 17.2239 1.5675 17.5 1.5675C17.617 1.5675 17.7302 1.60851 17.8201 1.68339L21.9391 5.11587C22.1512 5.29266 22.1799 5.60794 22.0031 5.82008C21.9081 5.93407 21.7674 5.99998 21.619 5.99998H2V3.99998H17ZM2 18H22V20H2V18ZM2 11H22V13H2V11Z"/>';
                         elements.playModeBtn.style.backgroundColor = 'transparent';
                         elements.playModeBtn.style.color = 'var(--text-secondary)';
                         // 移除可能存在的小圆点
@@ -1004,12 +1005,12 @@
                         }
                         break;
                     case 1: // 随机播放
-                        elements.modeIcon.className = 'fa fa-random';
+                        elements.modeIcon.innerHTML = '<path d="M18 17.8832V16L23 19L18 22V19.9095C14.9224 19.4698 12.2513 17.4584 11.0029 14.5453L11 14.5386L10.9971 14.5453C9.57893 17.8544 6.32508 20 2.72483 20H2V18H2.72483C5.52503 18 8.05579 16.3312 9.15885 13.7574L9.91203 12L9.15885 10.2426C8.05579 7.66878 5.52503 6 2.72483 6H2V4H2.72483C6.32508 4 9.57893 6.14557 10.9971 9.45473L11 9.46141L11.0029 9.45473C12.2513 6.5416 14.9224 4.53022 18 4.09051V2L23 5L18 8V6.11684C15.7266 6.53763 13.7737 8.0667 12.8412 10.2426L12.088 12L12.8412 13.7574C13.7737 15.9333 15.7266 17.4624 18 17.8832Z"/>';
                         elements.playModeBtn.style.backgroundColor = 'transparent';
                         elements.playModeBtn.style.color = 'var(--text-secondary)';
                         break;
                     case 2: // 单曲循环
-                        elements.modeIcon.className = 'fa fa-repeat';
+                        elements.modeIcon.innerHTML = '<path d="M8 20V21.9325C8 22.2086 7.77614 22.4325 7.5 22.4325C7.38303 22.4325 7.26977 22.3915 7.17991 22.3166L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1046 20 16V8H22V16C22 18.2091 20.2091 20 18 20H8ZM16 2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 6C4.89543 6 4 6.89543 4 8V16H2V8C2 5.79086 3.79086 4 6 4H16V2.0675ZM11 8H13V16H11V10H9V9L11 8Z"/>';
                         elements.playModeBtn.style.backgroundColor = 'transparent';
                         elements.playModeBtn.style.color = 'var(--text-secondary)';
                         // 添加数字1表示单曲循环
@@ -1027,7 +1028,7 @@
                         if (dot) {
                             dot.remove();
                         }
-                        elements.modeIcon.className = 'fa fa-repeat';
+                        elements.modeIcon.innerHTML = '<path d="M8 20V21.9324C8 22.2086 7.77614 22.4324 7.5 22.4324C7.38303 22.4324 7.26977 22.3914 7.17991 22.3165L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1045 20 16V7.99997H22V16C22 18.2091 20.2091 20 18 20H8ZM16 3.99997V2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 5.99997C4.89543 5.99997 4 6.8954 4 7.99997V16H2V7.99997C2 5.79083 3.79086 3.99997 6 3.99997H16Z"/>';
                         elements.playModeBtn.style.backgroundColor = 'transparent';
                         elements.playModeBtn.style.color = 'var(--text-secondary)';
                         break;
@@ -1035,53 +1036,54 @@
             }
             
             // 分享功能
-            function shareMusic() {
-                // 获取当前播放歌曲的信息
-                const songTitle = elements.songTitleElement.textContent;
-                const songArtist = elements.songArtistElement.textContent;
+            // 显示云盘二维码
+            function showCloudQRCode() {
+                // 创建二维码弹窗
+                const qrModal = document.createElement('div');
+                qrModal.className = 'qr-modal';
+                qrModal.innerHTML = `
+                    <div class="qr-modal-content">
+                        <div class="qr-modal-header">
+                            <h3>上传歌曲至网易云盘</h3>
+                            <button class="qr-modal-close">&times;</button>
+                        </div>
+                        <div class="qr-modal-body">
+                            <img src="img/xcx.jpg" alt="云盘二维码" class="qr-code-image">
+                            <p>扫码使用小程序上传歌曲</p>
+                            <p><a href="https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg" target="_blank">使用指南</a></p>
+                        </div>
+                    </div>
+                `;
                 
-                // 构造分享文本
-                const shareText = `我正在听 ${songTitle} - ${songArtist}，来自民谣俱乐部音乐播放器`;
+                // 添加到页面
+                document.body.appendChild(qrModal);
                 
-                // 尝试使用Web Share API
-                if (navigator.share) {
-                    navigator.share({
-                        title: '民谣俱乐部音乐分享',
-                        text: shareText,
-                        url: window.location.href
-                    }).catch(error => {
-                        console.log('分享失败:', error);
-                        // 如果Web Share API失败，回退到复制链接
-                        copyToClipboard(shareText + ' ' + window.location.href);
-                    });
-                } else {
-                    // 如果浏览器不支持Web Share API，回退到复制链接
-                    copyToClipboard(shareText + ' ' + window.location.href);
-                }
-            }
-            
-            // 复制文本到剪贴板
-            function copyToClipboard(text) {
-                // 创建临时textarea元素
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
+                // 点击关闭按钮关闭弹窗
+                const closeBtn = qrModal.querySelector('.qr-modal-close');
+                closeBtn.addEventListener('click', function() {
+                    // 添加关闭动画
+                    const modalContent = qrModal.querySelector('.qr-modal-content');
+                    modalContent.style.animation = 'modalBounceOut 0.4s ease-in forwards';
+                    
+                    // 延迟移除弹窗，等待动画完成
+                    setTimeout(() => {
+                        document.body.removeChild(qrModal);
+                    }, 400);
+                });
                 
-                // 选择并复制文本
-                textarea.select();
-                try {
-                    const successful = document.execCommand('copy');
-                    if (successful) {
-                        alert('分享链接已复制到剪贴板:\n' + text);
-                    } else {
-                        alert('复制失败，请手动复制链接:\n' + text);
+                // 点击弹窗外部关闭弹窗
+                qrModal.addEventListener('click', function(e) {
+                    if (e.target === qrModal) {
+                        // 添加关闭动画
+                        const modalContent = qrModal.querySelector('.qr-modal-content');
+                        modalContent.style.animation = 'modalBounceOut 0.4s ease-in forwards';
+                        
+                        // 延迟移除弹窗，等待动画完成
+                        setTimeout(() => {
+                            document.body.removeChild(qrModal);
+                        }, 400);
                     }
-                } catch (err) {
-                    alert('复制失败，请手动复制链接:\n' + text);
-                }
-                
-                // 移除临时元素
-                document.body.removeChild(textarea);
+                });
             }
             
             // 事件监听器管理 - 存储所有监听器以便清理
@@ -1090,7 +1092,7 @@
                 prev: null,
                 next: null,
                 playMode: null,
-                share: null,
+                cloud: null,
                 timeupdate: null,
                 progressClick: null,
                 ended: null,
@@ -1113,8 +1115,8 @@
                 if (eventListeners.playMode) {
                     elements.playModeBtn.removeEventListener('click', eventListeners.playMode);
                 }
-                if (eventListeners.share) {
-                    elements.shareBtn.removeEventListener('click', eventListeners.share);
+                if (eventListeners.cloud) {
+                    elements.cloudBtn.removeEventListener('click', eventListeners.cloud);
                 }
                 if (eventListeners.timeupdate) {
                     elements.audioPlayer.removeEventListener('timeupdate', eventListeners.timeupdate);
@@ -1188,8 +1190,8 @@
                     }
                 });
                 
-                eventListeners.share = shareMusic;
-                elements.shareBtn.addEventListener('click', eventListeners.share);
+                eventListeners.cloud = showCloudQRCode;
+                elements.cloudBtn.addEventListener('click', eventListeners.cloud);
                 
                 // 音频事件
                 eventListeners.timeupdate = updateProgress;
@@ -1303,7 +1305,6 @@
             
             // 设置初始播放模式图标为顺序播放
             playMode = 0; // 确保初始为顺序播放模式
-            elements.modeIcon.className = 'fa fa-list';
             
             // 加载第一首歌曲
             if (filteredSongs.length > 0) {
