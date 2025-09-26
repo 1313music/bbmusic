@@ -741,14 +741,28 @@ body .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon.apla
     transition: all 0.3s ease;
   }
   
+  #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-qr {
+    display: inline;
+    position: absolute;
+    right: 110px;
+    top: -100px;
+    width: 28px;
+    height: 28px;
+    opacity: 0.7;
+    padding: 6px;
+    transition: all 0.3s ease;
+  }
+  
   #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-menu:hover,
-  #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-album:hover {
+  #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-album:hover,
+  #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-qr:hover {
     opacity: 1;
     transform: scale(1.1);
   }
   
   #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-menu path,
-  #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-album path {
+  #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-album path,
+  #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-qr path {
     fill: #fff;
   }
   #heoMusic-page .aplayer-volume-bar-wrap {
