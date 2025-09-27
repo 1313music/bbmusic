@@ -2,6 +2,13 @@
 var flattenedLocalMusic = [];
 var albums = []; // 存储专辑信息
 console.log('localEngine.js loaded');
+
+// 检查 localMusic 是否定义
+if (typeof localMusic === 'undefined') {
+  console.warn('localMusic is not defined, using empty array');
+  var localMusic = [];
+}
+
 console.log('localMusic:', localMusic);
 if (Array.isArray(localMusic)) {
   // 检查是否是新的按专辑分类的格式
@@ -135,7 +142,7 @@ function createAlbumList() {
       background: none;
       cursor: pointer;
       color: #666;
-      margin: 0 4px;
+    
       display: flex;
       align-items: center;
       justify-content: center;
@@ -158,6 +165,8 @@ function createAlbumList() {
       aplayerTime.appendChild(albumButton);
       aplayerTime.appendChild(qrButton); // 添加二维码按钮
     }
+
+
 
     // 创建二维码弹窗
     const qrModal = document.createElement('div');
