@@ -356,8 +356,8 @@ function createAlbumList() {
       event.stopPropagation();
       console.log('QR button clicked');
       
-      // 隐藏歌曲列表和专辑列表
-      if (window.ap) {
+      // 只在移动端隐藏歌曲列表，电脑端保持显示
+      if (window.innerWidth <= 768 && window.ap) {
         window.ap.list.hide();
       }
       if (albumListContainer && albumListContainer.style.display === 'block') {
