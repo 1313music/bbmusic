@@ -3,29 +3,36 @@
     "albumName": "勾三搭四2013李志跨年音乐会",
     "cover": "/flac/music/勾三搭四2013李志跨年音乐会/Cover.jpg",
     "songs": [
-      {
-        "title": "1990年的春天",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/1990年的春天.flac",
-        "lrc": ""
-      },
-      {
-        "title": "下雨",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/下雨.flac",
-        "lrc": ""
-      },
-      {
-        "title": "你的早晨&天空之城&暧昧",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/你的早晨&天空之城&暧昧.flac",
-        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/你的早晨&天空之城&暧昧.lrc"
-      },
+    
+    
       {
         "title": "和你在一起",
         "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/和你在一起.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/和你在一起.lrc"
+      },     {
+        "title": "意味",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/意味.flac",
+        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/意味.lrc"
+      },
+       {
+        "title": "离婚",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/离婚.flac",
+        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/离婚.lrc"
+      },
+       {
+        "title": "这个世界会好吗",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/这个世界会好吗.flac",
+        "lrc": ""
+      },
+        {
+        "title": "你的早晨&天空之城&暧昧",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/你的早晨&天空之城&暧昧.flac",
+        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/你的早晨&天空之城&暧昧.lrc"
       },
       {
         "title": "墙上的向日葵",
@@ -45,24 +52,8 @@
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/山阴路的夏天.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/山阴路的夏天.lrc"
       },
-      {
-        "title": "意味",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/意味.flac",
-        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/意味.lrc"
-      },
-      {
-        "title": "斜",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/斜.flac",
-        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/斜.lrc"
-      },
-      {
-        "title": "春末的南方城市",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/春末的南方城市.flac",
-        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/春末的南方城市.lrc"
-      },
+ 
+     
       {
         "title": "来了",
         "artist": "李志",
@@ -75,12 +66,7 @@
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/杭州&我们不能失去信仰.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/杭州&我们不能失去信仰.lrc"
       },
-      {
-        "title": "离婚",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/离婚.flac",
-        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/离婚.lrc"
-      },
+     
       {
         "title": "秋天的老狼",
         "artist": "李志",
@@ -105,12 +91,7 @@
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/被禁忌的游戏.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/被禁忌的游戏.lrc"
       },
-      {
-        "title": "这个世界会好吗",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/这个世界会好吗.flac",
-        "lrc": ""
-      },
+     
       {
         "title": "铅笔",
         "artist": "李志",
@@ -128,6 +109,30 @@
         "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/黑色信封.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/黑色信封.lrc"
+      },  
+      {
+        "title": "1990年的春天",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/1990年的春天.flac",
+        "lrc": ""
+      },
+      {
+        "title": "下雨",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/下雨.flac",
+        "lrc": ""
+      },
+       {
+        "title": "斜",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/斜.flac",
+        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/斜.lrc"
+      },
+      {
+        "title": "春末的南方城市",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/春末的南方城市.flac",
+        "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/春末的南方城市.lrc"
       }
     ]
   },
