@@ -98,12 +98,7 @@ function createAlbumList() {
     // 创建专辑列表按钮
     const albumButton = document.createElement('button');
     albumButton.className = 'aplayer-icon aplayer-icon-album';
-    albumButton.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-        <circle cx="10" cy="17" r="2"/>
-      </svg>
-    `;
+    albumButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" ><rect x="3" y="3" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/><rect x="9.5" y="3" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/><rect x="16" y="3" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/><rect x="3" y="9.5" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/><rect x="9.5" y="9.5" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/><rect x="16" y="9.5" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/><rect x="3" y="16" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/><rect x="9.5" y="16" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/><rect x="16" y="16" width="5" height="5" rx="0.5" fill="white" opacity="0.8"/></svg>';
     albumButton.style.cssText = `
       width: 24px;
      
@@ -111,7 +106,7 @@ function createAlbumList() {
       background: none;
       cursor: pointer;
       color: #666;
-      margin: 0 4px;
+     
       display: flex;
       align-items: center;
       justify-content: center;
@@ -512,8 +507,8 @@ function createAlbumList() {
       event.stopPropagation(); // 阻止事件冒泡
       console.log('Album button clicked');
       
-      // 隐藏歌曲列表 - 使用APlayer的list.hide()方法控制
-      if (window.ap) {
+      // 只在移动端隐藏歌曲列表，电脑端保持显示
+      if (window.innerWidth <= 768 && window.ap) {
         window.ap.list.hide();
       }
       
@@ -536,10 +531,11 @@ function createAlbumList() {
     
     // 点击其他地方关闭专辑列表
     document.addEventListener('click', function(event) {
-      if (!albumListContainer.contains(event.target)) {
-        if (albumListContainer.style.display === 'block') {
-          hideAlbumList();
-        }
+      if (!albumListContainer.contains(event.target) && 
+          !event.target.closest('.aplayer-icon-album') && 
+          albumListContainer.style.display === 'block') {
+        
+        hideAlbumList();
       }
     });
     
