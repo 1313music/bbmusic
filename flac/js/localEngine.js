@@ -163,7 +163,7 @@ function createAlbumList() {
 
 
 
-    // 创建二维码弹窗
+    // 二维码弹窗 - 完全模仿APlayer列表结构
     const qrModal = document.createElement('div');
     qrModal.className = 'qr-modal';
     qrModal.style.cssText = `
@@ -189,28 +189,6 @@ function createAlbumList() {
     
     // 初始状态添加隐藏类（确保第一次点击有动画）
     qrModal.classList.add('qr-modal-hide');
-    
-    // 添加遮罩层 - 完全模仿APlayer列表
-    const qrModalMask = document.createElement('div');
-    qrModalMask.className = 'qr-modal-mask';
-    qrModalMask.style.cssText = `
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      display: none;
-    `;
-    
-    // 初始状态添加隐藏类
-    qrModalMask.classList.add('qr-modal-mask-hide');
 
     // 创建二维码容器
     const qrContainer = document.createElement('div');
@@ -280,55 +258,53 @@ function createAlbumList() {
       this.style.background = '#3385ff';
     });
 
-    // 创建关闭按钮
-    const qrClose = document.createElement('button');
-    qrClose.innerHTML = '×';
-    qrClose.style.cssText = `
+    // 创建主页按钮
+    const qrHomeButton = document.createElement('a');
+    qrHomeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>';
+    qrHomeButton.href = 'https://1701701.xyz/';
+    qrHomeButton.target = '_blank';
+    qrHomeButton.style.cssText = `
       position: absolute;
       top: 20px;
       right: 20px;
-      background: rgba(0, 0, 0, 0.3);
       border: none;
       border-radius: 50%;
       width: 40px;
       height: 40px;
-      font-size: 24px;
       color: #fff;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s ease;
+      transition: all 0.2s ease;
       z-index: 1004;
+      text-decoration: none;
     `;
 
-    // 关闭按钮悬停效果
-    qrClose.addEventListener('mouseenter', function() {
-      this.style.background = 'rgba(0, 0, 0, 0.5)';
+    // 主页按钮悬停效果
+    qrHomeButton.addEventListener('mouseenter', function() {
+      this.style.transform = 'scale(1.1)';
     });
 
-    qrClose.addEventListener('mouseleave', function() {
-      this.style.background = 'rgba(0, 0, 0, 0.3)';
+    qrHomeButton.addEventListener('mouseleave', function() {
+      this.style.transform = 'scale(1)';
     });
 
     // 组装弹窗
     qrModal.appendChild(qrContainer);
-    qrModal.appendChild(qrClose);
+    qrModal.appendChild(qrHomeButton);
     document.body.appendChild(qrModal);
-    document.body.appendChild(qrModalMask);
 
     // 二维码弹窗显示/隐藏函数 - 使用类切换机制确保第一次点击也有动画
     function showQrModal() {
       // 先设置display，然后移除隐藏类来触发动画（模仿APlayer的机制）
       qrModal.style.display = 'block';
-      qrModalMask.style.display = 'block';
       
       // 强制重绘，确保display生效
       void qrModal.offsetHeight;
       
       // 移除隐藏类来触发动画
       qrModal.classList.remove('qr-modal-hide');
-      qrModalMask.classList.remove('qr-modal-mask-hide');
       
       // 添加内容到容器
       qrContainer.appendChild(qrTitle);
@@ -340,12 +316,10 @@ function createAlbumList() {
     function hideQrModal() {
       // 添加隐藏类来触发动画
       qrModal.classList.add('qr-modal-hide');
-      qrModalMask.classList.add('qr-modal-mask-hide');
       
       // 动画完成后隐藏元素
       setTimeout(() => {
         qrModal.style.display = 'none';
-        qrModalMask.style.display = 'none';
         // 清空容器内容
         qrContainer.innerHTML = '';
       }, 400);
@@ -374,15 +348,12 @@ function createAlbumList() {
       }
     });
 
-    // 关闭按钮点击事件
-    qrClose.addEventListener('click', function(event) {
-      event.stopPropagation();
-      hideQrModal();
-    });
-
     // 点击弹窗背景关闭
-    qrModalMask.addEventListener('click', function(event) {
-      hideQrModal();
+    qrModal.addEventListener('click', function(event) {
+      // 如果点击的是弹窗本身而不是内容区域，则关闭弹窗
+      if (event.target === qrModal) {
+        hideQrModal();
+      }
     });
 
     // 监听菜单按钮点击事件，关闭二维码弹窗
@@ -410,10 +381,8 @@ function createAlbumList() {
       width: 100vw;
       top: 0px;
       left: 0;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border-radius: 0px 0px 20px 20px;
-      padding: 20px 0px;
+      
       max-width: 100vw;
       height: calc(100dvh - 240px);
       box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
@@ -422,31 +391,12 @@ function createAlbumList() {
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       transform-origin: top center;
       display: none;
+      overflow: hidden;
+      padding: 20px 0px;
     `;
     
     // 初始状态添加隐藏类（确保第一次点击有动画）
     albumListContainer.classList.add('album-list-hide');
-    
-    // 添加遮罩层 - 完全模仿APlayer列表
-    const albumListMask = document.createElement('div');
-    albumListMask.style.cssText = `
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      display: none;
-    `;
-    
-    // 初始状态添加隐藏类
-    albumListMask.classList.add('album-list-mask-hide');
     
     // 创建专辑列表内容容器 - 完全模仿APlayer列表
     const albumListContent = document.createElement('div');
@@ -455,7 +405,7 @@ function createAlbumList() {
       
       height: 100%;
       overflow-y: auto;
-      padding: 0 20px;
+      padding: 20px;
     `;
     
     
@@ -480,25 +430,21 @@ function createAlbumList() {
     function showAlbumList() {
       // 先设置display，然后移除隐藏类来触发动画（模仿APlayer的机制）
       albumListContainer.style.display = 'block';
-      albumListMask.style.display = 'block';
       
       // 强制重绘，确保display生效
       void albumListContainer.offsetHeight;
       
       // 移除隐藏类来触发动画
       albumListContainer.classList.remove('album-list-hide');
-      albumListMask.classList.remove('album-list-mask-hide');
     }
     
     function hideAlbumList() {
       // 添加隐藏类来触发动画
       albumListContainer.classList.add('album-list-hide');
-      albumListMask.classList.add('album-list-mask-hide');
       
       // 动画完成后隐藏元素
       setTimeout(() => {
         albumListContainer.style.display = 'none';
-        albumListMask.style.display = 'none';
       }, 400);
     }
     
@@ -549,11 +495,6 @@ function createAlbumList() {
         transform: scaleY(0.8) !important;
       }
       
-      /* 遮罩层隐藏状态 */
-      .album-list-mask-hide {
-        opacity: 0 !important;
-      }
-      
       /* 专辑列表显示状态 */
       .album-list-container:not(.album-list-hide) {
         top: 0px !important;
@@ -561,9 +502,25 @@ function createAlbumList() {
         transform: scaleY(1) !important;
       }
       
-      /* 遮罩层显示状态 */
-      .album-list-mask:not(.album-list-mask-hide) {
-        opacity: 1 !important;
+      /* 添加遮罩层 - 模仿二维码弹窗 */
+      .album-list-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 0px 0px 20px 20px;
+      }
+      
+      .album-list-container:not(.album-list-hide)::before {
+        opacity: 1;
       }
       
       /* 二维码弹窗隐藏状态 - 模仿APlayer的动画 */
@@ -573,11 +530,6 @@ function createAlbumList() {
         transform: scaleY(0.8) !important;
       }
       
-      /* 二维码遮罩层隐藏状态 */
-      .qr-modal-mask-hide {
-        opacity: 0 !important;
-      }
-      
       /* 二维码弹窗显示状态 */
       .qr-modal:not(.qr-modal-hide) {
         top: 0px !important;
@@ -585,9 +537,25 @@ function createAlbumList() {
         transform: scaleY(1) !important;
       }
       
-      /* 二维码遮罩层显示状态 */
-      .qr-modal-mask:not(.qr-modal-mask-hide) {
-        opacity: 1 !important;
+      /* 添加遮罩层 - 模仿APlayer列表 */
+      .qr-modal::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 0px 0px 20px 20px;
+      }
+      
+      .qr-modal:not(.qr-modal-hide)::before {
+        opacity: 1;
       }
       
       .album-list-container::-webkit-scrollbar {
@@ -603,46 +571,51 @@ function createAlbumList() {
       .album-item {
         cursor: pointer;
         transition: all 0.3s ease;
-        border-radius: 12px;
-        padding:2px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 0;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         text-align: center;
         box-sizing: border-box;
         width: 100%;
+        position: relative;
+        overflow: hidden;
       }
       .album-item:hover {
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 255, 255, 0.25);
       }
       .album-cover {
         width: 100%;
         aspect-ratio: 1;
-        border-radius: 8px;
+        border-radius: 12px;
         overflow: hidden;
-        margin-bottom: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        position: relative;
       }
       .album-cover img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.3s ease;
+        transition: transform 0.4s ease;
       }
       .album-item:hover .album-cover img {
-        transform: scale(1.05);
+        transform: scale(1.08);
       }
       .album-title {
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.8);
-        font-weight: 500;
-        line-height: 1.3;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 600;
+        line-height: 1.4;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
-        height: 31px;
+        height: 36px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       }
       @media (max-width: 768px) {
         .album-grid {
@@ -659,9 +632,6 @@ function createAlbumList() {
     `;
     document.head.appendChild(style);
     
-    // 将遮罩层添加到DOM
-    document.body.appendChild(albumListMask);
-    
     // 创建专辑项 - 优化专辑项样式
     albums.forEach((album, index) => {
       const albumItem = document.createElement('div');
@@ -672,28 +642,30 @@ function createAlbumList() {
         align-items: center;
         cursor: pointer;
         transition: all 0.3s ease;
-        padding: 8px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 0;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         text-align: center;
         box-sizing: border-box;
         width: 100%;
+        position: relative;
+        overflow: hidden;
       `;
       
       const albumCover = document.createElement('div');
       albumCover.className = 'album-cover';
-      albumCover.innerHTML = `<img src="${encodeNonAscii(album.cover)}" alt="${album.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
+      albumCover.innerHTML = `<img src="${encodeNonAscii(album.cover)}" alt="${album.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">`;
       
       const albumTitle = document.createElement('div');
       albumTitle.className = 'album-title';
       albumTitle.textContent = album.name;
       albumTitle.style.cssText = `
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.8);
-        font-weight: 500;
-        line-height: 1.3;
-        margin-top: 8px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 600;
+        line-height: 1.4;
+        margin-top: 12px;
         text-align: center;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -701,7 +673,8 @@ function createAlbumList() {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         max-width: 100%;
-        height: 31px;
+        height: 36px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       `;
       
       albumItem.appendChild(albumCover);
