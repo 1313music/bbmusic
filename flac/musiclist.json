@@ -2,7 +2,7 @@
 
 
 {
-    "albumName": "看见2015李志巡回演唱会",
+    "albumName": "看见2015",
     "cover": "/flac/music/看见2015李志巡回演唱会/Cover.jpg",
     "songs": [
    
@@ -69,7 +69,7 @@
     ]
   },
  {
-    "albumName": "i/O 2014-2015李志跨年音乐会",
+    "albumName": "i/O",
     "cover": "/flac/music/i:O2014-2015李志跨年音乐会/Cover.jpg",
     "songs": [
       {
@@ -143,7 +143,7 @@
     
 
   {
-    "albumName": "勾三搭四2013李志跨年音乐会",
+    "albumName": "勾三搭四",
     "cover": "/flac/music/勾三搭四2013李志跨年音乐会/Cover.jpg",
     "songs": [
     
@@ -281,7 +281,7 @@
   },
  
   {
-    "albumName": "动静2015-2016李志跨年音乐会",
+    "albumName": "动静",
     "cover": "/flac/music/动静2015-2016李志跨年音乐会/Cover.jpg",
     "songs": [
       {
@@ -348,7 +348,7 @@
   },
 
   {
-    "albumName": "李志2016北京不插电现场",
+    "albumName": "北京不插电",
     "cover": "/flac/music/李志2016北京不插电现场/Cover.jpg",
     "songs": [
       {
@@ -682,7 +682,7 @@
     ]
   },
     {
-    "albumName": "爵士与不插电新编12首",
+    "albumName": "爵士与不插电",
     "cover": "/flac/music/爵士与不插电新编12首/Cover.jpg",
     "songs": [
       {
@@ -820,7 +820,7 @@
     ]
   },
   {
-    "albumName": "IMAGINE2011李志跨年音乐会",
+    "albumName": "IMAGINE",
     "cover": "/flac/music/IMAGINE2011李志跨年音乐会/Cover.jpg",
     "songs": [
       {
