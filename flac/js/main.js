@@ -258,6 +258,16 @@ var heo = {
         songName = audio.name;
         songArtist = audio.artist;
       }
+      
+      // 检查是否需要更新元数据，避免不必要的更新
+      const currentMetadata = navigator.mediaSession.metadata;
+      if (currentMetadata && 
+          currentMetadata.title === songName && 
+          currentMetadata.artist === songArtist && 
+          currentMetadata.album === audio.album) {
+        return; // 元数据没有变化，不需要更新
+      }
+      
       navigator.mediaSession.metadata = new MediaMetadata({
         title: songName,
         artist: songArtist,
@@ -329,9 +339,21 @@ var heo = {
         }
       });
 
-      // 监听时间更新事件
+      // 优化歌词更新：使用节流函数减少更新频率
+      let lastLrcUpdate = 0;
+      let lastLrcContent = '';
+      
       aplayer.on('timeupdate', () => {
-        heo.setMediaMetadata(aplayer, true);
+        const now = Date.now();
+        const currentLrcElement = document.getElementById("heoMusic-page").querySelector(".aplayer-lrc-current");
+        const currentLrcContent = currentLrcElement ? currentLrcElement.textContent : '';
+        
+        // 只有当歌词变化且距离上次更新超过1秒时才更新元数据
+        if (currentLrcContent !== lastLrcContent && now - lastLrcUpdate > 1000) {
+          lastLrcUpdate = now;
+          lastLrcContent = currentLrcContent;
+          heo.setMediaMetadata(aplayer, true);
+        }
       });
     }
   },
