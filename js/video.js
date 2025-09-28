@@ -695,6 +695,12 @@
                 const walineContainer = document.getElementById('waline');
                 
                 if (commentsToggleBtn && walineContainer) {
+                    // 默认展开留言板
+                    walineContainer.classList.add('show');
+                    const textNode = commentsToggleBtn.childNodes[2]; // 获取文本节点
+                    textNode.textContent = ' 收起留言板 ';
+                    commentsToggleBtn.classList.add('active');
+                    
                     commentsToggleBtn.addEventListener('click', function() {
                         const isHidden = !walineContainer.classList.contains('show');
                         const textNode = commentsToggleBtn.childNodes[2]; // 获取文本节点

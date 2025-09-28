@@ -1239,6 +1239,12 @@
             
             // 初始化留言板展开收起功能
             if (elements.commentsToggleBtn && elements.walineContainer) {
+                // 默认展开留言板
+                elements.walineContainer.classList.add('show');
+                const textNode = elements.commentsToggleBtn.childNodes[2]; // 获取文本节点
+                textNode.textContent = ' 收起留言板 ';
+                elements.commentsToggleBtn.classList.add('active');
+                
                 elements.commentsToggleBtn.addEventListener('click', function() {
                     const isHidden = !elements.walineContainer.classList.contains('show');
                     const textNode = elements.commentsToggleBtn.childNodes[2]; // 获取文本节点
