@@ -377,6 +377,116 @@ var heo = {
   init: function() {
     this.getCustomPlayList();
     this.initScrollEvents();
+  },
+
+  // 添加播放模式切换功能
+  initPlayMode: function() {
+    // 等待APlayer初始化完成后再处理按钮
+    const checkAPlayer = setInterval(() => {
+      if (typeof ap !== 'undefined' && ap.container) {
+        clearInterval(checkAPlayer);
+        
+        // 移除原来的播放模式按钮
+        const orderBtn = ap.container.querySelector('.aplayer-icon-order');
+        const loopBtn = ap.container.querySelector('.aplayer-icon-loop');
+        
+        if (orderBtn) {
+          orderBtn.style.display = 'none';
+          orderBtn.remove();
+        }
+        
+        if (loopBtn) {
+          loopBtn.style.display = 'none';
+          loopBtn.remove();
+        }
+        
+        // 检查是否已经创建了我们的新按钮
+        const existingModeBtn = ap.container.querySelector('.aplayer-icon-mode');
+        if (!existingModeBtn) {
+          // 创建播放模式按钮
+          const playModeBtn = document.createElement('button');
+          playModeBtn.className = 'aplayer-icon aplayer-icon-mode';
+          playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 20V21.9324C8 22.2086 7.77614 22.4324 7.5 22.4324C7.38303 22.4324 7.26977 22.3914 7.17991 22.3165L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1045 20 16V7.99997H22V16C22 18.2091 20.2091 20 18 20H8ZM16 3.99997V2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 5.99997C4.89543 5.99997 4 6.8954 4 7.99997V16H2V7.99997C2 5.79083 3.79086 3.99997 6 3.99997H16Z"/></svg>';
+          playModeBtn.title = '列表循环';
+          playModeBtn.type = 'button'; // 明确指定按钮类型
+          playModeBtn.setAttribute('aria-label', '播放模式切换'); // 添加可访问性标签
+          
+          // 将按钮添加到播放器控制栏
+          const aplayerTime = ap.container.querySelector('.aplayer-time');
+          if (aplayerTime) {
+            aplayerTime.appendChild(playModeBtn);
+          }
+          
+          // 播放模式状态
+          let playMode = 'loop'; // loop: 列表循环, list: 列表播放, random: 随机播放, single: 单曲循环
+          
+          // 设置初始播放模式为列表循环
+          ap.options.order = 'list';
+          ap.options.loop = true;
+          
+          // 保存原始音频列表顺序
+          const originalAudios = [...ap.list.audios];
+          
+          // 点击事件
+          playModeBtn.addEventListener('click', function() {
+            // 切换播放模式
+            switch(playMode) {
+              case 'loop':
+                playMode = 'list';
+                // 恢复原始顺序
+                ap.list.audios = [...originalAudios];
+                playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M17 3.99998V2.0675C17 1.79136 17.2239 1.5675 17.5 1.5675C17.617 1.5675 17.7302 1.60851 17.8201 1.68339L21.9391 5.11587C22.1512 5.29266 22.1799 5.60794 22.0031 5.82008C21.9081 5.93407 21.7674 5.99998 21.619 5.99998H2V3.99998H17ZM2 18H22V20H2V18ZM2 11H22V13H2V11Z"/></svg>';
+                playModeBtn.title = '列表播放';
+                break;
+              case 'list':
+                playMode = 'random';
+                // 随机排序
+                ap.list.audios = [...originalAudios];
+                ap.list.audios.sort(() => Math.random() - 0.5);
+                playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M18 17.8832V16L23 19L18 22V19.9095C14.9224 19.4698 12.2513 17.4584 11.0029 14.5453L11 14.5386L10.9971 14.5453C9.57893 17.8544 6.32508 20 2.72483 20H2V18H2.72483C5.52503 18 8.05579 16.3312 9.15885 13.7574L9.91203 12L9.15885 10.2426C8.05579 7.66878 5.52503 6 2.72483 6H2V4H2.72483C6.32508 4 9.57893 6.14557 10.9971 9.45473L11 9.46141L11.0029 9.45473C12.2513 6.5416 14.9224 4.53022 18 4.09051V2L23 5L18 8V6.11684C15.7266 6.53763 13.7737 8.0667 12.8412 10.2426L12.088 12L12.8412 13.7574C13.7737 15.9333 15.7266 17.4624 18 17.8832Z"/></svg>';
+                playModeBtn.title = '随机播放';
+                break;
+              case 'random':
+                playMode = 'single';
+                // 恢复原始顺序
+                ap.list.audios = [...originalAudios];
+                playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 20V21.9325C8 22.2086 7.77614 22.4325 7.5 22.4325C7.38303 22.4325 7.26977 22.3915 7.17991 22.3166L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1046 20 16V8H22V16C22 18.2091 20.2091 20 18 20H8ZM16 2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 6C4.89543 6 4 6.89543 4 8V16H2V8C2 5.79086 3.79086 4 6 4H16V2.0675ZM11 8H13V16H11V10H9V9L11 8Z"/></svg>';
+                playModeBtn.title = '单曲循环';
+                break;
+              case 'single':
+                playMode = 'loop';
+                // 恢复原始顺序
+                ap.list.audios = [...originalAudios];
+                playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 20V21.9324C8 22.2086 7.77614 22.4324 7.5 22.4324C7.38303 22.4324 7.26977 22.3914 7.17991 22.3165L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1045 20 16V7.99997H22V16C22 18.2091 20.2091 20 18 20H8ZM16 3.99997V2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 5.99997C4.89543 5.99997 4 6.8954 4 7.99997V16H2V7.99997C2 5.79083 3.79086 3.99997 6 3.99997H16Z"/></svg>';
+                playModeBtn.title = '列表循环';
+                break;
+            }
+            
+            // 应用播放模式
+            ap.options.order = playMode === 'random' ? 'random' : 'list';
+            ap.options.loop = playMode === 'single' || playMode === 'loop';
+            
+            // 更新列表显示
+            ap.list.update();
+          });
+          
+          // 监听播放器事件，在歌曲结束时根据播放模式处理
+          ap.on('ended', function() {
+            if (playMode === 'single') {
+              // 单曲循环，重新播放当前歌曲
+              setTimeout(() => {
+                ap.play();
+              }, 500);
+            }
+          });
+        }
+      }
+    }, 100);
+    
+    // 设置超时，避免无限等待
+    setTimeout(() => {
+      clearInterval(checkAPlayer);
+    }, 10000); // 10秒超时
   }
 }
 
@@ -441,6 +551,9 @@ window.addEventListener('resize', function() {
 
 // 调用初始化
 heo.init();
+
+// 初始化播放模式按钮
+heo.initPlayMode();
 
 // 修复iPhone端切换歌曲不隐藏列表的问题
 setTimeout(function() {

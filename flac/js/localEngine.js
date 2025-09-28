@@ -77,7 +77,9 @@ window.ap = new APlayer({
   container: document.getElementById('heoMusic-page'),
   lrcType: 3,
   audio: encodedLocalMusic,
-  listFolded: window.innerWidth < 768 ? true : false
+  listFolded: window.innerWidth < 768 ? true : false,
+  order: false, // 禁用默认的播放顺序按钮
+  loop: false // 禁用默认的循环按钮
 });
 console.log('APlayer initialized:', window.ap);
 
@@ -350,8 +352,18 @@ function createAlbumList() {
 
     // 点击弹窗背景关闭
     qrModal.addEventListener('click', function(event) {
-      // 如果点击的是弹窗本身而不是内容区域，则关闭弹窗
+      // 如果点击的是弹窗背景而不是内容区域，则关闭弹窗
       if (event.target === qrModal) {
+        hideQrModal();
+      }
+    });
+    
+    // 点击页面其他地方关闭二维码弹窗
+    document.addEventListener('click', function(event) {
+      if (!qrModal.contains(event.target) && 
+          !event.target.closest('.aplayer-icon-qr') && 
+          qrModal.style.display === 'block') {
+        
         hideQrModal();
       }
     });
@@ -475,7 +487,13 @@ function createAlbumList() {
     
     
     
-    // 点击其他地方关闭专辑列表
+    // 点击专辑列表背景或内容区域关闭弹窗
+    albumListContainer.addEventListener('click', function(event) {
+      // 点击弹窗任何区域都可以关闭弹窗
+      hideAlbumList();
+    });
+    
+    // 点击页面其他地方关闭专辑列表
     document.addEventListener('click', function(event) {
       if (!albumListContainer.contains(event.target) && 
           !event.target.closest('.aplayer-icon-album') && 
@@ -728,3 +746,25 @@ function createAlbumList() {
 
 // 在APlayer初始化完成后创建专辑列表
 createAlbumList();
+
+// 添加点击页面其他区域关闭歌曲列表的功能
+document.addEventListener('click', function(event) {
+  // 确保APlayer已初始化
+  if (typeof ap !== 'undefined' && ap.list) {
+    const listElement = ap.template.list;
+    
+    // 检查歌曲列表是否显示
+    if (listElement && !listElement.classList.contains('aplayer-list-hide')) {
+      // 检查点击目标是否在歌曲列表内
+      const isClickInsideList = listElement.contains(event.target);
+      
+      // 检查点击目标是否是菜单按钮
+      const isMenuButton = event.target.closest('.aplayer-icon-menu');
+      
+      // 如果点击不在歌曲列表内且不是菜单按钮，则关闭歌曲列表
+      if (!isClickInsideList && !isMenuButton) {
+        ap.list.hide();
+      }
+    }
+  }
+});
