@@ -83,6 +83,18 @@ window.ap = new APlayer({
 });
 console.log('APlayer initialized:', window.ap);
 
+// 触发自定义事件，通知APlayer已初始化完成
+if (typeof window.CustomEvent === 'function') {
+  const aplayerReadyEvent = new CustomEvent('aplayerReady', {
+    detail: { aplayer: window.ap }
+  });
+  window.dispatchEvent(aplayerReadyEvent);
+  console.log('APlayer就绪事件已触发');
+} else {
+  // 如果浏览器不支持CustomEvent，使用传统方式
+  console.log('APlayer已初始化完成');
+}
+
 heo.setupMediaSessionHandlers(window.ap);
 
 // 创建专辑列表按钮和容器

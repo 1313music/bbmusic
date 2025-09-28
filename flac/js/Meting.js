@@ -133,6 +133,18 @@ class MetingJSElement extends HTMLElement {
     this.aplayer = new APlayer(options)
     window.ap = this.aplayer;
 
+    // 触发自定义事件，通知APlayer已初始化完成
+    if (typeof window.CustomEvent === 'function') {
+      const aplayerReadyEvent = new CustomEvent('aplayerReady', {
+        detail: { aplayer: this.aplayer }
+      });
+      window.dispatchEvent(aplayerReadyEvent);
+      console.log('APlayer就绪事件已触发 (来自Meting.js)');
+    } else {
+      // 如果浏览器不支持CustomEvent，使用传统方式
+      console.log('APlayer已初始化完成 (来自Meting.js)');
+    }
+
     heo.setupMediaSessionHandlers(this.aplayer);
   }
 

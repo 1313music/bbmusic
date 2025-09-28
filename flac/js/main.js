@@ -553,9 +553,49 @@ window.addEventListener('resize', function() {
 heo.init();
 
 // 等待APlayer完全初始化后再初始化播放模式按钮
-setTimeout(function() {
-  heo.initPlayMode();
-}, 500); // 延迟500ms确保APlayer已初始化
+function waitForAPlayerAndInitPlayMode() {
+  // 最大重试次数
+  const maxRetries = 50; // 5秒 (50 * 100ms)
+  let retryCount = 0;
+  
+  // 检查APlayer是否已初始化
+  function checkAPlayer() {
+    if (typeof ap !== 'undefined' && ap.container && ap.container.querySelector('.aplayer-time')) {
+      // APlayer已初始化，初始化播放模式按钮
+      heo.initPlayMode();
+      console.log('播放模式按钮初始化成功');
+    } else if (retryCount < maxRetries) {
+      // APlayer未初始化，继续等待
+      retryCount++;
+      setTimeout(checkAPlayer, 100);
+    } else {
+      // 超时，尝试强制初始化
+      console.warn('APlayer初始化超时，尝试强制初始化播放模式按钮');
+      if (typeof ap !== 'undefined' && ap.container) {
+        heo.initPlayMode();
+      } else {
+        console.error('无法初始化播放模式按钮：APlayer实例不存在');
+      }
+    }
+  }
+  
+  // 开始检查
+  checkAPlayer();
+}
+
+// 监听APlayer的初始化事件
+document.addEventListener('DOMContentLoaded', function() {
+  // 尝试监听APlayer的初始化完成事件
+  if (typeof window.addEventListener === 'function') {
+    window.addEventListener('aplayerReady', function() {
+      console.log('检测到APlayer初始化完成事件');
+      waitForAPlayerAndInitPlayMode();
+    });
+  }
+  
+  // 延迟一点时间开始检查，确保DOM已加载
+  setTimeout(waitForAPlayerAndInitPlayMode, 300);
+});
 
 // 修复iPhone端切换歌曲不隐藏列表的问题
 setTimeout(function() {
