@@ -552,8 +552,10 @@ window.addEventListener('resize', function() {
 // 调用初始化
 heo.init();
 
-// 初始化播放模式按钮
-heo.initPlayMode();
+// 等待APlayer完全初始化后再初始化播放模式按钮
+setTimeout(function() {
+  heo.initPlayMode();
+}, 500); // 延迟500ms确保APlayer已初始化
 
 // 修复iPhone端切换歌曲不隐藏列表的问题
 setTimeout(function() {
