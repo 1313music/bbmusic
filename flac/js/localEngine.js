@@ -429,7 +429,7 @@ function createAlbumList() {
       
       height: 100%;
       overflow-y: auto;
-      padding: 20px;
+      padding:0 20px;
     `;
     
     
@@ -603,8 +603,6 @@ function createAlbumList() {
         transition: all 0.3s ease;
         border-radius: 16px;
         padding: 0;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.12);
         text-align: center;
         box-sizing: border-box;
         width: 100%;
@@ -612,10 +610,10 @@ function createAlbumList() {
         overflow: hidden;
       }
       .album-item:hover {
-        background: rgba(255, 255, 255, 0.15);
+        
         transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        border-color: rgba(255, 255, 255, 0.25);
+       
+        
       }
       .album-cover {
         width: 100%;
@@ -674,8 +672,7 @@ function createAlbumList() {
         transition: all 0.3s ease;
         padding: 0;
         border-radius: 16px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+       
         text-align: center;
         box-sizing: border-box;
         width: 100%;
@@ -762,21 +759,5 @@ createAlbumList();
 // 添加点击页面其他区域关闭歌曲列表的功能
 document.addEventListener('click', function(event) {
   // 确保APlayer已初始化
-  if (typeof ap !== 'undefined' && ap.list) {
-    const listElement = ap.template.list;
-    
-    // 检查歌曲列表是否显示
-    if (listElement && !listElement.classList.contains('aplayer-list-hide')) {
-      // 检查点击目标是否在歌曲列表内
-      const isClickInsideList = listElement.contains(event.target);
-      
-      // 检查点击目标是否是菜单按钮
-      const isMenuButton = event.target.closest('.aplayer-icon-menu');
-      
-      // 如果点击不在歌曲列表内且不是菜单按钮，则关闭歌曲列表
-      if (!isClickInsideList && !isMenuButton) {
-        ap.list.hide();
-      }
-    }
-  }
+  // 全局点击事件监听器已移除
 });
