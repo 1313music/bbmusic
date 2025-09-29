@@ -440,53 +440,95 @@ var heo = {
           }
           
           // 播放模式状态
-          let playMode = 'loop'; // loop: 列表循环, list: 列表播放, random: 随机播放, single: 单曲循环
-          
-          // 设置初始播放模式为列表循环
-          ap.options.order = 'list';
-          ap.options.loop = true;
+          let playMode = 'loop'; // loop: 列表循环, list: 顺序播放, random: 随机播放, single: 单曲循环
           
           // 保存原始音频列表顺序
-          const originalAudios = [...ap.list.audios];
+          let originalAudios = [];
+          
+          // 初始化原始音频列表（确保ap.list.audios已初始化）
+          if (ap && ap.list && ap.list.audios && ap.list.audios.length > 0) {
+            originalAudios = [...ap.list.audios];
+          }
+          
+          // 初始化播放器选项
+          function initPlayerOptions() {
+            switch(playMode) {
+              case 'loop':
+                ap.options.order = 'list';
+                ap.options.loop = true;
+                break;
+              case 'list':
+                ap.options.order = 'list';
+                ap.options.loop = false;
+                break;
+              case 'random':
+                ap.options.order = 'random';
+                ap.options.loop = true;
+                break;
+              case 'single':
+                ap.options.order = 'list';
+                ap.options.loop = 'single';
+                break;
+            }
+          }
+          
+          // 设置初始播放模式
+          initPlayerOptions();
           
           // 点击事件
           playModeBtn.addEventListener('click', function() {
+            // 确保原始音频列表已初始化
+            if (originalAudios.length === 0 && ap && ap.list && ap.list.audios) {
+              originalAudios = [...ap.list.audios];
+            }
+            
             // 切换播放模式
             switch(playMode) {
               case 'loop':
                 playMode = 'list';
                 // 恢复原始顺序
-                ap.list.audios = [...originalAudios];
+                if (originalAudios.length > 0) {
+                  ap.list.audios = [...originalAudios];
+                }
                 playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M17 3.99998V2.0675C17 1.79136 17.2239 1.5675 17.5 1.5675C17.617 1.5675 17.7302 1.60851 17.8201 1.68339L21.9391 5.11587C22.1512 5.29266 22.1799 5.60794 22.0031 5.82008C21.9081 5.93407 21.7674 5.99998 21.619 5.99998H2V3.99998H17ZM2 18H22V20H2V18ZM2 11H22V13H2V11Z"/></svg>';
-                playModeBtn.title = '列表播放';
+                playModeBtn.title = '顺序播放';
                 break;
               case 'list':
                 playMode = 'random';
-                // 随机排序
-                ap.list.audios = [...originalAudios];
-                ap.list.audios.sort(() => Math.random() - 0.5);
+                // 更好的随机排序算法（Fisher-Yates shuffle）
+                if (originalAudios.length > 0) {
+                  ap.list.audios = [...originalAudios];
+                  // Fisher-Yates shuffle算法
+                  for (let i = ap.list.audios.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [ap.list.audios[i], ap.list.audios[j]] = [ap.list.audios[j], ap.list.audios[i]];
+                  }
+                }
                 playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M18 17.8832V16L23 19L18 22V19.9095C14.9224 19.4698 12.2513 17.4584 11.0029 14.5453L11 14.5386L10.9971 14.5453C9.57893 17.8544 6.32508 20 2.72483 20H2V18H2.72483C5.52503 18 8.05579 16.3312 9.15885 13.7574L9.91203 12L9.15885 10.2426C8.05579 7.66878 5.52503 6 2.72483 6H2V4H2.72483C6.32508 4 9.57893 6.14557 10.9971 9.45473L11 9.46141L11.0029 9.45473C12.2513 6.5416 14.9224 4.53022 18 4.09051V2L23 5L18 8V6.11684C15.7266 6.53763 13.7737 8.0667 12.8412 10.2426L12.088 12L12.8412 13.7574C13.7737 15.9333 15.7266 17.4624 18 17.8832Z"/></svg>';
                 playModeBtn.title = '随机播放';
                 break;
               case 'random':
                 playMode = 'single';
                 // 恢复原始顺序
-                ap.list.audios = [...originalAudios];
+                if (originalAudios.length > 0) {
+                  ap.list.audios = [...originalAudios];
+                }
                 playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 20V21.9325C8 22.2086 7.77614 22.4325 7.5 22.4325C7.38303 22.4325 7.26977 22.3915 7.17991 22.3166L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1046 20 16V8H22V16C22 18.2091 20.2091 20 18 20H8ZM16 2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 6C4.89543 6 4 6.89543 4 8V16H2V8C2 5.79086 3.79086 4 6 4H16V2.0675ZM11 8H13V16H11V10H9V9L11 8Z"/></svg>';
                 playModeBtn.title = '单曲循环';
                 break;
               case 'single':
                 playMode = 'loop';
                 // 恢复原始顺序
-                ap.list.audios = [...originalAudios];
+                if (originalAudios.length > 0) {
+                  ap.list.audios = [...originalAudios];
+                }
                 playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 20V21.9324C8 22.2086 7.77614 22.4324 7.5 22.4324C7.38303 22.4324 7.26977 22.3914 7.17991 22.3165L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1045 20 16V7.99997H22V16C22 18.2091 20.2091 20 18 20H8ZM16 3.99997V2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 5.99997C4.89543 5.99997 4 6.8954 4 7.99997V16H2V7.99997C2 5.79083 3.79086 3.99997 6 3.99997H16Z"/></svg>';
                 playModeBtn.title = '列表循环';
                 break;
             }
             
             // 应用播放模式
-            ap.options.order = playMode === 'random' ? 'random' : 'list';
-            ap.options.loop = playMode === 'single' || playMode === 'loop';
+            initPlayerOptions();
             
             // 更新列表显示
             ap.list.update();
@@ -494,10 +536,27 @@ var heo = {
           
           // 监听播放器事件，在歌曲结束时根据播放模式处理
           ap.on('ended', function() {
-            if (playMode === 'single') {
-              // 单曲循环，重新播放当前歌曲
+            // 如果已经是单曲循环模式，让APlayer默认处理
+            if (playMode !== 'single') {
               setTimeout(() => {
-                ap.play();
+                if (playMode === 'loop' || playMode === 'random') {
+                  // 列表循环或随机播放模式，自动播放下一首
+                  ap.skipForward();
+                  // 确保切换到下一首后自动开始播放
+                  if (ap.paused) {
+                    ap.play();
+                  }
+                } else if (playMode === 'list') {
+                  // 顺序播放模式，检查是否是最后一首
+                  if (ap.list.index < ap.list.audios.length - 1) {
+                    ap.skipForward();
+                    // 确保切换到下一首后自动开始播放
+                    if (ap.paused) {
+                      ap.play();
+                    }
+                  }
+                  // 如果是最后一首，则不自动播放
+                }
               }, 500);
             }
           });
@@ -524,34 +583,35 @@ document.addEventListener("keydown", function (event) {
   if (event.code === "Space") {
     event.preventDefault();
     ap.toggle();
-
-  };
+  }
+  
   //切换下一曲
-  if (event.keyCode === 39) {
+  if (event.code === "ArrowRight") {
     event.preventDefault();
     ap.skipForward();
-
-  };
+  }
+  
   //切换上一曲
-  if (event.keyCode === 37) {
+  if (event.code === "ArrowLeft") {
     event.preventDefault();
     ap.skipBack();
-
   }
+  
   //增加音量
-  if (event.keyCode === 38) {
-    if (volume <= 1) {
-      volume += 0.1;
+  if (event.code === "ArrowUp") {
+    event.preventDefault();
+    if (volume < 1) {
+      volume = Math.min(1, volume + 0.1);
       ap.volume(volume, true);
-
     }
   }
+  
   //减小音量
-  if (event.keyCode === 40) {
-    if (volume >= 0) {
-      volume += -0.1;
+  if (event.code === "ArrowDown") {
+    event.preventDefault();
+    if (volume > 0) {
+      volume = Math.max(0, volume - 0.1);
       ap.volume(volume, true);
-
     }
   }
 });
