@@ -2,8 +2,8 @@
 
 
 {
-    "albumName": "看见2015",
-    "cover": "/flac/music/看见2015李志巡回演唱会/Cover.jpg",
+    "albumName": "看见",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/2015.webp",
     "songs": [
    
       {
@@ -70,7 +70,7 @@
   },
  {
     "albumName": "i/O",
-    "cover": "/flac/music/i:O2014-2015李志跨年音乐会/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/2014.webp",
     "songs": [
       {
         "title": "墙上的向日葵",
@@ -144,7 +144,7 @@
 
   {
     "albumName": "勾三搭四",
-    "cover": "/flac/music/勾三搭四2013李志跨年音乐会/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/2013.webp",
     "songs": [
     
     
@@ -282,7 +282,7 @@
  
   {
     "albumName": "动静",
-    "cover": "/flac/music/动静2015-2016李志跨年音乐会/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/dj.webp",
     "songs": [
       {
         "title": "你的早晨",
@@ -349,7 +349,7 @@
 
   {
     "albumName": "北京不插电",
-    "cover": "/flac/music/李志2016北京不插电现场/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/2016.webp",
     "songs": [
       {
         "artist": "李志",
@@ -426,64 +426,9 @@
     ]
   },
 
- {
-    "albumName": "在每一条伤心的应天大街上",
-    "cover": "/flac/music/在每一条伤心的应天大街上/Cover.jpg",
-    "songs": [
-      {
-        "title": "一个夜晚",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/一个夜晚.flac",
-        "lrc": "/flac/music/在每一条伤心的应天大街上/一个夜晚.lrc"
-      },
-      {
-        "title": "一头偶像",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/一头偶像.flac",
-        "lrc": "/flac/music/在每一条伤心的应天大街上/一头偶像.lrc"
-      },
-      {
-        "title": "你好明天",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/你好明天.flac",
-        "lrc": "/flac/music/在每一条伤心的应天大街上/你好明天.lrc"
-      },
-      {
-        "title": "克兰河",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/克兰河.flac",
-        "lrc": "/flac/music/在每一条伤心的应天大街上/克兰河.lrc"
-      },
-      {
-        "title": "哦吼",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/哦吼.flac",
-        "lrc": "/flac/music/在每一条伤心的应天大街上/哦吼.lrc"
-      },
-      {
-        "title": "在每一条伤心的应天大街上",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/在每一条伤心的应天大街上.flac",
-        "lrc": "/flac/music/在每一条伤心的应天大街上/在每一条伤心的应天大街上.lrc"
-      },
-      {
-        "title": "彩色派对",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/彩色派对.flac",
-        "lrc": "/flac/music/在每一条伤心的应天大街上/彩色派对.lrc"
-      },
-      {
-        "title": "死人",
-        "artist": "李志",
-        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/死人.flac",
-        "lrc": "/flac/music/在每一条伤心的应天大街上/死人.lrc"
-      }
-    ]
-  },
-  
   {
     "albumName": "8",
-    "cover": "/flac/music/8/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/cd.webp",
     "songs": [
       {
         "title": "Hey Jude",
@@ -542,10 +487,65 @@
     ]
   },
   
+ {
+    "albumName": "在每一条伤心的应天大街上",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/ytdj.webp",
+    "songs": [
+      {
+        "title": "一个夜晚",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/一个夜晚.flac",
+        "lrc": "/flac/music/在每一条伤心的应天大街上/一个夜晚.lrc"
+      },
+      {
+        "title": "一头偶像",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/一头偶像.flac",
+        "lrc": "/flac/music/在每一条伤心的应天大街上/一头偶像.lrc"
+      },
+      {
+        "title": "你好明天",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/你好明天.flac",
+        "lrc": "/flac/music/在每一条伤心的应天大街上/你好明天.lrc"
+      },
+      {
+        "title": "克兰河",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/克兰河.flac",
+        "lrc": "/flac/music/在每一条伤心的应天大街上/克兰河.lrc"
+      },
+      {
+        "title": "哦吼",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/哦吼.flac",
+        "lrc": "/flac/music/在每一条伤心的应天大街上/哦吼.lrc"
+      },
+      {
+        "title": "在每一条伤心的应天大街上",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/在每一条伤心的应天大街上.flac",
+        "lrc": "/flac/music/在每一条伤心的应天大街上/在每一条伤心的应天大街上.lrc"
+      },
+      {
+        "title": "彩色派对",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/彩色派对.flac",
+        "lrc": "/flac/music/在每一条伤心的应天大街上/彩色派对.lrc"
+      },
+      {
+        "title": "死人",
+        "artist": "李志",
+        "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/死人.flac",
+        "lrc": "/flac/music/在每一条伤心的应天大街上/死人.lrc"
+      }
+    ]
+  },
+  
   
   {
     "albumName": "电声与管弦乐",
-    "cover": "/flac/music/电声与管弦乐/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/dian1.webp",
     "songs": [
       {
         "title": "序曲",
@@ -623,7 +623,7 @@
   },
   {
     "albumName": "电声与管弦乐Ⅱ",
-    "cover": "/flac/music/电声与管弦乐Ⅱ/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/电声与管弦乐Ⅱ.webp",
     "songs": [
       {
         "title": "一头偶像",
@@ -761,7 +761,7 @@
   },
   {
     "albumName": "F",
-    "cover": "/flac/music/F/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/f.webp",
     "songs": [
       {
         "title": "寻找",
@@ -821,7 +821,7 @@
   },
   {
     "albumName": "IMAGINE",
-    "cover": "/flac/music/IMAGINE2011李志跨年音乐会/Cover.jpg",
+    "cover": "https://img.1701701.xyz/api/0_preview/封面/Imagine.webp",
     "songs": [
       {
         "title": "青春",
