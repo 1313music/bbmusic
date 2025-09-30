@@ -1,6 +1,7 @@
 // 处理按专辑分类的音乐数据
 var flattenedLocalMusic = [];
 var albums = []; // 存储专辑信息
+var isLastSongInListMode = false; // 是否在顺序播放模式的最后一首歌
 console.log('localEngine.js loaded');
 
 // 检查 localMusic 是否定义
