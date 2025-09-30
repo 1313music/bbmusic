@@ -679,8 +679,8 @@ var heo = {
             // 应用播放模式
             initPlayerOptions();
             
-            // 更新列表显示
-            if (ap.list && typeof ap.list.show === 'function') {
+            // 更新列表显示（仅在非移动端显示列表）
+            if (ap.list && typeof ap.list.show === 'function' && window.innerWidth > 768) {
               ap.list.show();
             }
             

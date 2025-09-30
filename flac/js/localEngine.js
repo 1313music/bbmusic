@@ -424,7 +424,7 @@ function createAlbumList() {
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       transform-origin: top center;
       display: none;
-      overflow: hidden;
+      overflow: visible; /* 修改为visible，让内容容器能够滚动 */
       padding: 20px 0px;
     `;
     
@@ -432,54 +432,136 @@ function createAlbumList() {
     albumListContainer.classList.add('album-list-hide');
     
     // 创建专辑列表内容容器 - 完全模仿APlayer列表
-    const albumListContent = document.createElement('div');
-    albumListContent.className = 'album-list-content';
-    albumListContent.style.cssText = `
-      
-      height: 100%;
-      overflow-y: auto;
-      padding:0 20px;
-    `;
-    
-    
-    
-    // 创建专辑项网格布局 - 优化为每行显示四个专辑
-    const albumGrid = document.createElement('div');
-    albumGrid.className = 'album-grid';
-    albumGrid.style.cssText = `
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      justify-content: center;
-      max-width: 800px;
-      margin: 0 auto;
-    `;
-    
-    // 组装专辑列表结构
-    albumListContent.appendChild(albumGrid);
-    albumListContainer.appendChild(albumListContent);
+const albumListContent = document.createElement('div');
+albumListContent.className = 'album-list-content';
+albumListContent.style.cssText = `
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding:0 20px;
+  -webkit-overflow-scrolling: touch; /* 启用iOS平滑滚动 */
+`;
+
+// 创建专辑列表标题
+const albumListTitle = document.createElement('div');
+albumListTitle.className = 'album-list-title';
+albumListTitle.textContent = '民谣俱乐部 无损专辑列表';
+albumListTitle.style.cssText = `
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  margin: 20px 0 30px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+`;
+
+// 创建专辑项网格布局 - 优化为每行显示四个专辑
+const albumGrid = document.createElement('div');
+albumGrid.className = 'album-grid';
+albumGrid.style.cssText = `
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+`;
+
+// 创建底部提示信息容器
+const albumListFooter = document.createElement('div');
+albumListFooter.className = 'album-list-footer';
+albumListFooter.style.cssText = `
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+// 创建提示信息
+const warningText = document.createElement('div');
+warningText.className = 'album-list-warning';
+warningText.textContent = '无损音源文件较大，加载慢请耐心等待';
+warningText.style.cssText = `
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 15px;
+  line-height: 1.5;
+`;
+
+// 创建回到经典版链接
+const classicLink = document.createElement('a');
+classicLink.className = 'album-list-classic-link';
+classicLink.href = 'https://1701701.xyz/';
+classicLink.target = '_blank';
+classicLink.rel = 'noopener noreferrer';
+classicLink.textContent = '回到经典版';
+classicLink.style.cssText = `
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+`;
+
+// 添加悬停效果
+classicLink.addEventListener('mouseenter', function() {
+  this.style.background = 'rgba(255, 255, 255, 0.2)';
+  this.style.color = '#ffffff';
+  this.style.transform = 'translateY(-2px)';
+});
+
+classicLink.addEventListener('mouseleave', function() {
+  this.style.background = 'rgba(255, 255, 255, 0.1)';
+  this.style.color = 'rgba(255, 255, 255, 0.9)';
+  this.style.transform = 'translateY(0)';
+});
+
+// 组装底部内容
+albumListFooter.appendChild(warningText);
+albumListFooter.appendChild(classicLink);
+
+// 组装专辑列表结构
+albumListContent.appendChild(albumListTitle);
+albumListContent.appendChild(albumGrid);
+albumListContent.appendChild(albumListFooter);
+albumListContainer.appendChild(albumListContent);
     
     // 专辑列表显示/隐藏函数 - 使用类切换机制确保第一次点击也有动画
-    function showAlbumList() {
-      // 先设置display，然后移除隐藏类来触发动画（模仿APlayer的机制）
-      albumListContainer.style.display = 'block';
-      
-      // 强制重绘，确保display生效
-      void albumListContainer.offsetHeight;
-      
-      // 移除隐藏类来触发动画
-      albumListContainer.classList.remove('album-list-hide');
+function showAlbumList() {
+  // 先设置display，然后移除隐藏类来触发动画（模仿APlayer的机制）
+  albumListContainer.style.display = 'block';
+  
+  // 强制重绘，确保display生效
+  void albumListContainer.offsetHeight;
+  
+  // 移除隐藏类来触发动画
+  albumListContainer.classList.remove('album-list-hide');
+  
+  // 修复滚动问题：重置内容容器的滚动位置
+  setTimeout(() => {
+    if (albumListContent) {
+      albumListContent.scrollTop = 0;
+      // 强制重绘滚动容器
+      void albumListContent.offsetHeight;
     }
-    
-    function hideAlbumList() {
-      // 添加隐藏类来触发动画
-      albumListContainer.classList.add('album-list-hide');
-      
-      // 动画完成后隐藏元素
-      setTimeout(() => {
-        albumListContainer.style.display = 'none';
-      }, 400);
-    }
+  }, 10);
+}
+
+function hideAlbumList() {
+  // 添加隐藏类来触发动画
+  albumListContainer.classList.add('album-list-hide');
+  
+  // 动画完成后隐藏元素
+  setTimeout(() => {
+    albumListContainer.style.display = 'none';
+  }, 400);
+}
     
     // 添加专辑按钮点击事件
     albumButton.addEventListener('click', function(event) {
@@ -659,11 +741,31 @@ function createAlbumList() {
           grid-template-columns: repeat(3, 1fr) !important;
           gap: 12px !important;
         }
+        .album-list-title {
+          font-size: 20px !important;
+          margin: 15px 0 25px 0 !important;
+        }
       }
       @media (max-width: 480px) {
         .album-grid {
           grid-template-columns: repeat(3, 1fr) !important;
           gap: 10px !important;
+        }
+        .album-list-title {
+          font-size: 18px !important;
+          margin: 10px 0 20px 0 !important;
+        }
+        .album-list-footer {
+          margin-top: 20px !important;
+          padding: 15px 0 !important;
+        }
+        .album-list-warning {
+          font-size: 12px !important;
+          margin-bottom: 12px !important;
+        }
+        .album-list-classic-link {
+          font-size: 12px !important;
+          padding: 6px 16px !important;
         }
       }
     `;

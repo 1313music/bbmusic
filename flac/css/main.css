@@ -358,6 +358,13 @@ body #nav-music {
   margin-left: 15px;
 }
 
+/* 为768px以上尺寸的二维码按钮添加右边距 */
+@media screen and (min-width: 768px) {
+  #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-qr {
+    margin-right: 20px;
+  }
+}
+
 #heoMusic-page .aplayer-info .aplayer-time .aplayer-volume-wrap::before {
   content: '';
   position: absolute;
@@ -782,6 +789,25 @@ body .s-sticker div {
   #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-loop:hover {
     opacity: 1;
     transform: scale(1.1);
+  }
+  
+  /* iPad等中等尺寸设备按钮间距优化 */
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-album {
+      left: 40px;
+    }
+    
+    #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-qr {
+      right: 40px;
+    }
+    
+    #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-mode {
+      right: 85px;
+    }
+    
+    #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-menu {
+      left: 85px;
+    }
   }
 }
   #heoMusic-page .aplayer-info .aplayer-time .aplayer-icon-loop {
