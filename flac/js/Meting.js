@@ -145,7 +145,12 @@ class MetingJSElement extends HTMLElement {
       console.log('APlayer已初始化完成 (来自Meting.js)');
     }
 
-    heo.setupMediaSessionHandlers(this.aplayer);
+    // 确保heo对象已定义再调用setupMediaSessionHandlers
+    if (typeof heo !== 'undefined' && typeof heo.setupMediaSessionHandlers === 'function') {
+      heo.setupMediaSessionHandlers(this.aplayer);
+    } else {
+      console.log('heo对象尚未定义，稍后再设置MediaSession处理器');
+    }
   }
 
 }

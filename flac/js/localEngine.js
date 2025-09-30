@@ -79,7 +79,10 @@ window.ap = new APlayer({
   audio: encodedLocalMusic,
   listFolded: window.innerWidth < 768 ? true : false,
   order: false, // 禁用默认的播放顺序按钮
-  loop: false // 禁用默认的循环按钮
+  loop: false, // 禁用默认的循环按钮
+  // 添加自定义配置，确保封面能够正常显示
+  preload: 'auto', // 预加载音频文件，确保封面正常显示
+  autoplay: false // 不自动播放
 });
 console.log('APlayer initialized:', window.ap);
 
@@ -95,7 +98,12 @@ if (typeof window.CustomEvent === 'function') {
   console.log('APlayer已初始化完成');
 }
 
-heo.setupMediaSessionHandlers(window.ap);
+// 确保heo对象已定义再调用setupMediaSessionHandlers
+if (typeof heo !== 'undefined' && typeof heo.setupMediaSessionHandlers === 'function') {
+  heo.setupMediaSessionHandlers(window.ap);
+} else {
+  console.log('heo对象尚未定义，稍后再设置MediaSession处理器');
+}
 
 // 创建专辑列表按钮和容器
 function createAlbumList() {
@@ -710,13 +718,17 @@ function createAlbumList() {
       albumItem.addEventListener('click', function() {
         console.log(`Album clicked: ${album.name}`);
         
+        // 更新当前专辑名称
+        currentAlbumName = album.name;
+        
         // 创建歌曲列表
         const songList = album.songs.map(song => ({
           name: song.title,
           artist: song.artist,
           url: encodeNonAscii(song.url),
           cover: encodeNonAscii(song.cover || album.cover),
-          lrc: encodeNonAscii(song.lrc)
+          lrc: encodeNonAscii(song.lrc),
+          album: album.name // 添加专辑信息
         }));
         
         // 更新APlayer播放列表
@@ -724,9 +736,67 @@ function createAlbumList() {
           window.ap.list.clear();
           window.ap.list.add(songList);
           
-          // 自动播放第一首歌曲
-          window.ap.list.switch(0);
-          window.ap.play();
+          // 保持当前播放模式，但只使用当前专辑的歌曲
+          if (typeof playMode !== 'undefined' && originalAudios && originalAudios.length > 0) {
+            // 根据当前播放模式调整播放列表
+            switch(playMode) {
+              case 'list':
+                // 顺序播放模式，只使用当前专辑的歌曲
+                window.ap.list.audios = [...songList];
+                break;
+              case 'random':
+                // 随机播放模式，只使用当前专辑的歌曲并随机排序
+                window.ap.list.audios = [...songList];
+                // Fisher-Yates shuffle算法
+                for (let i = window.ap.list.audios.length - 1; i > 0; i--) {
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [window.ap.list.audios[i], window.ap.list.audios[j]] = [window.ap.list.audios[j], window.ap.list.audios[i]];
+                }
+                break;
+              case 'single':
+                // 单曲循环模式，只使用当前专辑的歌曲
+                window.ap.list.audios = [...songList];
+                break;
+              case 'loop':
+                // 列表循环模式，只使用当前专辑的歌曲
+                window.ap.list.audios = [...songList];
+                break;
+              default:
+                // 默认情况，只使用当前专辑的歌曲
+                window.ap.list.audios = [...songList];
+            }
+          }
+          
+          // 延迟一点时间再切换歌曲，确保覆盖函数已应用
+          setTimeout(function() {
+            // 自动播放第一首歌曲
+            window.ap.list.switch(0);
+            window.ap.play();
+          }, 100);
+          
+          // 重新应用skipForward方法覆盖，确保切歌功能正常
+          if (typeof overrideSkipForward === 'function') {
+            overrideSkipForward();
+          }
+          
+          // 重新应用skipBack方法覆盖，确保切歌功能正常
+          if (typeof overrideSkipBack === 'function') {
+            overrideSkipBack();
+          }
+          
+          // 更新isLastSongInListMode状态
+          if (typeof isLastSongInListMode !== 'undefined' && window.ap && window.ap.list && window.ap.list.audios) {
+            if (typeof playMode !== 'undefined') {
+              // 在专辑模式下，检查是否是当前专辑的最后一首歌
+              const currentAlbumSongs = window.ap.list.audios.filter(song => song.album === currentAlbumName);
+              const currentSongIndexInAlbum = currentAlbumSongs.findIndex(song => 
+                song.name === window.ap.list.audios[window.ap.list.index].name && 
+                song.artist === window.ap.list.audios[window.ap.list.index].artist
+              );
+              isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && currentSongIndexInAlbum >= currentAlbumSongs.length - 1);
+              console.log('专辑点击事件 - 更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前专辑:', currentAlbumName, '专辑内歌曲索引:', currentSongIndexInAlbum, '专辑总歌曲数:', currentAlbumSongs.length);
+            }
+          }
           
           // 关闭专辑列表
           hideAlbumList();

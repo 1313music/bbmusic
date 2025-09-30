@@ -3,6 +3,9 @@ var local = false;
 var isScrolling = false; // 添加全局变量 isScrolling，默认为 false
 var scrollTimer = null; // 添加定时器变量
 var animationFrameId = null; // 添加变量用于跟踪动画帧ID
+var playMode = 'loop'; // 全局播放模式变量：loop: 列表循环, list: 顺序播放, random: 随机播放, single: 单曲循环
+var originalAudios = []; // 保存原始音频列表顺序的全局变量
+var currentAlbumName = ''; // 当前选中的专辑名称
 
 if (typeof userId === 'undefined') {
   var userId = "8865774369"; // 替换为实际的默认值
@@ -439,12 +442,6 @@ var heo = {
             aplayerTime.appendChild(playModeBtn);
           }
           
-          // 播放模式状态
-          let playMode = 'loop'; // loop: 列表循环, list: 顺序播放, random: 随机播放, single: 单曲循环
-          
-          // 保存原始音频列表顺序
-          let originalAudios = [];
-          
           // 初始化原始音频列表（确保ap.list.audios已初始化）
           if (ap && ap.list && ap.list.audios && ap.list.audios.length > 0) {
             originalAudios = [...ap.list.audios];
@@ -455,20 +452,36 @@ var heo = {
             switch(playMode) {
               case 'loop':
                 ap.options.order = 'list';
-                ap.options.loop = true;
+                ap.options.loop = 'all';
                 break;
               case 'list':
                 ap.options.order = 'list';
-                ap.options.loop = false;
+                ap.options.loop = 'none';
                 break;
               case 'random':
                 ap.options.order = 'random';
-                ap.options.loop = true;
+                ap.options.loop = 'all';
                 break;
               case 'single':
                 ap.options.order = 'list';
-                ap.options.loop = 'single';
+                ap.options.loop = 'one';
                 break;
+            }
+            
+            // 更新APlayer内部状态
+            if (ap && ap.list && ap.list.audios) {
+              // 重新初始化随机顺序（如果需要）
+              if (playMode === 'random' && ap.randomOrder) {
+                // Fisher-Yates shuffle算法
+                ap.randomOrder = [];
+                for (let i = 0; i < ap.list.audios.length; i++) {
+                  ap.randomOrder.push(i);
+                }
+                for (let i = ap.randomOrder.length - 1; i > 0; i--) {
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [ap.randomOrder[i], ap.randomOrder[j]] = [ap.randomOrder[j], ap.randomOrder[i]];
+                }
+              }
             }
           }
           
@@ -486,9 +499,16 @@ var heo = {
             switch(playMode) {
               case 'loop':
                 playMode = 'list';
-                // 恢复原始顺序
-                if (originalAudios.length > 0) {
-                  ap.list.audios = [...originalAudios];
+                // 恢复原始顺序，如果在专辑模式下只使用当前专辑的歌曲
+                if (ap.list && ap.list.audios && ap.list.audios.length > 0) {
+                  if (currentAlbumName) {
+                    // 只使用当前专辑的歌曲
+                    const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+                    ap.list.audios = [...currentAlbumSongs];
+                  } else {
+                    // 使用所有歌曲
+                    ap.list.audios = [...ap.list.audios];
+                  }
                 }
                 playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M17 3.99998V2.0675C17 1.79136 17.2239 1.5675 17.5 1.5675C17.617 1.5675 17.7302 1.60851 17.8201 1.68339L21.9391 5.11587C22.1512 5.29266 22.1799 5.60794 22.0031 5.82008C21.9081 5.93407 21.7674 5.99998 21.619 5.99998H2V3.99998H17ZM2 18H22V20H2V18ZM2 11H22V13H2V11Z"/></svg>';
                 playModeBtn.title = '顺序播放';
@@ -496,12 +516,28 @@ var heo = {
               case 'list':
                 playMode = 'random';
                 // 更好的随机排序算法（Fisher-Yates shuffle）
-                if (originalAudios.length > 0) {
-                  ap.list.audios = [...originalAudios];
-                  // Fisher-Yates shuffle算法
-                  for (let i = ap.list.audios.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [ap.list.audios[i], ap.list.audios[j]] = [ap.list.audios[j], ap.list.audios[i]];
+                if (ap.list && ap.list.audios && ap.list.audios.length > 0) {
+                  // 如果有当前专辑，则只在当前专辑内随机
+                  if (currentAlbumName) {
+                    // 获取当前专辑内的歌曲
+                    const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+                    
+                    // 只对当前专辑内的歌曲进行随机排序
+                    for (let i = currentAlbumSongs.length - 1; i > 0; i--) {
+                      const j = Math.floor(Math.random() * (i + 1));
+                      [currentAlbumSongs[i], currentAlbumSongs[j]] = [currentAlbumSongs[j], currentAlbumSongs[i]];
+                    }
+                    
+                    // 将随机排序后的当前专辑歌曲设置为播放列表
+                    ap.list.audios = [...currentAlbumSongs];
+                  } else {
+                    // 如果没有当前专辑，则对所有歌曲进行随机排序
+                    ap.list.audios = [...ap.list.audios];
+                    // Fisher-Yates shuffle算法
+                    for (let i = ap.list.audios.length - 1; i > 0; i--) {
+                      const j = Math.floor(Math.random() * (i + 1));
+                      [ap.list.audios[i], ap.list.audios[j]] = [ap.list.audios[j], ap.list.audios[i]];
+                    }
                   }
                 }
                 playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M18 17.8832V16L23 19L18 22V19.9095C14.9224 19.4698 12.2513 17.4584 11.0029 14.5453L11 14.5386L10.9971 14.5453C9.57893 17.8544 6.32508 20 2.72483 20H2V18H2.72483C5.52503 18 8.05579 16.3312 9.15885 13.7574L9.91203 12L9.15885 10.2426C8.05579 7.66878 5.52503 6 2.72483 6H2V4H2.72483C6.32508 4 9.57893 6.14557 10.9971 9.45473L11 9.46141L11.0029 9.45473C12.2513 6.5416 14.9224 4.53022 18 4.09051V2L23 5L18 8V6.11684C15.7266 6.53763 13.7737 8.0667 12.8412 10.2426L12.088 12L12.8412 13.7574C13.7737 15.9333 15.7266 17.4624 18 17.8832Z"/></svg>';
@@ -509,18 +545,32 @@ var heo = {
                 break;
               case 'random':
                 playMode = 'single';
-                // 恢复原始顺序
-                if (originalAudios.length > 0) {
-                  ap.list.audios = [...originalAudios];
+                // 恢复原始顺序，如果在专辑模式下只使用当前专辑的歌曲
+                if (ap.list && ap.list.audios && ap.list.audios.length > 0) {
+                  if (currentAlbumName) {
+                    // 只使用当前专辑的歌曲
+                    const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+                    ap.list.audios = [...currentAlbumSongs];
+                  } else {
+                    // 使用所有歌曲
+                    ap.list.audios = [...ap.list.audios];
+                  }
                 }
                 playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 20V21.9325C8 22.2086 7.77614 22.4325 7.5 22.4325C7.38303 22.4325 7.26977 22.3915 7.17991 22.3166L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1046 20 16V8H22V16C22 18.2091 20.2091 20 18 20H8ZM16 2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 6C4.89543 6 4 6.89543 4 8V16H2V8C2 5.79086 3.79086 4 6 4H16V2.0675ZM11 8H13V16H11V10H9V9L11 8Z"/></svg>';
                 playModeBtn.title = '单曲循环';
                 break;
               case 'single':
                 playMode = 'loop';
-                // 恢复原始顺序
-                if (originalAudios.length > 0) {
-                  ap.list.audios = [...originalAudios];
+                // 恢复原始顺序，如果在专辑模式下只使用当前专辑的歌曲
+                if (ap.list && ap.list.audios && ap.list.audios.length > 0) {
+                  if (currentAlbumName) {
+                    // 只使用当前专辑的歌曲
+                    const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+                    ap.list.audios = [...currentAlbumSongs];
+                  } else {
+                    // 使用所有歌曲
+                    ap.list.audios = [...ap.list.audios];
+                  }
                 }
                 playModeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 20V21.9324C8 22.2086 7.77614 22.4324 7.5 22.4324C7.38303 22.4324 7.26977 22.3914 7.17991 22.3165L3.06093 18.8841C2.84879 18.7073 2.82013 18.392 2.99691 18.1799C3.09191 18.0659 3.23264 18 3.38103 18L18 18C19.1046 18 20 17.1045 20 16V7.99997H22V16C22 18.2091 20.2091 20 18 20H8ZM16 3.99997V2.0675C16 1.79136 16.2239 1.5675 16.5 1.5675C16.617 1.5675 16.7302 1.60851 16.8201 1.68339L20.9391 5.11587C21.1512 5.29266 21.1799 5.60794 21.0031 5.82008C20.9081 5.93407 20.7674 5.99998 20.619 5.99998L6 5.99997C4.89543 5.99997 4 6.8954 4 7.99997V16H2V7.99997C2 5.79083 3.79086 3.99997 6 3.99997H16Z"/></svg>';
                 playModeBtn.title = '列表循环';
@@ -531,35 +581,100 @@ var heo = {
             initPlayerOptions();
             
             // 更新列表显示
-            ap.list.update();
+            if (ap.list && typeof ap.list.show === 'function') {
+              ap.list.show();
+            }
+            
+            // 触发播放模式切换事件
+            if (ap && ap.events) {
+              ap.events.trigger('playmodechange', playMode);
+            }
+            
+            // 更新isLastSongInListMode状态
+            if (ap && ap.list && ap.list.audios) {
+              if (currentAlbumName) {
+                // 在专辑模式下，检查是否是当前专辑的最后一首歌
+                const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+                const currentSongIndexInAlbum = currentAlbumSongs.findIndex(song => 
+                  song.name === ap.list.audios[ap.list.index].name && 
+                  song.artist === ap.list.audios[ap.list.index].artist
+                );
+                isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && currentSongIndexInAlbum >= currentAlbumSongs.length - 1);
+                console.log('播放模式切换 - 专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前专辑:', currentAlbumName, '专辑内歌曲索引:', currentSongIndexInAlbum, '专辑总歌曲数:', currentAlbumSongs.length);
+              } else {
+                // 不在专辑模式下，检查是否是整个列表的最后一首歌
+                isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && ap.list.index >= ap.list.audios.length - 1);
+                console.log('播放模式切换 - 非专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前歌曲索引:', ap.list.index, '总歌曲数:', ap.list.audios.length);
+              }
+            }
+            
+            // 重新应用skipForward方法覆盖，确保切歌功能正常
+            overrideSkipForward();
+            
+            // 重新应用skipBack方法覆盖，确保切歌功能正常
+            overrideSkipBack();
+            
+
           });
           
           // 监听播放器事件，在歌曲结束时根据播放模式处理
-          ap.on('ended', function() {
-            // 如果已经是单曲循环模式，让APlayer默认处理
-            if (playMode !== 'single') {
-              setTimeout(() => {
-                if (playMode === 'loop' || playMode === 'random') {
-                  // 列表循环或随机播放模式，自动播放下一首
-                  ap.skipForward();
-                  // 确保切换到下一首后自动开始播放
-                  if (ap.paused) {
-                    ap.play();
-                  }
-                } else if (playMode === 'list') {
-                  // 顺序播放模式，检查是否是最后一首
-                  if (ap.list.index < ap.list.audios.length - 1) {
-                    ap.skipForward();
-                    // 确保切换到下一首后自动开始播放
-                    if (ap.paused) {
-                      ap.play();
-                    }
-                  }
-                  // 如果是最后一首，则不自动播放
-                }
-              }, 500);
-            }
-          });
+ap.on('ended', function() {
+  // 使用setTimeout确保在APlayer内部逻辑完成后执行
+  setTimeout(() => {
+    if (playMode === 'single') {
+      // 单曲循环模式，让APlayer默认处理
+      return;
+    } else if (playMode === 'loop' || playMode === 'random') {
+      // 列表循环或随机播放模式，自动播放下一首
+      ap.skipForward();
+      // 确保切换到下一首后自动开始播放
+      if (ap.paused) {
+        ap.play();
+      }
+    } else if (playMode === 'list') {
+      // 顺序播放模式，检查是否是最后一首
+      if (ap.list.index < ap.list.audios.length - 1) {
+        ap.skipForward();
+        // 确保切换到下一首后自动开始播放
+        if (ap.paused) {
+          ap.play();
+        }
+      } else {
+        // 如果是最后一首，则暂停播放
+        ap.pause();
+        
+        // 保持当前封面不变
+        const currentSong = ap.list.audios[ap.list.index];
+        const currentCover = currentSong ? currentSong.cover : '';
+        if (currentCover && ap.template && ap.template.pic) {
+          ap.template.pic.src = currentCover;
+        }
+        
+        // 使用我们统一的覆盖函数
+        overrideSkipForward();
+      }
+    }
+  }, 100);
+});
+          
+          // 监听播放器列表切换事件，防止在顺序播放模式下自动切换到下一张专辑
+ap.on('listswitch', function() {
+  // 如果是顺序播放模式且是最后一首歌，阻止切换
+  if (playMode === 'list' && ap.list.index >= ap.list.audios.length - 1) {
+    // 立即暂停播放器
+    ap.pause();
+    
+    // 保持当前封面不变
+    const currentSong = ap.list.audios[ap.list.index];
+    const currentCover = currentSong ? currentSong.cover : '';
+    if (currentCover && ap.template && ap.template.pic) {
+      ap.template.pic.src = currentCover;
+    }
+    
+    // 使用我们统一的覆盖函数
+    overrideSkipForward();
+  }
+});
         }
       }
     }, 100);
@@ -634,6 +749,96 @@ window.addEventListener('resize', function() {
 // 调用初始化
 heo.init();
 
+// 统一的skipForward方法覆盖函数
+function overrideSkipForward() {
+  // 检查ap变量是否已定义
+  if (typeof ap === 'undefined') {
+    console.warn('APlayer instance (ap) is not defined yet');
+    return;
+  }
+  
+  // 检查是否已经保存过原始方法，避免重复保存
+  if (!ap._originalSkipForward) {
+    // 保存原始的skipForward方法
+    ap._originalSkipForward = ap.skipForward;
+  }
+  
+  // 覆盖skipForward方法
+  ap.skipForward = function() {
+    console.log('skipForward被调用，当前播放模式:', playMode, '当前isLastSongInListMode状态:', isLastSongInListMode, '当前专辑:', currentAlbumName);
+    
+    // 只在顺序播放模式且是最后一首歌时阻止跳转
+    if (playMode === 'list' && isLastSongInListMode) {
+      // 不执行跳转，直接返回
+      console.log('阻止跳转到下一首：顺序播放模式且是最后一首歌');
+      return;
+    }
+    // 其他情况正常执行
+    console.log('允许跳转到下一首');
+    if (ap._originalSkipForward) {
+      ap._originalSkipForward.call(this);
+    } else {
+      // 如果由于某种原因原始方法未定义，则调用默认实现
+      this.list.switch(this.nextIndex());
+    }
+  };
+}
+
+// 统一的skipBack方法覆盖函数
+function overrideSkipBack() {
+  // 检查ap变量是否已定义
+  if (typeof ap === 'undefined') {
+    console.warn('APlayer instance (ap) is not defined yet');
+    return;
+  }
+  
+  // 检查是否已经保存过原始方法，避免重复保存
+  if (!ap._originalSkipBack) {
+    // 保存原始的skipBack方法
+    ap._originalSkipBack = ap.skipBack;
+  }
+  
+  // 覆盖skipBack方法
+  ap.skipBack = function() {
+    console.log('skipBack被调用，当前播放模式:', playMode, '当前专辑:', currentAlbumName);
+    
+    // 检查是否是顺序播放模式且是第一首歌
+    let isFirstSongInListMode = false;
+    
+    if (playMode === 'list') {
+      if (currentAlbumName) {
+        // 在专辑模式下，检查是否是当前专辑的第一首歌
+        const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+        const currentSongIndexInAlbum = currentAlbumSongs.findIndex(song => 
+          song.name === ap.list.audios[ap.list.index].name && 
+          song.artist === ap.list.audios[ap.list.index].artist
+        );
+        isFirstSongInListMode = (currentSongIndexInAlbum <= 0);
+        console.log('专辑模式检查第一首歌：当前歌曲在专辑中的索引:', currentSongIndexInAlbum, '是否是第一首:', isFirstSongInListMode);
+      } else {
+        // 不在专辑模式下，检查是否是整个列表的第一首歌
+        isFirstSongInListMode = (ap.list.index <= 0);
+        console.log('非专辑模式检查第一首歌：当前歌曲索引:', ap.list.index, '是否是第一首:', isFirstSongInListMode);
+      }
+    }
+    
+    // 只在顺序播放模式且是第一首歌时阻止跳转
+    if (isFirstSongInListMode) {
+      // 不执行跳转，直接返回
+      console.log('阻止跳转到上一首：顺序播放模式且是第一首歌');
+      return;
+    }
+    // 其他情况正常执行
+    console.log('允许跳转到上一首');
+    if (ap._originalSkipBack) {
+      ap._originalSkipBack.call(this);
+    } else {
+      // 如果由于某种原因原始方法未定义，则调用默认实现
+      this.list.switch(this.prevIndex());
+    }
+  };
+}
+
 // 等待APlayer完全初始化后再初始化播放模式按钮
 function waitForAPlayerAndInitPlayMode() {
   // 最大重试次数
@@ -643,9 +848,178 @@ function waitForAPlayerAndInitPlayMode() {
   // 检查APlayer是否已初始化
   function checkAPlayer() {
     if (typeof ap !== 'undefined' && ap.container && ap.container.querySelector('.aplayer-time')) {
+      // 初始化原始音频列表
+      if (ap && ap.list && ap.list.audios && ap.list.audios.length > 0) {
+        originalAudios = [...ap.list.audios];
+      }
+      
       // APlayer已初始化，初始化播放模式按钮
       heo.initPlayMode();
       console.log('播放模式按钮初始化成功');
+      
+      // 拦截APlayer的封面更新逻辑
+      if (ap.template && ap.template.pic) {
+        // 保存当前封面，防止被更改
+        let currentCover = '';
+        
+        // 监听播放器时间更新事件，实时保存当前封面
+        ap.on('timeupdate', function() {
+          if (ap.list && ap.list.audios && ap.list.audios.length > 0) {
+            const currentSong = ap.list.audios[ap.list.index];
+            if (currentSong && currentSong.cover) {
+              currentCover = currentSong.cover;
+            }
+            
+            // 检查是否是顺序播放模式或单曲循环模式且是最后一首歌
+            if (currentAlbumName) {
+              // 在专辑模式下，检查是否是当前专辑的最后一首歌
+              const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+              const currentSongIndexInAlbum = currentAlbumSongs.findIndex(song => 
+                song.name === ap.list.audios[ap.list.index].name && 
+                song.artist === ap.list.audios[ap.list.index].artist
+              );
+              isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && currentSongIndexInAlbum >= currentAlbumSongs.length - 1);
+              console.log('timeupdate事件 - 专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前专辑:', currentAlbumName, '专辑内歌曲索引:', currentSongIndexInAlbum, '专辑总歌曲数:', currentAlbumSongs.length);
+            } else {
+              // 不在专辑模式下，检查是否是整个列表的最后一首歌
+              isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && ap.list.index >= ap.list.audios.length - 1);
+              console.log('timeupdate事件 - 非专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前歌曲索引:', ap.list.index, '总歌曲数:', ap.list.audios.length);
+            }
+          }
+        });
+        
+        // 保存原始的switch方法
+        const originalSwitch = ap.list.switch;
+        
+        // 覆盖switch方法，添加额外的保护逻辑
+        ap.list.switch = function(index) {
+          // 检查是否是顺序播放模式或单曲循环模式且是最后一首歌
+          if (currentAlbumName) {
+            // 在专辑模式下，检查是否是当前专辑的最后一首歌
+            const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+            const currentSongIndexInAlbum = currentAlbumSongs.findIndex(song => 
+              song.name === ap.list.audios[ap.list.index].name && 
+              song.artist === ap.list.audios[ap.list.index].artist
+            );
+            isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && currentSongIndexInAlbum >= currentAlbumSongs.length - 1);
+            console.log('ap.list.switch方法 - 专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前专辑:', currentAlbumName, '专辑内歌曲索引:', currentSongIndexInAlbum, '专辑总歌曲数:', currentAlbumSongs.length);
+          } else {
+            // 不在专辑模式下，检查是否是整个列表的最后一首歌
+            isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && ap.list.index >= ap.list.audios.length - 1);
+            console.log('ap.list.switch方法 - 非专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前歌曲索引:', ap.list.index, '总歌曲数:', ap.list.audios.length);
+          }
+          
+          // 只在顺序播放模式且是最后一首歌时阻止切换到下一张专辑
+          if (playMode === 'list' && isLastSongInListMode && typeof index !== 'undefined' && index >= ap.list.audios.length - 1) {
+            // 不执行切换，直接返回
+            return;
+          }
+          
+          // 其他情况正常执行
+          originalSwitch.call(this, index);
+        };
+        
+        // 监听播放器列表切换事件
+        ap.on('listswitch', function() {
+          // 检查是否是顺序播放模式或单曲循环模式且是最后一首歌
+          if (currentAlbumName) {
+            // 在专辑模式下，检查是否是当前专辑的最后一首歌
+            const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+            const currentSongIndexInAlbum = currentAlbumSongs.findIndex(song => 
+              song.name === ap.list.audios[ap.list.index].name && 
+              song.artist === ap.list.audios[ap.list.index].artist
+            );
+            isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && currentSongIndexInAlbum >= currentAlbumSongs.length - 1);
+            console.log('listswitch事件 - 专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前专辑:', currentAlbumName, '专辑内歌曲索引:', currentSongIndexInAlbum, '专辑总歌曲数:', currentAlbumSongs.length);
+          } else {
+            // 不在专辑模式下，检查是否是整个列表的最后一首歌
+            isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && ap.list.index >= ap.list.audios.length - 1);
+            console.log('listswitch事件 - 非专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前歌曲索引:', ap.list.index, '总歌曲数:', ap.list.audios.length);
+          }
+          
+          // 如果是顺序播放模式或单曲循环模式且是最后一首歌，阻止封面更新
+          if (isLastSongInListMode && ap.paused) {
+            // 立即恢复当前封面
+            if (currentCover) {
+              ap.pic = currentCover;
+              if (ap.template && ap.template.pic) {
+                ap.template.pic.src = currentCover;
+              }
+            }
+          }
+        });
+        
+        // 使用MutationObserver监听封面图片元素的变化
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+              // 检查是否是顺序播放模式或单曲循环模式且是最后一首歌
+              if (currentAlbumName) {
+                // 在专辑模式下，检查是否是当前专辑的最后一首歌
+                const currentAlbumSongs = ap.list.audios.filter(song => song.album === currentAlbumName);
+                const currentSongIndexInAlbum = currentAlbumSongs.findIndex(song => 
+                  song.name === ap.list.audios[ap.list.index].name && 
+                  song.artist === ap.list.audios[ap.list.index].artist
+                );
+                isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && currentSongIndexInAlbum >= currentAlbumSongs.length - 1);
+                console.log('MutationObserver - 专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前专辑:', currentAlbumName, '专辑内歌曲索引:', currentSongIndexInAlbum, '专辑总歌曲数:', currentAlbumSongs.length);
+              } else {
+                // 不在专辑模式下，检查是否是整个列表的最后一首歌
+                isLastSongInListMode = ((playMode === 'list' || playMode === 'single') && ap.list.index >= ap.list.audios.length - 1);
+                console.log('MutationObserver - 非专辑模式更新isLastSongInListMode:', isLastSongInListMode, '当前播放模式:', playMode, '当前歌曲索引:', ap.list.index, '总歌曲数:', ap.list.audios.length);
+              }
+              
+              // 只在特定条件下阻止封面更新：顺序播放模式或单曲循环模式、最后一首歌、播放器已暂停
+              if (isLastSongInListMode && ap.paused && currentCover && ap.template.pic.src !== currentCover) {
+                // 恢复当前封面
+                ap.template.pic.src = currentCover;
+              }
+            }
+          });
+        });
+        
+        // 开始观察封面图片元素
+        observer.observe(ap.template.pic, { attributes: true });
+        
+        // 应用skipForward方法覆盖
+        overrideSkipForward();
+        
+        // 应用skipBack方法覆盖
+        overrideSkipBack();
+        
+
+        
+        // 同时监听自定义播放模式按钮的点击事件
+        document.addEventListener('click', function(event) {
+          // 检查点击的元素是否是我们的自定义播放模式按钮
+          if (event.target.closest('#heo-loop-btn') || 
+              event.target.closest('#heo-list-btn') || 
+              event.target.closest('#heo-random-btn') || 
+              event.target.closest('#heo-single-btn')) {
+            // 延迟一点时间确保播放模式已更新
+          setTimeout(function() {
+            console.log('[Debug] 播放模式切换后重新应用覆盖函数');
+            try {
+              // 重新应用skipForward方法的覆盖
+              if (ap && ap.skipForward) {
+                console.log('重新应用overrideSkipForward');
+                overrideSkipForward();
+                console.log('当前skipForward:', ap.skipForward.toString().slice(0,100)+'...');
+              }
+              // 重新应用skipBack方法的覆盖
+              if (ap && ap.skipBack) {
+                console.log('重新应用overrideSkipBack');
+                overrideSkipBack();
+                console.log('当前skipBack:', ap.skipBack.toString().slice(0,100)+'...');
+              }
+            } catch (e) {
+              console.error('覆盖函数执行异常:', e);
+            }
+          }, 100);
+          }
+        });
+      }
+      
     } else if (retryCount < maxRetries) {
       // APlayer未初始化，继续等待
       retryCount++;
@@ -692,7 +1066,8 @@ setTimeout(function() {
     
     if (ap.list && ap.list.element) {
       // 如果列表当前是隐藏的，确保有aplayer-list-hide类
-      if (ap.list.element.classList.contains('aplayer-list-hide') === false && 
+      if (ap.list.element.classList && 
+          ap.list.element.classList.contains('aplayer-list-hide') === false && 
           window.innerWidth <= 768 && 
           ap.list.element.style.display === 'none') {
         ap.list.element.classList.add('aplayer-list-hide');
