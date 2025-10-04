@@ -803,6 +803,9 @@
                 // 加载歌词
                 loadLyrics(song.name, currentAlbumId);
                 
+                // 初始化LRC歌词指示器状态
+                updateLyricsIndicator();
+                
                 // 清除之前的事件监听器防止内存泄漏
                 if (currentErrorHandler) {
                     elements.audioPlayer.removeEventListener('error', currentErrorHandler);
@@ -1381,6 +1384,28 @@
                     togglePage();
                 });
                 
+                // 点击LRC指示器切换页面
+                const lyricsIndicator1 = document.getElementById('lyrics-indicator');
+                const lyricsIndicator2 = document.getElementById('lyrics-indicator-2');
+                
+                if (lyricsIndicator1) {
+                    lyricsIndicator1.addEventListener('click', function() {
+                        // 只在封面页面时切换
+                        if (currentPage === 'cover') {
+                            togglePage();
+                        }
+                    });
+                }
+                
+                if (lyricsIndicator2) {
+                    lyricsIndicator2.addEventListener('click', function() {
+                        // 只在封面页面时切换
+                        if (currentPage === 'cover') {
+                            togglePage();
+                        }
+                    });
+                }
+                
                 // 点击歌词页面也可以切换回封面页面，但排除进度条区域
                 elements.lyricsPage.addEventListener('click', function(e) {
                     // 检查点击事件是否来自进度条或其子元素
@@ -1704,12 +1729,47 @@
                 }
             }
             
+            // 更新LRC歌词指示器状态
+            function updateLyricsIndicator() {
+                const indicator1 = document.getElementById('lyrics-indicator');
+                const indicator2 = document.getElementById('lyrics-indicator-2');
+                
+                // 检查是否有歌词（排除空歌词或纯音乐的情况）
+                const hasLyrics = currentLyrics.length > 0 && 
+                    !(currentLyrics.length === 1 && currentLyrics[0].text === '♪') &&
+                    !(currentLyrics.length === 1 && currentLyrics[0].text === '纯音乐') &&
+                    !(currentLyrics.length === 1 && currentLyrics[0].text === '无歌词');
+                
+                if (indicator1) {
+                    if (hasLyrics) {
+                        indicator1.classList.add('active');
+                        indicator1.title = '有歌词';
+                    } else {
+                        indicator1.classList.remove('active');
+                        indicator1.title = '无歌词';
+                    }
+                }
+                
+                if (indicator2) {
+                    if (hasLyrics) {
+                        indicator2.classList.add('active');
+                        indicator2.title = '有歌词';
+                    } else {
+                        indicator2.classList.remove('active');
+                        indicator2.title = '无歌词';
+                    }
+                }
+            }
+            
             // 渲染歌词
             function renderLyrics() {
                 if (!elements.lyricsContent) return;
                 
                 // 移除之前的single-line类
                 elements.lyricsContent.classList.remove('single-line');
+                
+                // 更新LRC歌词指示器状态
+                updateLyricsIndicator();
                 
                 if (currentLyrics.length === 0) {
                     elements.lyricsContent.innerHTML = '<div class="lyrics-empty">暂无歌词</div>';

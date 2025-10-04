@@ -857,6 +857,72 @@
             width: 100%;
         }
         
+        /* LRC歌词指示器样式 */
+        .lyrics-indicator {
+            position: absolute;
+            top: 35px;
+            left: 35px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0.9;
+            backdrop-filter: blur(8px);
+            z-index: 10;
+            text-transform: uppercase;
+        }
+        
+        .lyrics-indicator.active {
+            color: var(--primary);
+            background: rgba(212, 175, 55, 0.25);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            opacity: 1;
+        }
+        
+        .lyrics-indicator:hover {
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 1024px) {
+            .lyrics-indicator {
+                top: 30px;
+                left: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .lyrics-indicator {
+                top: 25px;
+                left: 25px;
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .lyrics-indicator {
+                top: 15px;
+                left: 15px;
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+        }
+        
+        /* 歌词页隐藏LRC指示器 */
+        .lyrics-page .lyrics-indicator {
+            display: none;
+        }
+        
         @media (max-width: 1024px) {
             .song-title {
                 font-size: 22px;
