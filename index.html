@@ -7,7 +7,7 @@
     <link rel="icon" href="https://1701701.xyz/favicon.ico" type="image/x-icon" />
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/music.css">
+    <link rel="stylesheet" href="css/music.css?t=2025100401">
     <link rel="stylesheet" href="css/waline.css">
     <link rel="stylesheet" href="css/nightsky.css">
     
@@ -54,20 +54,38 @@
             <!-- 主播放器区域 -->
             <main class="main-player">
                 <div class="player-header">
-                    <!-- 专辑封面 -->
-                    <div class="album-cover" id="album-cover">
-                        <div class="cover-image">
-                            <img src="img/zh.jpg" alt="专辑封面" id="cover-image">
+                    <!-- 专辑封面区域（封面页面） -->
+                    <div class="cover-page active" id="cover-page">
+                        <!-- 专辑封面 -->
+                        <div class="album-cover" id="album-cover">
+                            <div class="cover-image">
+                                <img src="img/zh.jpg" alt="专辑封面" id="cover-image">
+                            </div>
+                            <div class="vinyl-record">
+                            </div>
                         </div>
-                        <div class="vinyl-record">
+                        
+                        <!-- 歌曲信息 -->
+                        <div class="player-info">
+                            <h2 class="song-title" id="song-title">民谣俱乐部</h2>
+                            <p class="song-artist" id="song-artist">1701701.xyz</p>
                         </div>
-
                     </div>
                     
-                    <!-- 歌曲信息 -->
-                    <div class="player-info">
-                        <h2 class="song-title" id="song-title">民谣俱乐部</h2>
-                        <p class="song-artist" id="song-artist">1701701.xyz</p>
+                    <!-- 歌词显示区域（歌词页面） -->
+                    <div class="lyrics-page" id="lyrics-page">
+                        <div class="lyrics-container" id="lyrics-container">
+                            <!-- 歌曲信息 -->
+                            <div class="player-info">
+                                <h2 class="song-title" id="lyrics-song-title">民谣俱乐部</h2>
+                                <p class="song-artist" id="lyrics-song-artist">1701701.xyz</p>
+                            </div>
+                            <div class="lyrics-content" id="lyrics-content">
+                                <div class="lyrics-lines" id="lyrics-lines">
+                                    <div class="lyrics-line">暂无歌词</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -151,7 +169,7 @@
     
     <!-- JavaScript -->
     <script src="js/MusicList.js?t=2025061802"></script>
-    <script src="js/music.js?t=2025061801"></script>
+    <script src="js/music.js?t=2025100401"></script>
     
     <!-- Waline 库 -->
     <script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
