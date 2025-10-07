@@ -66,28 +66,7 @@ header {
     position: relative;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: -0.5px;
-    color: var(--primary);
-}
 
-.logo i {
-    color: var(--primary);
-    font-size: 28px;
-    transition: transform 0.5s ease;
-    /* 添加旋转动画 */
-    animation: logoRotate 2s ease-in-out;
-    animation-fill-mode: both;
-}
-
-.logo:hover i {
-    transform: rotate(15deg);
-}
 
 
 
@@ -120,15 +99,23 @@ header {
     transform: scale(1.1);
 }
 
-.nav-item i {
-    font-size: 22px;
+.nav-item .svg-icon {
+    width: 28px;
+    height: 28px;
+    fill: var(--primary);
     color: var(--primary);
     transition: all 0.3s ease;
 }
 
-.nav-item:hover i {
+.nav-item:hover .svg-icon {
+    fill: var(--accent);
     color: var(--accent);
     transform: scale(1.1);
+}
+
+/* 隐藏Font Awesome图标 */
+.fa {
+    display: none !important;
 }
 
 /* 为导航菜单项添加不同的动画延迟 */
@@ -138,16 +125,6 @@ header {
 .nav-item:nth-child(4) { animation-delay: 0.4s; }
 /* 移动端导航栏样式优化 */
 @media (max-width: 768px) {
-    /* 减小logo尺寸 */
-    .logo {
-        font-size: 20px;
-        gap: 8px;
-    }
-    
-    .logo i {
-        font-size: 24px;
-    }
-    
     /* 减小导航栏间距 */
     .nav-menu {
         gap: 10px;
@@ -629,7 +606,42 @@ header {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    
+}
+
+/* 修复按钮内的图标和文字居中显示 */
+.btn-row .qr-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* 增大btn-row中的图标 */
+.btn-row .qr-btn .svg-icon {
+    width: 36px !important;
+    height: 36px !important;
+    color: var(--primary);
+    fill: var(--primary);
+    margin-bottom: 8px;
+}
+
+/* 让联系图标的尺寸更大一些 */
+.btn-row .qr-btn:nth-child(3) .svg-icon {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+/* 为支持部分的图标添加主题色 */
+.btn-row .qr-btn .svg-icon {
+    color: var(--primary);
+    fill: var(--primary);
+}
+
+/* 悬停时图标变为亮金色 */
+.btn-row .qr-btn:hover .svg-icon {
+    color: var(--accent);
+    fill: var(--accent);
 }
 
 /* 二维码直接展示样式 */
@@ -772,6 +784,25 @@ header {
     margin: 0;
 }
 
+/* 使用指南按钮样式 */
+.guide-button {
+    display: inline-block;
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.2s;
+    padding: 8px 16px;
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-md);
+    background-color: rgba(212, 175, 55, 0.1);
+    margin-top: 10px;
+}
+
+.guide-button:hover {
+    color: var(--accent);
+    background-color: rgba(212, 175, 55, 0.2);
+    border-color: var(--accent);
+}
+
 /* 页脚样式 */
 footer {
     text-align: center;
@@ -820,8 +851,11 @@ footer {
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.back-to-top i {
-    font-size: 1.2rem;
+.back-to-top .svg-icon {
+    width: 24px !important;
+    height: 24px !important;
+    fill: var(--primary) !important;
+    color: var(--primary) !important;
 }
 
 /* 移动端适配 */
@@ -833,8 +867,11 @@ footer {
         right: 20px;
     }
     
-    .back-to-top i {
-        font-size: 1rem;
+    .back-to-top .svg-icon {
+        width: 20px !important;
+        height: 20px !important;
+        fill: var(--primary) !important;
+        color: var(--primary) !important;
     }
 }
 
@@ -935,6 +972,12 @@ footer {
     
     .qr-btn i {
         font-size: 30px;
+    }
+    
+    /* 移动端适配btn-row中的图标 */
+    .btn-row .qr-btn .svg-icon {
+        width: 32px !important;
+        height: 32px !important;
     }
     
     .qr-btn span {
@@ -1070,6 +1113,12 @@ footer {
         margin-bottom: 4px;
     }
     
+    /* 更小屏幕适配btn-row中的图标 */
+    .btn-row .qr-btn .svg-icon {
+        width: 28px !important;
+        height: 28px !important;
+    }
+    
     .qr-btn span {
         font-size: 11px;
     }
@@ -1108,17 +1157,7 @@ footer {
 }
 
 /* 动画关键帧定义 */
-@keyframes logoRotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(15deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
+
 
 @keyframes fadeInDown {
     from {

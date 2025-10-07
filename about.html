@@ -5,32 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>民谣俱乐部 | 关于</title>
     <link rel="icon" href="https://1701701.xyz/favicon.ico" type="image/x-icon" />
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/about.css">
-    <link rel="stylesheet" href="css/nightsky.css">
+    <link rel="stylesheet" href="css/about.css?t=20251007">
+      <link rel="stylesheet" href="css/nightsky.css">
+      <link rel="stylesheet" href="css/svg-icons.css">
 </head>
 <body>
+    <!-- 统一SVG图标库 -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- 音乐图标 -->
+  <symbol id="icon-music" viewBox="0 0 1024 1024">
+    <path d="M511.786667 83.285333a42.666667 42.666667 0 0 0-46.677334-38.229333C227.882667 68.608 42.666667 268.672 42.666667 512.085333c0 259.2 210.133333 469.333333 469.333333 469.333334 243.370667 0 443.477333-185.258667 467.029333-422.485334a42.666667 42.666667 0 1 0-84.906666-8.405333 384.042667 384.042667 0 1 1-420.565334-420.565333 42.666667 42.666667 0 0 0 38.229334-46.677334zM652.8 64.128a42.666667 42.666667 0 0 0-55.466667 40.704v259.328A170.666667 170.666667 0 1 0 682.666667 512V167.893333a385.237333 385.237333 0 0 1 195.754666 228.864 42.666667 42.666667 0 1 0 81.408-25.6A470.357333 470.357333 0 0 0 652.8 64.170667zM426.666667 512a85.333333 85.333333 0 1 1 170.666666 0 85.333333 85.333333 0 0 1-170.666666 0z" fill="currentColor" p-id="83302"></path>
+  </symbol>
+  
+  <!-- 视频图标 -->
+  <symbol id="icon-video" viewBox="0 0 1365 1024">
+    <path d="M256.006827 42.669796a42.666382 42.666382 0 1 1 85.332764 0v938.660408a42.666382 42.666382 0 1 1-85.332764 0zM554.671502 383.147526c0-23.039846 16.213225-33.279778 37.546417-23.039847l227.838481 114.345905c41.813055 21.333191 40.959727 55.466297 0 75.94616l-33.279778 17.066553-193.705376 96.426024c-21.333191 10.239932-38.399744 0-38.399744-23.039847z" fill="currentColor" p-id="21468"></path>
+    <path d="M0.008533 384.000853A41.813055 41.813055 0 0 1 41.821588 341.334471h255.998293a42.666382 42.666382 0 0 1 43.51971 42.666382 41.813055 41.813055 0 0 1-41.813054 42.666383h-255.998294A42.666382 42.666382 0 0 1 0.008533 384.000853zM0.008533 639.999147A41.813055 41.813055 0 0 1 41.821588 597.332764h255.998293a42.666382 42.666382 0 0 1 43.51971 42.666383 41.813055 41.813055 0 0 1-41.813054 42.666382h-255.998294A42.666382 42.666382 0 0 1 0.008533 639.999147zM1024.001707 384.000853a41.813055 41.813055 0 0 1 41.813054-42.666382h255.998294a42.666382 42.666382 0 0 1 41.813054 42.666382 41.813055 41.813055 0 0 1-41.813054 42.666383h-255.998294a42.666382 42.666382 0 0 1-41.813054-42.666383zM1024.001707 639.999147a41.813055 41.813055 0 0 1 41.813054-42.666383h255.998294a42.666382 42.666382 0 0 1 41.813054 42.666383 41.813055 41.813055 0 0 1-41.813054 42.666382h-255.998294a42.666382 42.666382 0 0 1-41.813054-42.666382z" fill="currentColor" p-id="21469"></path>
+    <path d="M1024.001707 42.669796a42.666382 42.666382 0 1 1 85.332764 0v938.660408a42.666382 42.666382 0 1 1-85.332764 0z" fill="currentColor" p-id="21470"></path>
+    <path d="M1262.933447 0.003413H102.407851A101.54599 101.54599 0 0 0 0.008533 101.549403v820.047866A103.252645 103.252645 0 0 0 102.407851 1023.996587h1160.525596a101.54599 101.54599 0 0 0 102.399318-101.54599V101.549403A103.252645 103.252645 0 0 0 1262.933447 0.003413z m17.066553 870.394198a68.266212 68.266212 0 0 1-67.412884 68.266211H152.754182a68.266212 68.266212 0 0 1-67.412884-68.266211V153.602389a68.266212 68.266212 0 0 1 67.412884-68.266211h1059.832934a68.266212 68.266212 0 0 1 67.412884 68.266211z" fill="currentColor" p-id="21471"></path>
+  </symbol>
+  
+  <!-- 图片图标 -->
+  <symbol id="icon-images" viewBox="0 0 1365 1024">
+    <path d="M170.666667 170.666667v853.333333h1194.666666V170.666667H170.666667z m1109.333333 711.168L1109.333333 597.333333l-193.706666 161.194667L768 512l-512 426.666667V256h1024v625.834667zM341.333333 469.333333A128 128 0 1 0 469.333333 341.333333 128 128 0 0 0 341.333333 469.333333zM1194.666667 0H0v853.333333h85.333333V85.333333h1109.333334V0z" fill="currentColor" p-id="35704"></path>
+  </symbol>
+  
+  <!-- 信息图标 -->
+  <symbol id="icon-info" viewBox="0 0 1024 1024">
+    <path d="M512 1024A512 512 0 1 1 512 0a512 512 0 0 1 0 1024z m3.008-92.992a416 416 0 1 0 0-832 416 416 0 0 0 0 832zM448 448h128v384H448V448z m0-256h128v128H448V192z" p-id="2273"></path>
+  </symbol>
+  
+  <!-- CD图标 -->
+  <symbol id="icon-cd" viewBox="0 0 24 24">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+  </symbol>
+  
+  <!-- 票券图标 -->
+  <symbol id="icon-ticket" viewBox="0 0 24 24">
+    <path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM11 15h2v2h-2zm0-4h2v2h-2zm0-4h2v2h-2z"/>
+  </symbol>
+  
+  <!-- 微信图标 -->
+  <symbol id="icon-wechat" viewBox="0 0 1024 1024">
+    <path d="M664.250054 368.541681c10.015098 0 19.892049 0.732687 29.67281 1.795902-26.647917-122.810047-159.358451-214.077703-310.826188-214.077703-169.353083 0-308.085774 114.232694-308.085774 259.274068 0 83.708494 46.165436 152.460344 123.281791 205.78483l-30.80868 91.730191 107.688651-53.455469c38.558178 7.53665 69.459978 15.308661 107.924012 15.308661 9.66308 0 19.230993-0.470721 28.752858-1.225921-6.025227-20.36584-9.521864-41.723264-9.521864-63.862493C402.328693 476.632491 517.908058 368.541681 664.250054 368.541681zM498.62897 285.87389c23.200398 0 38.557154 15.120372 38.557154 38.061874 0 22.846334-15.356756 38.156018-38.557154 38.156018-23.107277 0-46.260603-15.309684-46.260603-38.156018C452.368366 300.994262 475.522716 285.87389 498.62897 285.87389zM283.016307 362.090758c-23.107277 0-46.402843-15.309684-46.402843-38.156018 0-22.941502 23.295566-38.061874 46.402843-38.061874 23.081695 0 38.46301 15.120372 38.46301 38.061874C321.479317 346.782098 306.098002 362.090758 283.016307 362.090758zM945.448458 606.151333c0-121.888048-123.258255-221.236753-261.683954-221.236753-146.57838 0-262.015505 99.348706-262.015505 221.236753 0 122.06508 115.437126 221.200938 262.015505 221.200938 30.66644 0 61.617359-7.609305 92.423993-15.262612l84.513836 45.786813-23.178909-76.17082C899.379213 735.776599 945.448458 674.90216 945.448458 606.151333zM598.803483 567.994292c-15.332197 0-30.807656-15.096836-30.807656-30.501688 0-15.190981 15.47546-30.477129 30.807656-30.477129 23.295566 0 38.558178 15.286148 38.558178 30.477129C637.361661 552.897456 622.099049 567.994292 598.803483 567.994292zM768.25071 567.994292c-15.213493 0-30.594809-15.096836-30.594809-30.501688 0-15.190981 15.381315-30.477129 30.594809-30.477129 23.107277 0 38.558178 15.286148 38.558178 30.477129C806.808888 552.897456 791.357987 567.994292 768.25071 567.994292z" fill="currentColor" p-id="37516"></path>
+  </symbol>
+  
+  <!-- 大拇指图标 -->
+  <symbol id="icon-thumb-up" viewBox="0 0 24 24">
+    <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+  </symbol>
+  
+  <!-- 关闭图标 -->
+  <symbol id="icon-close" viewBox="0 0 24 24">
+    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+  </symbol>
+  
+  <!-- 向上箭头 -->
+  <symbol id="icon-arrow-up" viewBox="0 0 24 24">
+    <path d="M13 19V7.83l4.88 4.88c.39.39 1.03.39 1.42 0 .39-.39.39-1.02 0-1.41l-6.59-6.59a.996.996 0 00-1.41 0l-6.6 6.58c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L11 7.83V19c0 .55.45 1 1 1s1-.45 1-1z"/>
+  </symbol>
+</svg>
+    
     <div class="container">
         <!-- 头部导航 -->
         <header>
-            <div class="logo">
-                <i class="fas fa-guitar"></i>
-                <a href="index.html" style="color: inherit; text-decoration: none;"><span>民谣俱乐部</span></a>
-            </div>
+            
             <!-- 导航菜单 -->
             <div class="nav-menu">
                 <a href="index.html" class="nav-item" title="音乐">
-                    <i class="fas fa-music"></i>
+                    <svg class="svg-icon"><use href="#icon-music"></use></svg>
                 </a>
                 <a href="video.html" class="nav-item" title="视频">
-                    <i class="fas fa-video"></i>
+                    <svg class="svg-icon"><use href="#icon-video"></use></svg>
                 </a>
                 <a href="https://images.1701701.xyz/" class="nav-item" title="图库">
-                    <i class="fas fa-images"></i>
+                    <svg class="svg-icon"><use href="#icon-images"></use></svg>
                 </a>
                 <a href="about.html" class="nav-item" title="关于">
-                    <i class="fas fa-info-circle"></i>
+                    <svg class="svg-icon"><use href="#icon-info"></use></svg>
                 </a>
             </div>
         </header>
@@ -64,7 +116,7 @@
             
             <div class="support-section">
         <h2>支持</h2>
-        <p class="support-intro">如果你想通过<img src="https://s1.music.126.net/style/favicon.ico?v20180823">听李志 请使用下方小程序一键上传云盘</p>
+        <p class="support-intro">如果你想通过<img src="https://s1.music.126.net/style/favicon.ico?v20180823">听李志 请使用下方小程序上传云盘</p>
                 
         <div class="qr-code-container">
             <div class="qr-code-item" data-qr="gzh.jpg">
@@ -73,34 +125,28 @@
             </div>
             <div class="qr-code-item" data-qr="xcx.jpg">
                 <img src="img/xcx.jpg" alt="小程序二维码" class="qr-code-img">
-                <p class="qr-code-label">一键上传网易云</p>
-            </div>
-            <div class="qr-code-item">
-                <a href="https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg" target="_blank">
-                    <img src="img/zh.jpg" alt="李志歌单/使用指南" class="qr-code-img">
-                    <p class="qr-code-label">使用指南</p>
-                </a>
+                <p class="qr-code-label">上传网易云</p>
             </div>
         </div>
         <div class="btn-row">
             <a href="http://tower.jp/item/6849478" target="_blank" class="qr-btn-link">
                 <div class="qr-btn" data-qr="cd.png">
-                    <i class="fas fa-compact-disc"></i>
+                    <svg class="svg-icon"><use href="#icon-cd"></use></svg>
                     <span>正版CD</span>
                 </div>
             </a>
             <a href="https://mp.weixin.qq.com/s/n9U1FQS0pLjVh_TzeO2JHw" target="_blank" class="qr-btn-link">
                 <div class="qr-btn" data-qr="qrcode.jpg">
-                    <i class="fas fa-ticket-alt"></i>
+                    <svg class="svg-icon"><use href="#icon-ticket"></use></svg>
                     <span>最新巡演</span>
                 </div>
             </a>
             <div class="qr-btn" data-qr="wx.jpg">
-                <i class="fab fa-weixin"></i>
+                <svg class="svg-icon"><use href="#icon-wechat"></use></svg>
                 <span>联系</span>
             </div>
             <div class="qr-btn" data-qr="zs.jpg">
-                <i class="fas fa-bolt"></i>
+                <svg class="svg-icon"><use href="#icon-thumb-up"></use></svg>
                 <span>支持</span>
             </div>
         </div>
@@ -111,7 +157,7 @@
         <div id="qr-modal" class="qr-modal">
             <div class="qr-content">
                 <div class="qr-close">
-                    <i class="fas fa-times"></i>
+                    <svg class="svg-icon"><use href="#icon-close"></use></svg>
                 </div>
                 <h3 class="qr-title"></h3>
                 <div class="qr-image">
@@ -132,7 +178,7 @@
     
     <!-- 回到顶部按钮 -->
     <button id="back-to-top" class="back-to-top" aria-label="回到顶部">
-        <i class="fas fa-arrow-up"></i>
+        <svg class="svg-icon"><use href="#icon-arrow-up"></use></svg>
     </button>
     
     <!-- 夜间模式背景 -->
@@ -176,10 +222,10 @@
             const qrTitles = {
                 'cd.png': '购买正版CD 需翻墙',
                 'qrcode.jpg': '最新巡演信息',
-                'gzh.jpg': '关注民谣俱乐部公众号',
+                'gzh.jpg': '关注民谣俱乐部',
                 'zs.jpg': '加个鸡腿🍗',
                 'xcx.jpg': '上传歌曲至网易云盘',
-                'wx.jpg': '加好友请备注 如"进群"'
+                'wx.jpg': '交个朋友🍻'
             };
             
             // 点击按钮显示二维码
@@ -196,6 +242,20 @@
                     e.preventDefault();
                     qrImage.src = `img/${qrFile}`;
                     qrTitle.textContent = qrTitles[qrFile];
+                    
+                    // 如果是网易云上传二维码，添加使用指南链接
+                    if (qrFile === 'xcx.jpg') {
+                        const qrDescription = qrModal.querySelector('.qr-description');
+                        if (qrDescription) {
+                            qrDescription.innerHTML = '扫码使用小程序上传歌曲<br><a href="https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg" target="_blank" class="guide-button">使用指南</a>';
+                        }
+                    } else {
+                        const qrDescription = qrModal.querySelector('.qr-description');
+                        if (qrDescription) {
+                            qrDescription.textContent = '扫描上方二维码';
+                        }
+                    }
+                    
                     qrModal.classList.add('active');
                 });
             });
@@ -209,6 +269,20 @@
                     e.preventDefault();
                     qrImage.src = `img/${qrFile}`;
                     qrTitle.textContent = qrTitles[qrFile];
+                    
+                    // 如果是网易云上传二维码，添加使用指南链接
+                    if (qrFile === 'xcx.jpg') {
+                        const qrDescription = qrModal.querySelector('.qr-description');
+                        if (qrDescription) {
+                            qrDescription.innerHTML = '扫码使用小程序上传歌曲<br><a href="https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg" target="_blank" class="guide-button">使用指南</a>';
+                        }
+                    } else {
+                        const qrDescription = qrModal.querySelector('.qr-description');
+                        if (qrDescription) {
+                            qrDescription.textContent = '扫描上方二维码';
+                        }
+                    }
+                    
                     qrModal.classList.add('active');
                 });
             });

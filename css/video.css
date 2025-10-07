@@ -79,15 +79,29 @@
             transform: scale(1.1);
         }
 
-        .nav-item i {
-            font-size: 22px;
+        .nav-item .svg-icon {
+            width: 28px;
+            height: 28px;
             color: var(--primary);
             transition: all 0.3s ease;
         }
 
-        .nav-item:hover i {
+        .nav-item:hover .svg-icon {
             color: var(--accent);
             transform: scale(1.1);
+        }
+
+        /* 隐藏Font Awesome图标 */
+        .fa {
+            display: none !important;
+        }
+        
+        /* 全局SVG图标样式 */
+        .svg-icon {
+            width: 1em;
+            height: 1em;
+            fill: currentColor;
+            vertical-align: -0.125em;
         }
         
         /* 为导航菜单项添加不同的动画延迟 */
@@ -292,46 +306,7 @@
             animation-fill-mode: both;
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 22px;
-            letter-spacing: -0.5px;
-            color: var(--primary);
-        }
         
-        .logo i {
-            color: var(--primary);
-            font-size: 28px;
-            transition: transform 0.5s ease;
-            /* 添加旋转动画 */
-            animation: logoRotate 2s ease-in-out;
-            animation-fill-mode: both;
-        }
-        
-        .logo:hover i {
-            transform: rotate(15deg);
-        }
-        
-        /* 移动端导航栏样式优化 */
-        @media (max-width: 768px) {
-            /* 减小logo尺寸 */
-            .logo {
-                font-size: 20px;
-                gap: 8px;
-            }
-            
-            .logo i {
-                font-size: 24px;
-            }
-            
-            /* 减小导航栏间距 */
-            .nav-menu {
-                gap: 10px;
-            }
-        }
         
         
         
@@ -449,28 +424,41 @@
         }
         
         .category-btn {
-            flex: 0 0 auto;
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 10px 20px;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: 14px;
-            white-space: nowrap;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            /* 添加弹出动画效果 */
-            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            animation-fill-mode: both;
-            opacity: 0;
-        }
+    flex: 0 0 auto;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* 添加弹出动画效果 */
+    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation-fill-mode: both;
+    opacity: 0;
+}
+
+/* 分类导航按钮中的SVG图标样式 */
+.category-btn .svg-icon {
+    width: 16px !important;
+    height: 16px !important;
+    fill: currentColor !important;
+    color: currentColor !important;
+    transition: var(--transition);
+    /* 重置全局SVG样式的影响 */
+    vertical-align: baseline !important;
+    /* 确保图标大小固定，不受em单位影响 */
+    font-size: 16px !important;
+}
         
         .category-btn::before {
             content: '';
@@ -578,28 +566,7 @@
             }
         }
         
-        /* 淡入动画（用于waline.css） */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
         
-        /* Logo旋转动画 */
-        @keyframes logoRotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            50% {
-                transform: rotate(15deg);
-            }
-            100% {
-                transform: rotate(0deg);
-            }
-        }
         
         .videos-list {
             display: grid;
@@ -776,6 +743,14 @@
             z-index: 3;
         }
         
+        .play-icon .svg-icon,
+        .folder-icon .svg-icon {
+            width: 30px !important;
+            height: 30px !important;
+            fill: currentColor !important;
+            color: white !important;
+        }
+        
         .video-item:hover .play-icon,
         .video-item:hover .folder-icon {
             opacity: 1;
@@ -783,7 +758,7 @@
         }
         
         .play-icon i, .folder-icon i {
-            font-size: 20px;
+            font-size: 42px;
             color: white;
         }
         
@@ -1029,8 +1004,11 @@
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.back-to-top i {
-    font-size: 1.2rem;
+.back-to-top .svg-icon {
+    width: 24px !important;
+    height: 24px !important;
+    fill: currentColor !important;
+    color: var(--primary) !important;
 }
 
 /* 移动端适配 */
@@ -1042,7 +1020,10 @@
         right: 20px;
     }
     
-    .back-to-top i {
-        font-size: 1rem;
+    .back-to-top .svg-icon {
+        width: 20px !important;
+        height: 20px !important;
+        fill: currentColor !important;
+        color: var(--primary) !important;
     }
 }
