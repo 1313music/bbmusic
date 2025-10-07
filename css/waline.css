@@ -839,10 +839,6 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
-.wl-card-item:last-child>.wl-card {
-  border-bottom: none;
-}
-
 .wl-card .wl-nick svg {
   position: relative;
   bottom: -0.125em;
@@ -1478,7 +1474,7 @@
 
 .comments-toggle-btn.active i:last-child,
 .comments-toggle-btn.active svg:last-child {
-    transform: rotate(-180deg);
+    transform: rotate(180deg);
 }
 
 /* 留言板容器样式 */
@@ -1494,9 +1490,9 @@
 }
 
 #waline.show {
-    max-height: 800px; /* 设置一个足够大的固定高度 */
+    max-height: 3000px; /* 增加最大高度以确保能显示所有留言 */
     opacity: 1;
-    padding: 0;
+    padding: 20px 0; /* 添加一些内边距 */
 }
 
 /* 响应式调整 */
