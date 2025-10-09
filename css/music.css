@@ -1195,6 +1195,7 @@
             justify-content: center;
             gap: 10px;
             margin: 1px auto;
+            z-index: 100; /* 提高层级确保可点击 */
         }
         
         @media (max-width: 1024px) {
