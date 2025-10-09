@@ -2017,8 +2017,6 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: rgba(212, 175, 55, 0.1);
-                border-radius: 50%;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 color: var(--text-secondary);
@@ -2032,11 +2030,6 @@
                 transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.3s ease;
                 transform: rotate(0deg);
                 will-change: transform; /* 优化旋转动画性能 */
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                margin-top: -11px;
-                margin-left: -11px;
                 color: white;
             }
             
@@ -2045,7 +2038,6 @@
             }
             
             .mobile-songs-list .collapse-btn:hover {
-                background: rgba(212, 175, 55, 0.2);
                 color: var(--primary);
             }
             
