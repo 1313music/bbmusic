@@ -350,7 +350,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 20px;
+   
     position: relative;
     z-index: 100;
     /* 添加淡入动画 */
