@@ -74,8 +74,44 @@ header {
 .nav-menu {
     display: flex;
     gap: 15px;
-    margin-left: auto;
     align-items: center;
+}
+
+/* Logo样式 */
+.nav-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    text-decoration: none;
+    /* 添加淡入动画 */
+    animation: fadeIn 0.8s ease-out;
+    animation-fill-mode: both;
+    opacity: 0;
+}
+
+.nav-logo:hover {
+    transform: scale(1.1);
+    background: transparent;
+}
+
+.nav-logo .svg-icon {
+    width: 28px;
+    height: 28px;
+    fill: var(--primary);
+    color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.nav-logo:hover .svg-icon {
+    fill: var(--accent);
+    color: var(--accent);
+    transform: scale(1.1);
 }
 
 .nav-item {
@@ -97,6 +133,31 @@ header {
 
 .nav-item:hover {
     transform: scale(1.1);
+    background: transparent;
+}
+
+/* 导航菜单悬停提示文字 */
+.nav-item::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    color: var(--primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.nav-item:hover::after {
+    opacity: 1;
 }
 
 .nav-item .svg-icon {
@@ -626,10 +687,10 @@ header {
     margin-bottom: 8px;
 }
 
-/* 让联系图标的尺寸更大一些 */
+
 .btn-row .qr-btn:nth-child(3) .svg-icon {
-    width: 40px !important;
-    height: 40px !important;
+    width: 40px 
+    height: 40px 
 }
 
 /* 为支持部分的图标添加主题色 */

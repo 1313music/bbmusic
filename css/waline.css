@@ -1428,53 +1428,184 @@
 .comments-toggle-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 30px 0 15px;
     /* 添加淡入动画 */
     animation: fadeIn 1s ease-out;
     animation-fill-mode: both;
     animation-delay: 0.9s;
+    gap: 15px;
+}
+
+.comments-left-buttons,
+.comments-right-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.comments-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    padding: 8px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-decoration: none;
+    position: relative;
+    width: 36px;
+    height: 36px;
+}
+
+.comments-btn:hover {
+    background: transparent;
+    transform: translateY(-1px);
+}
+
+.comments-btn .svg-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+}
+
+/* 联系按钮图标保持统一大小 */
+.comments-right-buttons .comments-btn:first-child .svg-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.comments-btn .btn-text {
+    display: none;
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(25, 28, 36, 0.9);
+    color: var(--primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    border: none;
+}
+
+.comments-btn:hover .btn-text {
+    display: block;
 }
 
 .comments-toggle-btn {
-    background: rgba(212, 175, 55, 0.2);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    color: var(--primary);
-    padding: 10px 20px;
-    border-radius: var(--radius-md);
+    background: transparent;
+    border: none;
+    color: #d4af37;
+    padding: 8px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     transition: all 0.3s ease;
+    font-weight: 500;
+    text-decoration: none;
+    position: relative;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 500;
+    justify-content: center;
+    box-shadow: none;
 }
 
 .comments-toggle-btn .svg-icon {
     width: 24px;
     height: 24px;
+    color: #d4af37;
+    fill: currentColor;
+}
+
+.comments-toggle-btn.active .comments-icon-collapse {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.comments-toggle-btn .comments-icon-expand {
+    display: none;
+}
+
+.comments-toggle-btn.active .comments-icon-expand {
+    display: none;
+}
+
+.comments-toggle-btn.active .comments-icon-collapse {
+    display: block;
+    width: 24px;
+    height: 24px;
 }
 
 .comments-toggle-btn:hover {
-    background: rgba(212, 175, 55, 0.3);
-    border-color: var(--primary);
-    transform: translateY(-2px);
+    background: transparent;
+    transform: translateY(-1px);
 }
 
 .comments-toggle-btn.active {
-    background: rgba(212, 175, 55, 0.4);
-    border-color: var(--accent);
-    color: var(--accent);
+    background: transparent;
 }
 
-.comments-toggle-btn i:last-child,
-.comments-toggle-btn svg:last-child {
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* 留言板悬浮提示文字 */
+.comments-toggle-btn::after {
+    content: '留言板';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(25, 28, 36, 0.9);
+    color: var(--primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
-.comments-toggle-btn.active i:last-child,
-.comments-toggle-btn.active svg:last-child {
-    transform: rotate(180deg);
+.comments-toggle-btn:hover::after {
+    opacity: 1;
+}
+
+.comments-toggle-btn .svg-icon {
+    transition: opacity 0.3s ease;
+}
+
+.comments-toggle-btn .comments-icon-expand {
+    display: block;
+}
+
+.comments-toggle-btn .comments-icon-collapse {
+    display: none;
+}
+
+.comments-toggle-btn.active .comments-icon-expand {
+    display: none;
+}
+
+.comments-toggle-btn.active .comments-icon-collapse {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+@media (max-width: 768px) {
+    .comments-toggle-btn.active .comments-icon-collapse {
+        width: 22px;
+        height: 22px;
+    }
 }
 
 /* 留言板容器样式 */
@@ -1497,10 +1628,97 @@
 
 /* 响应式调整 */
 @media (max-width: 768px) {
-    .comments-toggle-btn {
-        padding: 8px 16px;
-        font-size: 14px;
+    .comments-toggle-container {
+        flex-wrap: nowrap;
+        gap: 8px;
+        margin: 20px 0 10px;
+        padding: 0 10px;
+        justify-content: center;
     }
     
-  
+    .comments-left-buttons,
+    .comments-right-buttons {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+    
+    .comments-btn {
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+        flex-shrink: 0;
+    }
+    
+    .comments-btn .svg-icon {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .comments-toggle-btn {
+        width: 36px;
+        height: 36px;
+        padding: 8px;
+        flex-shrink: 0;
+        margin: 0;
+    }
+    
+    .comments-toggle-btn .svg-icon {
+        width: 22px;
+        height: 22px;
+    }
+    
+    /* 联系按钮图标稍微大一点 */
+    .comments-right-buttons .comments-btn:first-child .svg-icon {
+        width: 22px;
+        height: 22px;
+    }
+    
+    /* 移动端按钮文字提示位置调整 */
+    .comments-btn .btn-text {
+        bottom: -25px;
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+    
+    .comments-toggle-btn::after {
+        bottom: -25px;
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+    
+    /* 超小屏幕适配 */
+    @media (max-width: 480px) {
+        .comments-toggle-container {
+            gap: 8px;
+            padding: 0 10px;
+        }
+        
+        .comments-left-buttons,
+        .comments-right-buttons {
+            gap: 8px;
+        }
+        
+        .comments-btn {
+            width: 32px;
+            height: 32px;
+            padding: 6px;
+        }
+        
+        .comments-btn .svg-icon {
+            width: 22px;
+            height: 22px;
+        }
+        
+        .comments-toggle-btn {
+            width: 36px;
+            height: 36px;
+            padding: 8px;
+        }
+        
+        .comments-toggle-btn .svg-icon {
+            width: 22px;
+            height: 22px;
+        }
+    }
 }

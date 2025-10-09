@@ -123,8 +123,10 @@
 
 /* 单独缩小关于图标 */
 .nav-item[title="关于"] .svg-icon {
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
+  /* 确保关于图标与音乐图标视觉大小一致 */
+  transform: scale(1.04);
 }
 
 /* 隐藏Font Awesome备用图标 */
