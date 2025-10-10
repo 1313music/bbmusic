@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 8888;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 8889;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
