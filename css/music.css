@@ -176,7 +176,7 @@
         .nav-item:nth-child(4) { animation-delay: 0.4s; }
 
         /* 二维码弹窗样式 */
-        .qr-modal {
+        .cloud-qr-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -186,12 +186,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 9999;
             opacity: 0;
             animation: fadeInScale 0.5s ease-out forwards;
         }
         
-        .qr-modal-content {
+        .cloud-qr-modal .qr-modal-content {
             background-color: rgba(30, 30, 40, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -205,7 +205,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .qr-modal-header {
+        .cloud-qr-modal .qr-modal-header {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -215,7 +215,7 @@
     position: relative;
 }
 
-.qr-modal-header h3 {
+.cloud-qr-modal .qr-modal-header h3 {
     margin: 0;
     color: var(--text-primary);
     font-size: 18px;
@@ -223,7 +223,7 @@
     text-align: center;
 }
 
-.qr-modal-close {
+.cloud-qr-modal .qr-modal-close {
     background: none;
     border: none;
     color: var(--text-secondary);
@@ -236,7 +236,7 @@
     transform: translateY(-50%);
 }
         
-        .qr-modal-close {
+        .cloud-qr-modal .qr-modal-close {
             background: none;
             border: none;
             color: var(--text-secondary);
@@ -246,30 +246,30 @@
             margin-left: 10px;
         }
         
-        .qr-modal-close:hover {
+        .cloud-qr-modal .qr-modal-close:hover {
             color: var(--text-primary);
         }
         
-        .qr-modal-body {
+        .cloud-qr-modal .qr-modal-body {
             padding: 20px;
             text-align: center;
         }
         
-        .qr-code-image {
+        .cloud-qr-modal .qr-code-image {
             max-width: 100%;
             height: auto;
             border-radius: var(--radius-md);
          
         }
         
-        .qr-modal-body p {
+        .cloud-qr-modal .qr-modal-body p {
             margin: 10px 0;
             color: #ffffff;
             font-size: 16px;
             text-align: center;
         }
         
-        .qr-modal-body a {
+        .cloud-qr-modal .qr-modal-body a {
             display: inline-block;
             color: var(--primary);
             text-decoration: none;
@@ -281,7 +281,7 @@
             margin-top: 10px;
         }
         
-        .qr-modal-body a:hover {
+        .cloud-qr-modal .qr-modal-body a:hover {
             color: var(--accent);
             background-color: rgba(212, 175, 55, 0.2);
             border-color: var(--accent);
