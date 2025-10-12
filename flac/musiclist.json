@@ -3,66 +3,56 @@
 
 {
     "albumName": "看见",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/2015.webp",
     "songs": [
-   
       {
         "title": "热河",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/热河 (2015 Live 看见版).flac",
         "lrc": "/flac/music/看见2015李志巡回演唱会/热河.lrc"
       },
       {
         "title": "看见",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/看见 (2015 Live 看见版).flac",
         "lrc": "/flac/music/看见2015李志巡回演唱会/看见.lrc"
       },
       {
         "title": "离婚",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/离婚 (2015 Live 看见版).flac",
         "lrc": "/flac/music/看见2015李志巡回演唱会/离婚.lrc"
       },
       {
         "title": "苍井空",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/苍井空 (2015 Live 看见版).flac",
         "lrc": "/flac/music/看见2015李志巡回演唱会/苍井空.lrc"
       },
       {
         "title": "董卓瑶",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/董卓瑶 (2015 Live 看见版).flac",
         "lrc": "/flac/music/看见2015李志巡回演唱会/董卓瑶.lrc"
       },
       {
         "title": "黑色信封",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/黑色信封 (2015 Live 看见版).flac",
         "lrc": "/flac/music/看见2015李志巡回演唱会/黑色信封.lrc"
       },
          {
         "title": "下雨",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/下雨 (2015 Live 看见版).flac",
         "lrc": ""
       },
       {
         "title": "春末的南方城市",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/春末的南方城市 (2015 Live 看见版).flac",
         "lrc": "/flac/music/看见2015李志巡回演唱会/春末的南方城市.lrc"
       },
       {
         "title": "梵高先生",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/梵高先生 (2015 Live 看见版).flac",
         "lrc": ""
       },
       {
         "title": "你离开了南京，从此没有人和我说话",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/看见2015李志巡回演唱会/你离开了南京，从此没有人和我说话 (2015 Live 看见版).flac",
         "lrc": ""
       }
@@ -70,71 +60,61 @@
   },
  {
     "albumName": "i/O",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/2014.webp",
     "songs": [
       {
         "title": "墙上的向日葵",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/墙上的向日葵 (2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/墙上的向日葵.lrc"
       },
       {
         "title": "妈妈",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/妈妈 (2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/妈妈.lrc"
       },
       {
         "title": "定西",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/定西 (2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/定西.lrc"
       },
       {
         "title": "山阴路的夏天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/山阴路的夏天 (2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/山阴路的夏天.lrc"
       },
       {
         "title": "方式",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/方式 (2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/方式.lrc"
       },
       {
         "title": "来了",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/来了 (2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/来了.lrc"
       },
       {
         "title": "杭州",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/杭州 (2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/杭州.lrc"
       },
       {
         "title": "铅笔",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/铅笔(2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/铅笔.lrc"
       },
       {
         "title": "下雨_董卓瑶_忽然",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/下雨_董卓瑶_忽然 (2014i O现场版).flac",
         "lrc": ""
       },
       {
         "title": "这个世界会好吗",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/这个世界会好吗 (2014i_O现场版).flac",
         "lrc": ""
       },
       {
         "title": "鸵鸟_天空之城_我们不能失去信仰",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/i:O2014-2015李志跨年音乐会/鸵鸟_天空之城_我们不能失去信仰 (2014i_O现场版).flac",
         "lrc": "/flac/music/i:O2014-2015李志跨年音乐会/鸵鸟&天空之城&我们不能失去信仰.lrc"
       }
@@ -144,136 +124,113 @@
 
   {
     "albumName": "勾三搭四",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/2013.webp",
     "songs": [
-    
-    
       {
         "title": "和你在一起",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/和你在一起.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/和你在一起.lrc"
       },     {
         "title": "意味",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/意味.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/意味.lrc"
       },
        {
         "title": "离婚",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/离婚.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/离婚.lrc"
       },
        {
         "title": "这个世界会好吗",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/这个世界会好吗.flac",
         "lrc": ""
       },
         {
         "title": "你的早晨&天空之城&暧昧",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/你的早晨&天空之城&暧昧.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/你的早晨&天空之城&暧昧.lrc"
       },
       {
         "title": "墙上的向日葵",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/墙上的向日葵.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/墙上的向日葵.lrc"
       },
       {
         "title": "妈妈",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/妈妈.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/妈妈.lrc"
       },
       {
         "title": "山阴路的夏天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/山阴路的夏天.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/山阴路的夏天.lrc"
       },
- 
      
       {
         "title": "来了",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/来了.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/来了.lrc"
       },
       {
         "title": "杭州&我们不能失去信仰",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/杭州&我们不能失去信仰.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/杭州&我们不能失去信仰.lrc"
       },
      
       {
         "title": "秋天的老狼",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/秋天的老狼.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/秋天的老狼.lrc"
       },
       {
         "title": "翁庆年的六英镑",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/翁庆年的六英镑.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/翁庆年的六英镑.lrc"
       },
       {
         "title": "董卓瑶",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/董卓瑶.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/董卓瑶.lrc"
       },
       {
         "title": "被禁忌的游戏",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/被禁忌的游戏.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/被禁忌的游戏.lrc"
       },
      
       {
         "title": "铅笔",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/铅笔.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/铅笔.lrc"
       },
       {
         "title": "门",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/门.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/门.lrc"
       },
       {
         "title": "黑色信封",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/黑色信封.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/黑色信封.lrc"
       },  
       {
         "title": "1990年的春天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/1990年的春天.flac",
         "lrc": ""
       },
       {
         "title": "下雨",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/下雨.flac",
         "lrc": ""
       },
        {
         "title": "斜",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/斜.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/斜.lrc"
       },
       {
         "title": "春末的南方城市",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/勾三搭四2013李志跨年音乐会/春末的南方城市.flac",
         "lrc": "/flac/music/勾三搭四2013李志跨年音乐会/春末的南方城市.lrc"
       }
@@ -282,65 +239,56 @@
  
   {
     "albumName": "动静",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/dj.webp",
     "songs": [
       {
         "title": "你的早晨",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/你的早晨 (2015动静版) - 李志.flac",
         "lrc": "/flac/music/动静2015-2016李志跨年音乐会/你的早晨.lrc"
       },
       {
         "title": "地方",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/地方 (2015动静版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "定西",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/定西 (2015动静版) - 李志.flac",
         "lrc": "/flac/music/动静2015-2016李志跨年音乐会/定西.lrc"
       },
       {
         "title": "尽头",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/尽头 (2015动静版) - 李志.flac",
         "lrc": "/flac/music/动静2015-2016李志跨年音乐会/尽头.lrc"
       },
       {
         "title": "忽然",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/忽然（2015动静版） - 李志.flac",
         "lrc": "/flac/music/动静2015-2016李志跨年音乐会/忽然.lrc"
       },
       {
         "title": "和你在一起",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/和你在一起 (2015动静版) - 李志.flac",
         "lrc": "/flac/music/动静2015-2016李志跨年音乐会/和你在一起.lrc"
       },
       {
         "title": "墙上的向日葵",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/墙上的向日葵 (2015动静版) - 李志.flac",
         "lrc": "/flac/music/动静2015-2016李志跨年音乐会/墙上的向日葵.lrc"
       },
       {
         "title": "好威武支持有希望&倒影&青春&人民不需要自由",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/好威武支持有希望&倒影&青春&人民不需要自由 (2015动静版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "普希金",
-        "artist": "李志,丁薇",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/普希金 (2015动静版) - 李志丁薇.flac",
         "lrc": ""
       },
       {
         "title": "这个世界会好吗",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/动静2015-2016李志跨年音乐会/这个世界会好吗 (2015动静版) - 李志.flac",
         "lrc": ""
       }
@@ -349,77 +297,66 @@
 
   {
     "albumName": "北京不插电",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/2016.webp",
     "songs": [
       {
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/关于郑州的记忆 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/关于郑州的记忆.lrc",
         "title": "关于郑州的记忆"
       },
       {
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/大象 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/大象.lrc",
         "title": "大象"
       },
       {
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/定西 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/定西.lrc",
         "title": "定西"
       },
       {
         "title": "山阴路的夏天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/山阴路的夏天 (2016 unlugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/山阴路的夏天.lrc"
       },
       {
         "title": "春末的南方城市",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/春末的南方城市 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/春末的南方城市.lrc"
       },
       {
         "title": "杭州",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/杭州 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/杭州.lrc"
       },
       {
         "title": "热河",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/热河 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/热河.lrc"
       },
       {
         "title": "这个世界会好吗",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/这个世界会好吗 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/这个世界会好吗.lrc"
       },
       {
         "title": "鸵鸟",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/鸵鸟 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/鸵鸟.lrc"
       },
       {
         "title": "黑色信封",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/黑色信封 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/黑色信封.lrc"
       },
       {
         "title": "鼠说",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/鼠说 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/鼠说.lrc"
       },
       {
         "title": "结婚",
-        "artist": "朱格乐,张怡然,姚斌",
         "url": "https://flac.1701701.xyz/李志2016北京不插电现场/朱格乐,张怡然,姚斌 - 结婚 (2016 unplugged).flac",
         "lrc": "/flac/music/李志2016北京不插电现场/结婚.lrc"
       }
@@ -428,59 +365,51 @@
 
   {
     "albumName": "8",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/cd.webp",
     "songs": [
       {
         "title": "Hey Jude",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/Hey Jude.flac",
         "lrc": "/flac/music/8/Hey Jude.lrc"
       },
       {
         "title": "兰花草",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/兰花草.flac",
         "lrc": "/flac/music/8/兰花草.lrc"
       },
       {
         "title": "小螺号",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/小螺号.flac",
         "lrc": "/flac/music/8/小螺号.lrc"
       },
       {
         "title": "数鸭子",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/数鸭子.flac",
         "lrc": "/flac/music/8/数鸭子.lrc"
       },
       {
         "title": "朋友越多越快乐",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/朋友越多越快乐.flac",
         "lrc": "/flac/music/8/朋友越多越快乐.lrc"
       },
       {
         "title": "歌声与微笑",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/歌声与微笑.flac",
         "lrc": "/flac/music/8/歌声与微笑.lrc"
       },
       {
         "title": "蜗牛与黄鹂鸟",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/蜗牛与黄鹂鸟.flac",
         "lrc": "/flac/music/8/蜗牛与黄鹂鸟.lrc"
       },
       {
         "title": "送别",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/送别.flac",
         "lrc": ""
       },
       {
         "title": "采蘑菇的小姑娘",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/8/采蘑菇的小姑娘.flac",
         "lrc": "/flac/music/8/采蘑菇的小姑娘.lrc"
       }
@@ -489,53 +418,46 @@
   
  {
     "albumName": "在每一条伤心的应天大街上",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/ytdj.webp",
     "songs": [
       {
         "title": "一个夜晚",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/一个夜晚.flac",
         "lrc": "/flac/music/在每一条伤心的应天大街上/一个夜晚.lrc"
       },
       {
         "title": "一头偶像",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/一头偶像.flac",
         "lrc": "/flac/music/在每一条伤心的应天大街上/一头偶像.lrc"
       },
       {
         "title": "你好明天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/你好明天.flac",
         "lrc": "/flac/music/在每一条伤心的应天大街上/你好明天.lrc"
       },
       {
         "title": "克兰河",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/克兰河.flac",
         "lrc": "/flac/music/在每一条伤心的应天大街上/克兰河.lrc"
       },
       {
         "title": "哦吼",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/哦吼.flac",
         "lrc": "/flac/music/在每一条伤心的应天大街上/哦吼.lrc"
       },
       {
         "title": "在每一条伤心的应天大街上",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/在每一条伤心的应天大街上.flac",
         "lrc": "/flac/music/在每一条伤心的应天大街上/在每一条伤心的应天大街上.lrc"
       },
       {
         "title": "彩色派对",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/彩色派对.flac",
         "lrc": "/flac/music/在每一条伤心的应天大街上/彩色派对.lrc"
       },
       {
         "title": "死人",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/在每一条伤心的应天大街上/死人.flac",
         "lrc": "/flac/music/在每一条伤心的应天大街上/死人.lrc"
       }
@@ -545,77 +467,66 @@
   
   {
     "albumName": "电声与管弦乐",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/dian1.webp",
     "songs": [
       {
         "title": "序曲",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/01 - 序曲 (Live).flac",
         "lrc": ""
       },
       {
         "title": "杭州",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/02 - 杭州 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/杭州.lrc"
       },
       {
         "title": "尽头",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/03 - 尽头 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/尽头.lrc"
       },
       {
         "title": "定西",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/04 - 定西 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/定西.lrc"
       },
       {
         "title": "春末的南方城市",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/05 - 春末的南方城市 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/春末的南方城市.lrc"
       },
       {
         "title": "黑色信封",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/06 - 黑色信封 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/黑色信封.lrc"
       },
       {
         "title": "铅笔",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/07 - 铅笔 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/铅笔.lrc"
       },
       {
         "title": "和你在一起",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/08 - 和你在一起 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/和你在一起.lrc"
       },
       {
         "title": "墙上的向日葵",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/09 - 墙上的向日葵 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/墙上的向日葵.lrc"
       },
       {
         "title": "大象",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/10 - 大象 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/大象.lrc"
       },
       {
         "title": "门",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/11 - 门 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/门.lrc"
       },
       {
         "title": "回答",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐/12 - 回答 (Live).flac",
         "lrc": "/flac/music/电声与管弦乐/回答.lrc"
       }
@@ -623,59 +534,51 @@
   },
   {
     "albumName": "电声与管弦乐Ⅱ",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/电声与管弦乐Ⅱ.webp",
     "songs": [
       {
         "title": "一头偶像",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/一头偶像 (相信未来版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "你好明天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/你好明天 (相信未来版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "哦吼",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/哦吼 (相信未来版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "天空之城",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/天空之城 (相信未来版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "家乡",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/家乡 (相信未来版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "寻找",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/寻找 (相信未来版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "山阴路的夏天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/山阴路的夏天 (相信未来版) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "相信未来序曲",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/相信未来序曲 (乐曲) - 李志.flac",
         "lrc": ""
       },
       {
         "title": "这个世界会好吗",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/电声与管弦乐Ⅱ/这个世界会好吗 (相信未来版) - 李志.flac",
         "lrc": ""
       }
@@ -683,77 +586,66 @@
   },
     {
     "albumName": "爵士与不插电",
+    "artist": "李志",
     "cover": "/flac/music/爵士与不插电新编12首/Cover.jpg",
     "songs": [
       {
         "title": "一个夜晚",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/一个夜晚 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "关于郑州的记忆",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/关于郑州的记忆 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "卡夫卡",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/卡夫卡 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "死人",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/死人 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "热河",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/热河 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "爱",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/爱 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "看见",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/看见 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "离婚",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/离婚 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "翁庆年的六英镑",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/翁庆年的六英镑 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "董卓瑶",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/董卓瑶 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "鸵鸟",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/鸵鸟 (相信未来版)-李志.flac",
         "lrc": ""
       },
       {
         "title": "鼠说",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/爵士与不插电新编12首/鼠说 (相信未来版)-李志.flac",
         "lrc": ""
       }
@@ -761,59 +653,51 @@
   },
   {
     "albumName": "F",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/f.webp",
     "songs": [
       {
         "title": "寻找",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/01 - 寻找 .flac",
         "lrc": ""
       },
       {
         "title": "尽头",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/02 - 尽头 .flac",
         "lrc": ""
       },
       {
         "title": "门",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/03 - 门 .flac",
         "lrc": ""
       },
       {
         "title": "下雨",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/04 - 下雨 .flac",
         "lrc": ""
       },
       {
         "title": "山阴路的夏天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/05 - 山阴路的夏天 .flac",
         "lrc": ""
       },
       {
         "title": "女神",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/06 - 女神 .flac",
         "lrc": ""
       },
       {
         "title": "你的早晨",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/07 - 你的早晨 .flac",
         "lrc": ""
       },
       {
         "title": "杭州",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/08 - 杭州 .flac",
         "lrc": ""
       },
       {
         "title": "日",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/F/09 - 日 .flac",
         "lrc": ""
       }
@@ -821,149 +705,126 @@
   },
   {
     "albumName": "IMAGINE",
+    "artist": "李志",
     "cover": "https://img.1701701.xyz/api/0_preview/封面/Imagine.webp",
     "songs": [
       {
         "title": "青春",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/01. 青春.flac",
         "lrc": ""
       },
       {
         "title": "离婚",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/02. 离婚.flac",
         "lrc": ""
       },
       {
         "title": "我们不能失去信仰",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/03. 我们不能失去信仰.flac",
         "lrc": ""
       },
       {
         "title": "喀纳斯",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/04. 喀纳斯.flac",
         "lrc": ""
       },
       {
         "title": "天空之城",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/05. 天空之城.flac",
         "lrc": ""
       },
       {
         "title": "苍井空",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/06. 苍井空.flac",
         "lrc": ""
       },
       {
         "title": "关于郑州的记忆",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/07. 关于郑州的记忆.flac",
         "lrc": ""
       },
       {
         "title": "海的女儿",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/08. 海的女儿.flac",
         "lrc": ""
       },
       {
         "title": "她",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/09. 她.flac",
         "lrc": ""
       },
       {
         "title": "家乡",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/10. 家乡.flac",
         "lrc": ""
       },
       {
         "title": "结婚",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/11. 结婚.flac",
         "lrc": ""
       },
       {
         "title": "红色气球",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/12. 红色气球.flac",
         "lrc": ""
       },
       {
         "title": "被禁忌的游戏",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/13. 被禁忌的游戏.flac",
         "lrc": ""
       },
       {
         "title": "寻找",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/14. 寻找.flac",
         "lrc": ""
       },
       {
         "title": "斜",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/15. 斜.flac",
         "lrc": ""
       },
       {
         "title": "和你在一起",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/16. 和你在一起.flac",
         "lrc": ""
       },
       {
         "title": "门",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/17. 门.flac",
         "lrc": ""
       },
       {
         "title": "尽头",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/18. 尽头.flac",
         "lrc": ""
       },
       {
         "title": "女神",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/19. 女神.flac",
         "lrc": ""
       },
       {
         "title": "杭州",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/20. 杭州.flac",
         "lrc": ""
       },
       {
         "title": "翁庆年的六英镑",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/21. 翁庆年的六英镑.flac",
         "lrc": ""
       },
       {
         "title": "秋天的老狼",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/22. 秋天的老狼.flac",
         "lrc": ""
       },
       {
         "title": "1990的春天",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/23. 1990的春天.flac",
         "lrc": ""
       },
       {
         "title": "结尾",
-        "artist": "李志",
         "url": "https://flac.1701701.xyz/IMAGINE2011李志跨年音乐会/24. 结尾.flac",
         "lrc": ""
       }
