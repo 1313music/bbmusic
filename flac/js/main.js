@@ -56,6 +56,37 @@ var volume = 0.8;
 // 创建URLSearchParams对象并传入URL中的查询字符串
 const params = new URLSearchParams(window.location.search);
 
+// 加载状态指示器功能
+function showLoadingIndicator() {
+  hideLoadingIndicator(); // 先移除已存在的指示器
+  
+  const indicator = document.createElement('div');
+  indicator.className = 'loading-indicator';
+  indicator.id = 'music-loading-indicator';
+  
+  const spinner = document.createElement('div');
+  spinner.className = 'loading-spinner';
+  
+  const text = document.createElement('div');
+  text.textContent = '加载中...';
+  
+  indicator.appendChild(spinner);
+  indicator.appendChild(text);
+  
+  // 添加到播放器容器中
+  const playerContainer = document.getElementById('heoMusic-page');
+  if (playerContainer) {
+    playerContainer.appendChild(indicator);
+  }
+}
+
+function hideLoadingIndicator() {
+  const indicator = document.getElementById('music-loading-indicator');
+  if (indicator) {
+    indicator.remove();
+  }
+}
+
 var heo = {
   // 处理滚动和触摸事件的通用方法
   handleScrollOrTouch: function(event, isTouchEvent) {
@@ -275,7 +306,7 @@ var heo = {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: songName,
         artist: songArtist,
-        album: audio.album,
+        album: audio.album || '未知专辑', // 添加默认值以防专辑信息不存在
         artwork: [
           { src: coverUrl, sizes: '96x96', type: 'image/jpeg' },
           { src: coverUrl, sizes: '128x128', type: 'image/jpeg' },
@@ -403,6 +434,33 @@ var heo = {
   init: function() {
     this.getCustomPlayList();
     this.initScrollEvents();
+    this.initLoadingHandlers();
+  },
+
+  // 初始化加载状态处理器
+  initLoadingHandlers: function() {
+    // 等待APlayer初始化完成
+    const checkAPlayer = setInterval(() => {
+      if (typeof ap !== 'undefined' && ap.container) {
+        clearInterval(checkAPlayer);
+        
+        // 监听歌曲加载开始事件
+        ap.on('loadstart', () => {
+          showLoadingIndicator();
+        });
+        
+        // 监听歌曲可以播放事件
+        ap.on('canplay', () => {
+          hideLoadingIndicator();
+        });
+        
+        // 监听加载错误事件
+        ap.on('error', () => {
+          hideLoadingIndicator();
+          // 可以在这里添加错误提示
+        });
+      }
+    }, 100);
   },
 
   // 添加播放模式切换功能

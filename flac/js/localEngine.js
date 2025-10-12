@@ -25,13 +25,14 @@ if (Array.isArray(localMusic)) {
         albums.push({
           name: album.albumName,
           cover: albumCoverPath,
+          artist: album.artist || '未知艺术家', // 添加专辑艺术家信息
           songs: album.songs
         });
         
         album.songs.forEach(song => {
           flattenedLocalMusic.push({
             name: song.title,
-            artist: song.artist,
+            artist: song.artist || album.artist || '未知艺术家', // 如果歌曲没有artist字段，则使用专辑级别的artist
             url: song.url,
             cover: song.cover || albumCoverPath, // 如果歌曲有单独封面则使用，否则使用专辑封面
             lrc: song.lrc,
@@ -81,8 +82,8 @@ window.ap = new APlayer({
   listFolded: window.innerWidth < 768 ? true : false,
   order: false, // 禁用默认的播放顺序按钮
   loop: false, // 禁用默认的循环按钮
-  // 添加自定义配置，确保封面能够正常显示
-  preload: 'auto', // 预加载音频文件，确保封面正常显示
+  // 优化预加载策略，不自动加载音频文件
+  preload: 'none', // 改为不预加载，改为按需加载
   autoplay: false // 不自动播放
 });
 console.log('APlayer initialized:', window.ap);
@@ -827,7 +828,7 @@ function hideAlbumList() {
         // 创建歌曲列表
         const songList = album.songs.map(song => ({
           name: song.title,
-          artist: song.artist,
+          artist: song.artist || album.artist || '未知艺术家', // 如果歌曲没有artist字段，则使用专辑级别的artist
           url: encodeNonAscii(song.url),
           cover: encodeNonAscii(song.cover || album.cover),
           lrc: encodeNonAscii(song.lrc),
