@@ -16,4 +16,4 @@ var userType = "playlist";
 //     lrc: '/music/落.lrc'
 // }
 // ];
-var remoteMusic = "./musiclist.json"
+var remoteMusic = "./musiclist.json?t=20251012";
