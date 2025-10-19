@@ -889,9 +889,7 @@
         
 
         
-        .album-cover:hover img {
-            filter: brightness(1.2);
-        }
+
         
         /* 播放动效已移除 */
         
@@ -2001,9 +1999,7 @@
             transform: scale(1.1);
         }
         
-        .album-item:hover .album-image img {
-            filter: brightness(1.05);
-        }
+
         
         .album-info {
             padding: 6px;
