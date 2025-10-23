@@ -17,23 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.body.appendChild(qrModal);
     
-    // 创建FLAC确认弹窗
-    const flacModal = document.createElement('div');
-    flacModal.className = 'flac-modal';
-    flacModal.innerHTML = `
-        <div class="flac-content">
-            <div class="flac-close">
-                <svg class="svg-icon"><use href="#icon-close"></use></svg>
-            </div>
-            <h3 class="flac-title">提示</h3>
-            <p class="flac-message">无损音质文件较大，加载慢，是否切换无损播放器</p>
-            <div class="flac-buttons">
-                <button class="flac-confirm">是</button>
-                <button class="flac-cancel">否</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(flacModal);
+
     
     // 添加关闭图标
     const closeIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -58,23 +42,96 @@ document.addEventListener('DOMContentLoaded', function() {
     const qrImage = qrModal.querySelector('.qr-image img');
     const qrTitle = qrModal.querySelector('.qr-title');
     
-    // 获取FLAC按钮和弹窗元素
-    const flacBtn = document.getElementById('flac-btn');
-    const flacClose = document.querySelector('.flac-close');
-    const flacConfirm = document.querySelector('.flac-confirm');
-    const flacCancel = document.querySelector('.flac-cancel');
+
     
-    // 点击按钮显示二维码
+    // 点击按钮显示二维码或弹窗
     qrBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // 如果是FLAC按钮，显示确认对话框
-            if (btn.id === 'flac-btn') {
+            const qrFile = btn.getAttribute('data-qr');
+            const link = btn.getAttribute('data-link');
+            
+            // 如果是flac-btn按钮，显示确认弹窗
+            if (btn.id === 'flac-btn' && link) {
                 e.preventDefault();
+                
+                // 创建FLAC确认弹窗
+                const flacModal = document.createElement('div');
+                flacModal.className = 'qr-modal';
+                flacModal.innerHTML = `
+                    <div class="qr-content flac-content">
+                        <div class="qr-close">
+                            <svg class="svg-icon"><use href="#icon-close"></use></svg>
+                        </div>
+                        <h3 class="qr-title">FLAC无损播放器</h3>
+                        <div class="flac-message">
+                            <p>即将跳转到FLAC无损音质页面</p>
+                            <p>该页面包含高品质无损音乐文件 加载较慢</p>
+                        </div>
+                        <div class="flac-buttons">
+                            <button class="flac-confirm">确认跳转</button>
+                            <button class="flac-cancel">取消</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(flacModal);
+                
+                // 显示弹窗
                 flacModal.classList.add('active');
+                
+                // 确认按钮事件
+                const confirmBtn = flacModal.querySelector('.flac-confirm');
+                confirmBtn.addEventListener('click', () => {
+                    window.open(link, '_blank');
+                    flacModal.classList.remove('active');
+                    setTimeout(() => {
+                        if (document.body.contains(flacModal)) {
+                            document.body.removeChild(flacModal);
+                        }
+                    }, 300);
+                });
+                
+                // 取消按钮事件
+                const cancelBtn = flacModal.querySelector('.flac-cancel');
+                cancelBtn.addEventListener('click', () => {
+                    flacModal.classList.remove('active');
+                    setTimeout(() => {
+                        if (document.body.contains(flacModal)) {
+                            document.body.removeChild(flacModal);
+                        }
+                    }, 300);
+                });
+                
+                // 关闭按钮事件
+                const closeBtn = flacModal.querySelector('.qr-close');
+                closeBtn.addEventListener('click', () => {
+                    flacModal.classList.remove('active');
+                    setTimeout(() => {
+                        if (document.body.contains(flacModal)) {
+                            document.body.removeChild(flacModal);
+                        }
+                    }, 300);
+                });
+                
+                // 点击背景关闭
+                flacModal.addEventListener('click', (event) => {
+                    if (event.target === flacModal) {
+                        flacModal.classList.remove('active');
+                        setTimeout(() => {
+                            if (document.body.contains(flacModal)) {
+                                document.body.removeChild(flacModal);
+                            }
+                        }, 300);
+                    }
+                });
+                
                 return;
             }
             
-            const qrFile = btn.getAttribute('data-qr');
+            // 如果有data-link属性，则跳转链接，不显示二维码
+            if (link) {
+                window.open(link, '_blank');
+                return;
+            }
             
             // 阻止默认行为，显示二维码
             e.preventDefault();
@@ -102,29 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // FLAC确认弹窗事件处理
-    flacClose.addEventListener('click', () => {
-        flacModal.classList.remove('active');
-    });
-    
-    flacCancel.addEventListener('click', () => {
-        flacModal.classList.remove('active');
-    });
-    
-    flacConfirm.addEventListener('click', () => {
-        const flacLink = flacBtn.getAttribute('data-link');
-        if (flacLink) {
-            window.open(flacLink, '_blank');
-        }
-        flacModal.classList.remove('active');
-    });
-    
-    // 点击FLAC弹窗背景关闭弹窗
-    flacModal.addEventListener('click', (e) => {
-        if (e.target === flacModal) {
-            flacModal.classList.remove('active');
-        }
-    });
+
     
     // 添加弹窗样式
     const style = document.createElement('style');
@@ -230,120 +265,59 @@ document.addEventListener('DOMContentLoaded', function() {
             color: var(--accent);
         }
         
-        /* FLAC确认弹窗样式 */
-        .flac-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 8889;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .flac-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
+        /* FLAC弹窗样式 */
         .flac-content {
-            background: rgba(30, 30, 40, 0.95);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
-            padding: 25px;
             max-width: 350px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-        
-        .flac-modal.active .flac-content {
-            transform: scale(1);
-        }
-        
-        .flac-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: background 0.3s ease;
-        }
-        
-        .flac-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .flac-close .svg-icon {
-            width: 16px;
-            height: 16px;
-            color: #fff;
-        }
-        
-        .flac-title {
-            margin: 0 0 15px;
-            color: var(--primary);
-            font-size: 20px;
+            padding: 25px;
         }
         
         .flac-message {
-            margin: 0 0 20px;
-            color: #e0e6f0;
-            font-size: 16px;
+            margin: 15px 0;
+            text-align: center;
+            color: #a0a8c0;
             line-height: 1.5;
+        }
+        
+        .flac-message p {
+            margin: 8px 0;
         }
         
         .flac-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
+            margin-top: 20px;
         }
         
         .flac-confirm, .flac-cancel {
-            padding: 8px 20px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .flac-confirm {
-            background: rgba(212, 175, 55, 0.3);
-            color: var(--primary);
-            border: 1px solid rgba(212, 175, 55, 0.5);
+            background: var(--primary);
+            color: #000;
         }
         
         .flac-confirm:hover {
-            background: rgba(212, 175, 55, 0.5);
-            color: var(--accent);
+            background: rgba(212, 175, 55, 0.9);
+            transform: translateY(-2px);
         }
         
         .flac-cancel {
             background: rgba(255, 255, 255, 0.1);
-            color: #a0a8c0;
+            color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .flac-cancel:hover {
             background: rgba(255, 255, 255, 0.2);
-            color: #fff;
+            transform: translateY(-2px);
         }
         
         @media (max-width: 768px) {
@@ -357,8 +331,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             .flac-confirm, .flac-cancel {
-                padding: 6px 16px;
+                padding: 8px 16px;
                 font-size: 14px;
+            }
+            
+            .flac-buttons {
+                gap: 10px;
             }
         }
     `;
