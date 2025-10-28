@@ -237,9 +237,7 @@
                     <svg class="svg-icon"><use href="#icon-list"></use></svg> 歌曲列表
                     <div class="quality-indicator" id="mobile-quality-indicator" title="音质切换">HQ</div>
                 </div>
-                <div class="songs-list" id="songs-list-desktop">
-                    <!-- 歌曲列表内容由JavaScript动态生成 -->
-                </div>
+                <div class="songs-list" id="songs-list-desktop"> </div>
             </aside>
             
             <!-- 主播放器区域 -->
@@ -334,16 +332,12 @@
             </div>
             <div class="quality-indicator" id="quality-indicator" title="音质切换">HQ</div>
             </div>
-            <div class="songs-list" id="songs-list-mobile">
-                <!-- 歌曲列表内容由JavaScript动态生成 -->
-            </div>
+            <div class="songs-list" id="songs-list-mobile"></div>
         </div>
         
         <!-- 专辑列表 -->
         <section class="albums-section">
-            <div class="albums-list" id="albums-list">
-                <!-- 专辑列表内容由JavaScript动态生成 -->
-            </div>
+            <div class="albums-list" id="albums-list"> </div>
         </section>
         
         <!-- 音质选择弹窗 -->
@@ -416,67 +410,13 @@
     
     <!-- 音乐播放元素 -->
     <audio id="audio-player" preload="metadata"></audio>
-    
-    <!-- JavaScript -->
-    <script>
-        // 根据URL参数加载对应的歌单
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const quality = urlParams.get('quality') || 'mp3'; // 默认为mp3
-            
-            // 根据音质参数加载对应的歌单
-            if (quality === 'mp3') {
-                // HQ模式：先加载other.list，再加载mp3list.js
-                const otherScript = document.createElement('script');
-                otherScript.src = 'js/other.js?t=' + Date.now();
-                otherScript.onload = function() {
-                    console.log('other.list加载完成');
-                    const mp3Script = document.createElement('script');
-                    mp3Script.src = 'js/mp3list.js?t=2025102801';
-                    mp3Script.onload = function() {
-                        console.log('mp3list.js加载完成');
-                        loadMusicPlayer();
-                    };
-                    document.head.appendChild(mp3Script);
-                };
-                document.head.appendChild(otherScript);
-            } else {
-                // SQ模式：直接加载flaclist.js
-                const flacScript = document.createElement('script');
-                flacScript.src = 'js/flaclist.js?t=2025102801';
-                flacScript.onload = function() {
-                    console.log('flaclist.js加载完成');
-                    loadMusicPlayer();
-                };
-                document.head.appendChild(flacScript);
-            }
-            
-            function loadMusicPlayer() {
-                // 歌单加载完成后，再加载音乐播放器
-                const musicScript = document.createElement('script');
-                musicScript.src = 'js/music.js?t=2025102801';
-                musicScript.onload = function() {
-                    console.log('音乐播放器加载完成');
-                    // 手动触发音乐播放器初始化
-                    if (typeof initMusicPlayer === 'function') {
-                        console.log('调用initMusicPlayer函数');
-                        initMusicPlayer();
-                    }
-                };
-                document.head.appendChild(musicScript);
-            }
-        });
-    </script>
+    <script src="js/load-music.js?t=2025102801"></script>
     <script src="js/comments-toggle.js?t=2025102401"></script>
     <script src="js/comments-buttons.js?t=2025102401"></script>
-    <!-- Waline 库 -->
     <script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
-    <!-- Waline 初始化脚本 -->
     <script src="js/hello.js"></script>
     <script defer src="https://tongji.1701701.xyz/1701701.xyz" data-website-id="620f8452-9530-409a-9fa5-909ea0297d88"></script>
-    <button id="back-to-top" class="back-to-top" aria-label="回到顶部">
-    <svg class="svg-icon"><use href="#icon-arrow-up"></use></svg>
-    </button>
+    <button id="back-to-top" class="back-to-top" aria-label="回到顶部"><svg class="svg-icon"><use href="#icon-arrow-up"></use></svg></button>
     <canvas id="universe"></canvas>
     <script src="js/nightsky.js"></script>
 </body>
