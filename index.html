@@ -79,7 +79,7 @@
     }
     </script>
     <link rel="icon" href="https://1701701.xyz/favicon.ico" type="image/x-icon" />   
-    <link rel="stylesheet" href="css/music.css?t=2025102401">
+    <link rel="stylesheet" href="css/music.css?t=2025102801">
     <link rel="stylesheet" href="css/waline.css?t=2025101002">
     <link rel="stylesheet" href="css/nightsky.css">
     <link rel="stylesheet" href="css/svg-icons.css?t=2025101002">
@@ -235,6 +235,7 @@
             <aside class="songs-sidebar" id="songs-sidebar">
                 <div class="songs-header">
                     <svg class="svg-icon"><use href="#icon-list"></use></svg> 歌曲列表
+                    <div class="quality-indicator" id="mobile-quality-indicator" title="音质切换">HQ</div>
                 </div>
                 <div class="songs-list" id="songs-list-desktop">
                     <!-- 歌曲列表内容由JavaScript动态生成 -->
@@ -247,7 +248,7 @@
                     <!-- 专辑封面区域（封面页面） -->
                     <div class="cover-page active" id="cover-page">
                         <!-- 专辑封面 -->
-                        <div class="album-cover" id="album-cover">
+                        <div class="album-cover" id="album-cover" onclick="togglePage()">
                             <div class="cover-image">
                                 <img src="img/zh.jpg" alt="专辑封面" id="cover-image">
                             </div>
@@ -259,24 +260,29 @@
                         <div class="player-info">
                             <h2 class="song-title" id="song-title">民谣俱乐部</h2>
                             <p class="song-artist" id="song-artist">1701701.xyz</p>
-                            <div class="lyrics-indicator" id="lyrics-indicator" title="歌词状态">LRC</div>
-                            <div class="quality-indicator" id="quality-indicator" title="音质切换">HQ</div>
                         </div>
                     </div>
-                    
+
                     <!-- 歌词显示区域（歌词页面） -->
                     <div class="lyrics-page" id="lyrics-page">
-                        <div class="lyrics-container" id="lyrics-container">
-                            <!-- 歌曲信息 -->
+                        <!-- 歌曲信息 -->
                         <div class="player-info">
                             <h2 class="song-title" id="lyrics-song-title">民谣俱乐部</h2>
                             <p class="song-artist" id="lyrics-song-artist">1701701.xyz</p>
-                            <div class="lyrics-indicator" id="lyrics-indicator-2" title="歌词状态">LRC</div>
-                            <div class="quality-indicator" id="quality-indicator-2" title="音质切换">HQ</div>
                         </div>
+                        <div class="lyrics-container">
                             <div class="lyrics-content" id="lyrics-content">
-                                <div class="lyrics-lines" id="lyrics-lines">
-                                    <div class="lyrics-line">暂无歌词</div>
+                                <p class="lyrics-line">点击封面查看歌词</p>
+                            </div>
+                            <!-- 时间线元素 -->
+                            <div class="lyrics-timeline" id="lyrics-timeline">
+                                <div class="timeline-content">
+                                    <div class="timeline-time" id="timeline-time">00:00</div>
+                                    <div class="timeline-play-btn" id="timeline-play-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -323,12 +329,10 @@
         <!-- 移动端歌曲列表 -->
         <div class="mobile-songs-list" id="mobile-songs-container">
             <div class="songs-header">
-                <div class="songs-title">
+            <div class="songs-title">
                 <svg class="svg-icon"><use href="#icon-list"></use></svg> 歌曲列表
             </div>
-            <div class="collapse-btn" id="mobile-songs-collapse">
-                <svg class="svg-icon"><use href="#icon-chevron-up"></use></svg>
-            </div>
+            <div class="quality-indicator" id="quality-indicator" title="音质切换">HQ</div>
             </div>
             <div class="songs-list" id="songs-list-mobile">
                 <!-- 歌曲列表内容由JavaScript动态生成 -->
@@ -410,10 +414,6 @@
          </footer>
     </div>
     
-    
-
-    
-    
     <!-- 音乐播放元素 -->
     <audio id="audio-player" preload="metadata"></audio>
     
@@ -425,21 +425,46 @@
             const quality = urlParams.get('quality') || 'mp3'; // 默认为mp3
             
             // 根据音质参数加载对应的歌单
-            const script = document.createElement('script');
-            script.src = quality === 'flac' ? 'js/flaclist.js?t=2025102401' : 'js/mp3list.js?t=2025102401';
-            script.onload = function() {
+            if (quality === 'mp3') {
+                // HQ模式：先加载other.list，再加载mp3list.js
+                const otherScript = document.createElement('script');
+                otherScript.src = 'js/other.list?t=' + Date.now();
+                otherScript.onload = function() {
+                    console.log('other.list加载完成');
+                    const mp3Script = document.createElement('script');
+                    mp3Script.src = 'js/mp3list.js?t=2025102801';
+                    mp3Script.onload = function() {
+                        console.log('mp3list.js加载完成');
+                        loadMusicPlayer();
+                    };
+                    document.head.appendChild(mp3Script);
+                };
+                document.head.appendChild(otherScript);
+            } else {
+                // SQ模式：直接加载flaclist.js
+                const flacScript = document.createElement('script');
+                flacScript.src = 'js/flaclist.js?t=2025102801';
+                flacScript.onload = function() {
+                    console.log('flaclist.js加载完成');
+                    loadMusicPlayer();
+                };
+                document.head.appendChild(flacScript);
+            }
+            
+            function loadMusicPlayer() {
                 // 歌单加载完成后，再加载音乐播放器
                 const musicScript = document.createElement('script');
-                musicScript.src = 'js/music.js?t=2025102401';
+                musicScript.src = 'js/music.js?t=2025102801';
                 musicScript.onload = function() {
+                    console.log('音乐播放器加载完成');
                     // 手动触发音乐播放器初始化
                     if (typeof initMusicPlayer === 'function') {
+                        console.log('调用initMusicPlayer函数');
                         initMusicPlayer();
                     }
                 };
                 document.head.appendChild(musicScript);
-            };
-            document.head.appendChild(script);
+            }
         });
     </script>
     <script src="js/comments-toggle.js?t=2025102401"></script>
