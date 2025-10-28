@@ -428,7 +428,7 @@
             if (quality === 'mp3') {
                 // HQ模式：先加载other.list，再加载mp3list.js
                 const otherScript = document.createElement('script');
-                otherScript.src = 'js/other.list?t=' + Date.now();
+                otherScript.src = 'js/other.js?t=' + Date.now();
                 otherScript.onload = function() {
                     console.log('other.list加载完成');
                     const mp3Script = document.createElement('script');
