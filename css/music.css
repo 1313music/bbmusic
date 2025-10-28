@@ -567,19 +567,31 @@
             transform: translateY(20px);
         }
         
+        /* 歌词页面特定布局 */
+        .lyrics-page {
+            justify-content: flex-start; /* 从顶部开始布局 */
+            padding-top: 20px; /* 减少顶部内边距，为歌词提供更多空间 */
+        }
+        
         @media (max-width: 1024px) {
             .cover-page,
             .lyrics-page {
                 height: calc(100% - 140px);
                 padding: 15px;
             }
+            
+            .lyrics-page {
+                padding-top: 18px; /* 调整顶部内边距，为歌词提供更多空间 */
+            }
         }
         
         @media (max-width: 768px) {
-            .cover-page,
             .lyrics-page {
-                height: calc(100% - 120px);
-                padding: 0 10px;
+                padding-top: 15px; /* 减少移动端顶部内边距，为歌词提供更多空间 */
+            }
+            
+            .lyrics-page .player-info {
+                margin-bottom: 8px; /* 减少播放器信息底部外边距 */
             }
         }
         
@@ -587,7 +599,12 @@
             .cover-page,
             .lyrics-page {
                 height: calc(100% - 100px);
-                padding:0  10px;
+                padding-top: 12px; /* 进一步减少小屏幕顶部内边距，为歌词提供更多空间 */
+                
+            }
+            
+            .lyrics-page .player-info {
+                margin-bottom: 6px; /* 减少播放器信息底部外边距 */
             }
         }
         
@@ -596,31 +613,30 @@
             justify-content: center; /* 恢复居中显示 */
         }
         
-        .cover-page.active,
+        .cover-page.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            z-index: 30;
+        }
+        
         .lyrics-page.active {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
-        }
-        
-        .cover-page {
-            z-index: 10;
-           
-        }
-        
-        .lyrics-page {
             z-index: 20;
-            background: transparent;
         }
         
         /* 歌词页面的player-info样式 */
         .lyrics-page .player-info {
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
+            margin-top: 0;
             width: 100%;
             max-width: 100%;
             z-index: 10;
             position: relative;
+            order: -1; /* 确保player-info显示在最前面 */
         }
 
         .lyrics-page .player-info h1 {
@@ -730,6 +746,8 @@
             margin-bottom: 40px;
             max-width: 100%;
             max-height: 50vh;
+            z-index: 10;
+            pointer-events: auto;
         }
         
         @media (max-width: 1024px) {
@@ -802,6 +820,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            pointer-events: none; /* 确保不会阻止点击事件 */
         }
         
         @media (max-width: 1024px) {
@@ -944,39 +963,13 @@
             width: 100%;
         }
         
-        /* LRC歌词指示器样式 */
-        .lyrics-indicator {
-            position: absolute;
-            top: 32px;
-            left: 32px;
-            padding: 6px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px !important;
-            font-weight: 600 !important;
-            letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            opacity: 0.9;
-            backdrop-filter: blur(8px);
-            z-index: 10;
-            text-transform: uppercase;
-            box-sizing: border-box; /* 确保盒模型一致 */
-            line-height: 1; /* 确保行高一致 */
-            font-family: inherit !important; /* 强制继承字体 */
-        }
-        
+        /* 音质指示器样式 */
         .quality-indicator {
-            position: absolute;
-            top: 90px;
-            left: 32px;
+            position: relative;
+          
+           right:0;
             padding: 6px;
-            border-radius: 6px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -995,14 +988,6 @@
             box-sizing: border-box; /* 确保盒模型一致 */
             line-height: 1; /* 确保行高一致 */
             font-family: inherit !important; /* 强制继承字体 */
-        }
-        
-        .lyrics-indicator.active {
-            color: var(--primary);
-            background: rgba(212, 175, 55, 0.25);
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-            opacity: 1;
         }
         
         .quality-indicator.active {
@@ -1021,53 +1006,27 @@
             opacity: 1;
         }
         
-        .lyrics-indicator:hover {
-            transform: translateY(-1px);
-        }
-        
         .quality-indicator:hover {
             transform: translateY(-1px);
         }
         
         @media (max-width: 1024px) {
-            .lyrics-indicator {
-                top: 33px;
-                left: 33px;
-            }
-            
             .quality-indicator {
-                top: 91px;
-                left: 33px;
+              
             }
         }
         
         @media (max-width: 768px) {
-            .lyrics-indicator {
-                top: 25px;
-                left: 25px;
-                padding: 5px    ;
-                font-size: 11px;
-            }
-            
             .quality-indicator {
-                top: 78px;
-                left: 25px;
+               
                 padding: 5px;
                 font-size: 11px;
             }
         }
         
         @media (max-width: 480px) {
-            .lyrics-indicator {
-                top: 21px;
-                left: 21px;
-                padding: 4px;
-                font-size: 10px;
-            }
-            
             .quality-indicator {
-                top: 69px;
-                left: 21px;
+                
                 padding: 4px;
                 font-size: 10px;
             }
@@ -1089,8 +1048,6 @@
             transition: all 0.3s ease;
             /* 统一使用金色样式 */
             color: #ffd700;
-            background: rgba(255, 215, 0, 0.15);
-            border: 1px solid rgba(255, 215, 0, 0.3);
         }
         
         .song-item:hover .quality-badge {
@@ -1170,7 +1127,7 @@
         }
         
         .quality-option {
-            padding: 15px;
+            padding: 10px;
             margin-bottom: 10px;
             border-radius: var(--radius-md);
             background: rgba(255, 255, 255, 0.05);
@@ -1261,11 +1218,6 @@
         .quality-option-desc {
             font-size: 14px;
             color: var(--text-secondary);
-        }
-        
-        /* 歌词页隐藏LRC指示器 */
-        .lyrics-page .lyrics-indicator {
-            display: none;
         }
         
         /* 歌词页隐藏音质指示器 */
@@ -1616,7 +1568,7 @@
         /* 歌词显示样式 */
         .lyrics-container {
             width: 100%;
-            height: calc(100% - 0px); /* 增加高度 */
+            height: 100%; /* 让歌词容器占据全部可用空间 */
             margin: 0 auto;
             background: transparent;
             border: none;
@@ -1628,25 +1580,27 @@
             justify-content: center;
             align-items: center;
             max-width: 100%;
+            flex: 1; /* 让歌词容器占据剩余空间 */
+            position: relative;
         }
         
         @media (max-width: 1024px) {
             .lyrics-container {
-                height: calc(100% - 10px);
+                height: 100%; /* 确保歌词容器占据全部可用空间 */
             }
         }
         
         @media (max-width: 768px) {
             .lyrics-container {
-                margin: 5px auto; /* 减少外边距 */
-                height: calc(100% - 20px); /* 增加高度，减少顶部和底部留白 */
+                margin: 3px auto; /* 减少外边距 */
+                height: 100%; /* 确保歌词容器占据全部可用空间 */
             }
         }
         
         @media (max-width: 480px) {
             .lyrics-container {
-                margin: 3px auto;
-                height: calc(100% - 30px);
+                margin: 2px auto; /* 进一步减少外边距 */
+                height: 100%; /* 确保歌词容器占据全部可用空间 */
             }
         }
         
@@ -1684,6 +1638,7 @@
                 black 85%,
                 transparent 100%
             );
+            height: 100%; /* 确保高度填满容器 */
         }
         
         @media (max-width: 1024px) {
@@ -1695,23 +1650,114 @@
         
         @media (max-width: 768px) {
             .lyrics-content {
-                max-height: 200px; /* 增加最大高度 */
                 padding: 15px 8px 8px; /* 增加顶部内边距 */
                 max-width: 100%;
+                height: 100%; /* 确保高度填满容器 */
             }
         }
         
         @media (max-width: 480px) {
             .lyrics-content {
-                max-height: 150px;
                 padding: 12px 8px 8px; /* 增加顶部内边距 */
                 max-width: 100%;
+                height: 100%; /* 确保高度填满容器 */
             }
         }
         
         /* 隐藏滚动条 - Webkit浏览器 (Chrome, Safari等) */
         .lyrics-content::-webkit-scrollbar {
             display: none; /* Chrome, Safari, Opera */
+        }
+        
+        /* 时间线样式 - 网易云音乐风格 */
+        .lyrics-timeline {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .lyrics-timeline.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        /* 时间线中间的指示线 - 缩短长度 */
+        .lyrics-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px;
+            height: 30px;
+            background: var(--primary);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        
+        /* 时间线容器 */
+        .timeline-content {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .timeline-time {
+            position: absolute;
+            left: 10px;
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+            min-width: 50px;
+        }
+        
+        .timeline-play-btn {
+            position: absolute;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .timeline-play-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .timeline-play-btn svg {
+            color: var(--primary);
+            width: 24px;
+            height: 24px;
+        }
+        
+        /* 时间线高亮歌词样式 - 网易云音乐风格 */
+        .lyrics-line.highlight {
+            background: rgba(212, 175, 55, 0.15);
+            border-left: 3px solid var(--primary);
+            border-radius: 0 4px 4px 0;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+            cursor: pointer;
         }
         
         
@@ -1780,6 +1826,7 @@
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
             transform: scale(1.05);
             opacity: 1; /* 完全显示 */
+            cursor: pointer;
         }
         
         .lyrics-line.past {
@@ -1924,7 +1971,7 @@
         }
         
         .songs-header {
-            padding: 15px ;
+            padding: 25px ;
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
             font-size: 18px;
             font-weight: 600;
@@ -1943,6 +1990,78 @@
             fill: currentColor;
             overflow: hidden;
             transform: scale(0.8);
+        }
+        
+        /* 电脑端音质切换按钮样式 */
+        .songs-sidebar .quality-indicator {
+            padding: 4px 8px;
+         
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-left: auto;
+            z-index: 2;
+        }
+        
+        .songs-sidebar .quality-indicator.active {
+            color: var(--primary);
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+        
+        .songs-sidebar .quality-indicator.hq-active {
+            color: var(--primary);
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+        
+        .songs-sidebar .quality-indicator:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 移动端音质切换按钮样式 */
+        @media (max-width: 1023px) {
+            .mobile-songs-list .quality-indicator {
+                padding: 4px 8px;
+          
+                font-size: 12px;
+                font-weight: 600;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: var(--text-secondary);
+                cursor: pointer;
+                transition: all 0.3s ease;
+                flex-shrink: 0;
+                margin-left: auto;
+                z-index: 2;
+            }
+            
+            .mobile-songs-list .quality-indicator.active {
+                color: var(--primary);
+                background: rgba(212, 175, 55, 0.15);
+                border: 1px solid rgba(212, 175, 55, 0.3);
+                box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            }
+            
+            .mobile-songs-list .quality-indicator.hq-active {
+                color: var(--primary);
+                background: rgba(212, 175, 55, 0.15);
+                border: 1px solid rgba(212, 175, 55, 0.3);
+                box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            }
+            
+            .mobile-songs-list .quality-indicator:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
         }
         
         .songs-list {
@@ -2316,10 +2435,11 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 15px 20px;
+                padding: 15px;
                 cursor: pointer;
                 width: 100%;
                 box-sizing: border-box;
+                position: relative;
             }
             
             .mobile-songs-list .songs-title {
@@ -2329,6 +2449,10 @@
                 font-weight: 500;
                 color: var(--text-primary);
                 flex-grow: 1;
+                justify-content: flex-start;
+                text-align: left;
+                position: relative;
+                z-index: 1;
             }
             
             .mobile-songs-list .songs-title .svg-icon {
@@ -2342,39 +2466,9 @@
                 transform: scale(0.8);
             }
             
-            .mobile-songs-list .collapse-btn {
-                width: 32px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                color: var(--text-secondary);
-                flex-shrink: 0;
-                position: relative;
-            }
+
             
-            .mobile-songs-list .collapse-btn .svg-icon {
-                width: 22px;
-                height: 22px;
-                transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.3s ease;
-                transform: rotate(0deg);
-                will-change: transform; /* 优化旋转动画性能 */
-                color: white;
-            }
-            
-            .mobile-songs-list.collapsed .collapse-btn .svg-icon {
-                transform: rotate(180deg);
-            }
-            
-            .mobile-songs-list .collapse-btn:hover {
-                color: var(--primary);
-            }
-            
-            .mobile-songs-list .collapse-btn:hover .svg-icon {
-                color: var(--primary);
-            }
+
             
             .mobile-songs-list .songs-list {
         max-height: 250px; /* 约5首歌曲的高度 */
