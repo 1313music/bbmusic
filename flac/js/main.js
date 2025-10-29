@@ -19,18 +19,44 @@ if (typeof userType === 'undefined') {
 }
 
 if (typeof remoteMusic !== 'undefined' && remoteMusic) {
-  fetch(remoteMusic)
-    .then(response => response.json())
-    .then(data => {
-      if (Array.isArray(data)) {
-        localMusic = data;
+  // 从URL中移除查询参数
+  const musicUrl = remoteMusic.split('?')[0];
+  
+  // 如果remoteMusic以.js结尾，说明是JS文件，直接使用全局变量musicList
+  if (musicUrl.endsWith('.js')) {
+    // 动态加载JS文件
+    const script = document.createElement('script');
+    script.src = remoteMusic;
+    script.onload = function() {
+      // 检查全局变量musicList是否存在
+      if (typeof musicList !== 'undefined' && Array.isArray(musicList)) {
+        localMusic = musicList;
+        loadMusicScript();
+      } else {
+        console.error('musicList variable not found in musiclist.js');
+        loadMusicScript();
       }
+    };
+    script.onerror = function() {
+      console.error('Failed to load musiclist.js');
       loadMusicScript();
-    })
-    .catch(error => {
-      console.error('Error fetching remoteMusic:', error);
-      loadMusicScript();
-    });
+    };
+    document.head.appendChild(script);
+  } else {
+    // 原有的JSON加载逻辑
+    fetch(remoteMusic)
+      .then(response => response.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          localMusic = data;
+        }
+        loadMusicScript();
+      })
+      .catch(error => {
+        console.error('Error fetching remoteMusic:', error);
+        loadMusicScript();
+      });
+  }
 } else {
   loadMusicScript();
 }
