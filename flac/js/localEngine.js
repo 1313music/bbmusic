@@ -446,7 +446,7 @@ albumListContent.style.cssText = `
 // 创建专辑列表标题
 const albumListTitle = document.createElement('div');
 albumListTitle.className = 'album-list-title';
-albumListTitle.textContent = '民谣俱乐部 无损专辑列表';
+albumListTitle.textContent = '民谣俱乐部 专辑列表';
 albumListTitle.style.cssText = `
   font-size: 24px;
   font-weight: bold;
@@ -482,7 +482,7 @@ albumListFooter.style.cssText = `
 // 创建提示信息
 const warningText = document.createElement('div');
 warningText.className = 'album-list-warning';
-warningText.textContent = '无损音源文件较大，加载慢请耐心等待';
+warningText.textContent = '1701701.xyz';
 warningText.style.cssText = `
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
