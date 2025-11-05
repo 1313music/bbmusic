@@ -62,10 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="qr-close">
                             <svg class="svg-icon"><use href="#icon-close"></use></svg>
                         </div>
-                        <h3 class="qr-title">FLAC无损播放器</h3>
+                        <h3 class="qr-title">音乐播放器II</h3>
                         <div class="flac-message">
-                            <p>即将跳转到FLAC无损音质页面</p>
-                            <p>该页面包含高品质无损音乐文件 加载较慢</p>
+                            <p>即将跳转到不同风格的音乐播放器II</p>
                         </div>
                         <div class="flac-buttons">
                             <button class="flac-confirm">确认跳转</button>

@@ -1,1 +1,48 @@
-eval(function(p,a,c,k,e,r){e=function(c){return c.toString(36)};if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'[0-9a-p]'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('2 g(){3 6=1.7(\'8\');6.9=\'0/music.0?t=h\';6.a=2(){4.5(\'音乐播放器加载完成\');k(typeof i===\'2\'){4.5(\'调用i函数\');i()}};1.b.c(6)}1.addEventListener(\'DOMContentLoaded\',2(){3 l=new URLSearchParams(window.location.search);3 j=l.get(\'j\')||\'m\';k(j===\'m\'){3 d=1.7(\'8\');d.9=\'0/n.0?t=\'+Date.now();d.a=2(){4.5(\'n.0加载完成\');3 e=1.7(\'8\');e.9=\'0/o.0?t=h\';e.a=2(){4.5(\'o.0加载完成\');g()};1.b.c(e)};1.b.c(d)}else{3 f=1.7(\'8\');f.9=\'0/p.0?t=h\';f.a=2(){4.5(\'p.0加载完成\');g()};1.b.c(f)}});',[],26,'js|document|function|const|console|log|musicScript|createElement|script|src|onload|head|appendChild|otherScript|mp3Script|flacScript|loadMusicPlayer|2025102801|initMusicPlayer|quality|if|urlParams|mp3|other|mp3list|flaclist'.split('|'),0,{}))
+// 音乐播放器加载脚本
+function loadMusicPlayer() {
+    // 歌单加载完成后，再加载音乐播放器
+    const musicScript = document.createElement('script');
+    musicScript.src = 'js/music.js?t=2025110501';
+    musicScript.onload = function() {
+        console.log('音乐播放器加载完成');
+        // 手动触发音乐播放器初始化
+        if (typeof initMusicPlayer === 'function') {
+            console.log('调用initMusicPlayer函数');
+            initMusicPlayer();
+        }
+    };
+    document.head.appendChild(musicScript);
+}
+
+// 根据URL参数加载对应的歌单
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const quality = urlParams.get('quality') || 'mp3'; // 默认为mp3
+    
+    // 根据音质参数加载对应的歌单
+    if (quality === 'mp3') {
+        // HQ模式：先加载other.js，再加载mp3list.js
+        const otherScript = document.createElement('script');
+        otherScript.src = 'js/other.js?t=' + Date.now();
+        otherScript.onload = function() {
+            console.log('other.js加载完成');
+            const mp3Script = document.createElement('script');
+            mp3Script.src = 'js/mp3list.js?t=2025102801';
+            mp3Script.onload = function() {
+                console.log('mp3list.js加载完成');
+                loadMusicPlayer();
+            };
+            document.head.appendChild(mp3Script);
+        };
+        document.head.appendChild(otherScript);
+    } else {
+        // SQ模式：直接加载flaclist.js
+        const flacScript = document.createElement('script');
+        flacScript.src = 'js/flaclist.js?t=2025102801';
+        flacScript.onload = function() {
+            console.log('flaclist.js加载完成');
+            loadMusicPlayer();
+        };
+        document.head.appendChild(flacScript);
+    }
+});
