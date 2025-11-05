@@ -1467,10 +1467,12 @@
     transform: translateY(-1px);
 }
 
-.comments-btn .svg-icon {
+.comments-btn .svg-icon,
+.comments-btn .icon {
     width: 24px;
     height: 24px;
     color: var(--primary);
+    fill: var(--primary);
 }
 
 /* 联系按钮图标保持统一大小 */
