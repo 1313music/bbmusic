@@ -2,7 +2,7 @@
 function loadMusicPlayer() {
     // 歌单加载完成后，再加载音乐播放器
     const musicScript = document.createElement('script');
-    musicScript.src = 'js/music.js?t=2025110501';
+    musicScript.src = 'js/music.js?t=2025110801';
     musicScript.onload = function() {
         console.log('音乐播放器加载完成');
         // 手动触发音乐播放器初始化
