@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         otherScript.onload = function() {
             console.log('other.js加载完成');
             const mp3Script = document.createElement('script');
-            mp3Script.src = 'js/mp3list.js?t=2025102801';
+            mp3Script.src = 'js/mp3list.js?t=2025110801';
             mp3Script.onload = function() {
                 console.log('mp3list.js加载完成');
                 loadMusicPlayer();
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         // SQ模式：直接加载flaclist.js
         const flacScript = document.createElement('script');
-        flacScript.src = 'js/flaclist.js?t=2025102801';
+        flacScript.src = 'js/flaclist.js?t=2025110801';
         flacScript.onload = function() {
             console.log('flaclist.js加载完成');
             loadMusicPlayer();
