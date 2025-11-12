@@ -2,7 +2,7 @@
 function loadMusicPlayer() {
     // 歌单加载完成后，再加载音乐播放器
     const musicScript = document.createElement('script');
-    musicScript.src = 'js/music.js?t=2025110801';
+    musicScript.src = 'js/music.js?t=202511121';
     musicScript.onload = function() {
         console.log('音乐播放器加载完成');
         // 手动触发音乐播放器初始化
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         otherScript.onload = function() {
             console.log('other.js加载完成');
             const mp3Script = document.createElement('script');
-            mp3Script.src = 'js/mp3list.js?t=2025111101';
+            mp3Script.src = 'js/mp3list.js?t=202511121';
             mp3Script.onload = function() {
                 console.log('mp3list.js加载完成');
                 loadMusicPlayer();
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         // SQ模式：直接加载flaclist.js
         const flacScript = document.createElement('script');
-        flacScript.src = 'js/flaclist.js?t=2025111101';
+        flacScript.src = 'js/flaclist.js?t=202511121';
         flacScript.onload = function() {
             console.log('flaclist.js加载完成');
             loadMusicPlayer();
