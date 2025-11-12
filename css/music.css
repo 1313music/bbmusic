@@ -947,7 +947,7 @@
             color: var(--text-primary);
             margin-bottom: 5px;
             line-height: 1.2;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
