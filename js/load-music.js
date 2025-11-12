@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         otherScript.onload = function() {
             console.log('other.js加载完成');
             const mp3Script = document.createElement('script');
-            mp3Script.src = 'js/mp3list.js?t=202511121';
+            mp3Script.src = 'js/mp3list.js?t=202511122';
             mp3Script.onload = function() {
                 console.log('mp3list.js加载完成');
                 loadMusicPlayer();
