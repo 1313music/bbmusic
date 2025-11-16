@@ -64,7 +64,7 @@
 .songs-header .svg-icon {
   width: 24px;
   height: 24px;
-  margin-right: 8px;
+  margin-right: 12px;
   color: #d4af37;
 }
 
@@ -133,4 +133,3 @@
 .fa {
   display: none !important;
 }
-</content>

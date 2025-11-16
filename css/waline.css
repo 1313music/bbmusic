@@ -1623,7 +1623,7 @@
 }
 
 #waline.show {
-    max-height: 3000px; /* 增加最大高度以确保能显示所有留言 */
+    max-height: 5000px; /* 进一步增加最大高度以确保能显示所有留言 */
     opacity: 1;
     padding: 20px 0; /* 添加一些内边距 */
 }
