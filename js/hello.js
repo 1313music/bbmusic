@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
         ],
         search: false,
         lang: 'zh',
+        pageSize: 20, // 设置合理的每页评论数量
+        pagination: true, // 启用分页功能
         locale: {
           placeholder: ' 保持理智 相信未来',
         }
