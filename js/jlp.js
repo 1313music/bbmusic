@@ -69,7 +69,7 @@ window.jlpAlbum = {
 { name: "中间talk-02(1112)", src: "https://r3.1701701.xyz/1112/中间talk-02(1112).mp3", lrc: "", cover: "" },
 { name: "中间talk-03(1112)", src: "https://r3.1701701.xyz/1112/中间talk-03(1112).mp3", lrc: "", cover: "" },
 { name: "中间talk-05(1112)", src: "https://r3.1701701.xyz/1112/中间talk-05(1112).mp3", lrc: "", cover: "" },
-{ name: "中间talk-06致谢(1112)", src: "https://r3.1701701.xyz/1112/中间talk-06致谢(1112).mp3", lrc: "", cover: "" },
-{ name: "中间talk-07结尾(1112)", src: "https://r3.1701701.xyz/1112/中间talk-07结尾(1112).mp3", lrc: "", cover: "" }
+{ name: "中间talk-06致谢(1112)", src: "https://r3.1701701.xyz/1112/中间talk-06(1112).mp3", lrc: "", cover: "" },
+{ name: "中间talk-07结尾(1112)", src: "https://r3.1701701.xyz/1112/中间talk-07(1112).mp3", lrc: "", cover: "" }
   ]
 };
