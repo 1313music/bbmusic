@@ -2,7 +2,7 @@
 function loadMusicPlayer() {
     // 歌单加载完成后，再加载音乐播放器
     const musicScript = document.createElement('script');
-    musicScript.src = 'js/music.js?t=2025111701';
+    musicScript.src = 'js/music.js?t=2025111703';
     musicScript.onload = function() {
         console.log('音乐播放器加载完成');
         // 手动触发音乐播放器初始化
@@ -21,18 +21,24 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 根据音质参数加载对应的歌单
     if (quality === 'mp3') {
-        // HQ模式：先加载other.js，再加载mp3list.js
+        // HQ模式：先加载other.js，再加载jlp.js，最后加载mp3list.js
         const otherScript = document.createElement('script');
         otherScript.src = 'js/other.js?t=' + Date.now();
         otherScript.onload = function() {
             console.log('other.js加载完成');
-            const mp3Script = document.createElement('script');
-            mp3Script.src = 'js/mp3list.js?t=2025111701';
-            mp3Script.onload = function() {
-                console.log('mp3list.js加载完成');
-                loadMusicPlayer();
+            const jlpScript = document.createElement('script');
+            jlpScript.src = 'js/jlp.js?t=' + Date.now();
+            jlpScript.onload = function() {
+                console.log('jlp.js加载完成');
+                const mp3Script = document.createElement('script');
+                mp3Script.src = 'js/mp3list.js?t=2025111703';
+                mp3Script.onload = function() {
+                    console.log('mp3list.js加载完成');
+                    loadMusicPlayer();
+                };
+                document.head.appendChild(mp3Script);
             };
-            document.head.appendChild(mp3Script);
+            document.head.appendChild(jlpScript);
         };
         document.head.appendChild(otherScript);
     } else {
