@@ -45,7 +45,15 @@ window.jlpAlbum = {
   { name: "热河+成员介绍(1111)", src: "https://r3.1701701.xyz/1111/热河_成员介绍.mp3", lrc: "", cover: ""},
   { name: "山阴路的夏天(1111)", src: "https://r3.1701701.xyz/1111/山阴路的夏天.mp3", lrc: "", cover: ""},
   { name: "花瓶(1111)", src: "https://r3.1701701.xyz/1111/花瓶_原唱ZWW.mp3", lrc: "", cover: ""},
- 
+    { name: "中间talk-01(1111)", src: "https://r3.1701701.xyz/1111/中间talk-01.mp3", lrc: "", cover: ""},
+    { name: "中间talk-02(1111)", src: "https://r3.1701701.xyz/1111/中间talk-02.mp3", lrc: "", cover: ""},
+    { name: "中间talk-03(1111)", src: "https://r3.1701701.xyz/1111/中间talk-03.mp3", lrc: "", cover: ""},
+    { name: "中间talk-04-关于新歌的对话(1111)", src: "https://r3.1701701.xyz/1111/中间talk-04_关于新歌的对话.mp3", lrc: "", cover: ""},
+    { name: "中间talk-05(1111)", src: "https://r3.1701701.xyz/1111/中间talk-05.mp3", lrc: "", cover: ""},
+    { name: "中间talk-06-致谢环节(1111)", src: "https://r3.1701701.xyz/1111/中间talk-06_致谢环节.mp3", lrc: "", cover: ""},
+    { name: "中间talk-07-安可前说的话(1111)", src: "https://r3.1701701.xyz/1111/中间talk-07_安可前说的话.mp3", lrc: "", cover: ""},
+    { name: "中间talk-08-结尾落幕(1111)", src: "https://r3.1701701.xyz/1111/中间talk-08_结尾落幕.mp3", lrc: "", cover: ""},
+
 
 { name: "11月12日开场音乐", src: "https://r3.1701701.xyz/1112/11月12日开场音乐(1112).mp3", lrc: "", cover: "" },
 { name: "黑色信封(1112)", src: "https://r3.1701701.xyz/1112/黑色信封(1112).mp3", lrc: "", cover: "" },
