@@ -5,7 +5,7 @@ window.jlpAlbum = {
   cover: "https://r2.1701701.xyz/img/jlp.webp",
   artist: "李志",
   songs: [
-    { name: "南京越来越远", src: "https://r2.1701701.xyz/mp3/叁缺壹吉隆坡站/南京越来越远.mp3", lrc: "https://r2.1701701.xyz/lrc/南京越来越远.lrc" , cover: "https://r2.1701701.xyz/mp3/叁缺壹吉隆坡站/njylyy.jpg"},
+    { name: "南京越来越远", src: "https://r2.1701701.xyz/mp3/叁缺壹吉隆坡站/南京越来越远.mp3", lrc: "https://r3.1701701.xyz/lrc/nj.lrc" , cover: "https://r2.1701701.xyz/mp3/叁缺壹吉隆坡站/njylyy.jpg"},
     { name: "下雨", src: "https://r2.1701701.xyz/mp3/叁缺壹吉隆坡站/下雨.mp3", lrc: "https://r2.1701701.xyz/lrc/叁缺壹吉隆坡站/下雨.lrc" },
     { name: "翁庆年的六英镑", src: "https://r2.1701701.xyz/mp3/叁缺壹吉隆坡站/六英镑.mp3", lrc: "https://r2.1701701.xyz/lrc/叁缺壹吉隆坡站/六英镑.lrc" },
     { name: "关于郑州的记忆", src: "https://r2.1701701.xyz/mp3/叁缺壹吉隆坡站/关于郑州的记忆.mp3", lrc: "https://r2.1701701.xyz/lrc/叁缺壹吉隆坡站/关于郑州的记忆.lrc" },
