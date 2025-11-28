@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         el: '#waline',
         serverURL: 'https://hello.1701701.xyz',
         path: pagePath, // 强制所有页面使用相同的评论标识符
+        avatarCDN: 'https://cravatar.cn/avatar/{md5}?d=wavatar', // 修改默认头像为 Cravatar 服务
         emoji: [
           'https://unpkg.com/@waline/emojis@1.2.0/weibo',
           'https://unpkg.com/@waline/emojis@1.2.0/qq',
