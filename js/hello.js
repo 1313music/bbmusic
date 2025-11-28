@@ -44,15 +44,21 @@ document.addEventListener('DOMContentLoaded', function() {
   // 检查留言板容器是否存在
   const walineContainer = document.getElementById('waline');
   if (walineContainer) {
-    // 检查当前页面是否是message.html，或者留言板容器是否可见
+    // 检查当前页面是否是message.html
     const isMessagePage = window.location.pathname.includes('message.html');
-    const isContainerVisible = walineContainer.style.display !== 'none' || walineContainer.classList.contains('show');
     
-    if (isMessagePage || isContainerVisible) {
-      // 如果是留言板页面或者容器已可见，直接初始化
+    if (isMessagePage) {
+      // 如果是留言板页面，直接初始化
       initWaline();
     } else {
-      // 否则，监听留言板显示事件
+      // 对于index.html页面，我们需要确保留言板在显示时初始化
+      // 方法1：直接初始化，不管容器是否可见
+      // 方法2：监听容器的显示状态变化
+      
+      // 采用方法1：直接初始化，Waline会处理容器隐藏的情况
+      initWaline();
+      
+      // 同时添加一个安全保障：监听切换按钮的点击事件，确保在显示时能正常工作
       const commentsToggleBtn = document.getElementById('comments-toggle-btn');
       if (commentsToggleBtn) {
         commentsToggleBtn.addEventListener('click', function() {
@@ -60,9 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
           setTimeout(function() {
             const isNowVisible = walineContainer.style.display !== 'none' || walineContainer.classList.contains('show');
             if (isNowVisible && !window.walineInitialized) {
+              console.log('安全保障：留言板已显示但未初始化，重新初始化');
               initWaline();
             }
-          }, 100);
+          }, 200); // 增加延迟时间，确保comments-toggle.js的逻辑已经执行完毕
         });
       }
     }
