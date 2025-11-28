@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
       let pagePath = currentPath;
       
       // 如果是留言板相关页面（index.html, message.html, test-message-detection.html），
-      // 使用统一的标识符来共享评论
-      if (currentPath.includes('index.html') || 
+      // 或者是根路径（/），使用统一的标识符来共享评论
+      if (currentPath === '/' || 
+          currentPath.includes('index.html') || 
           currentPath.includes('message.html') || 
           currentPath.includes('test-message-detection')) {
         pagePath = '/shared-comments'; // 统一的评论标识符
