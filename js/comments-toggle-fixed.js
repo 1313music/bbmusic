@@ -55,8 +55,8 @@
         
         // 改进的页面判断逻辑
         isMessagePage: function(path) {
-            // 方法1：检查是否包含message.html
-            if (path.includes('message.html')) {
+            // 方法1：检查是否包含message.html 或 test-message-detection
+            if (path.includes('message.html') || path.includes('test-message-detection')) {
                 return true;
             }
             
