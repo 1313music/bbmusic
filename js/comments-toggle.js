@@ -30,10 +30,18 @@
             const walineContainer = document.getElementById('waline');
             
             if (commentsToggleBtn && walineContainer) {
-                // 默认收起留言板
-                walineContainer.classList.remove('show');
-                commentsToggleBtn.classList.remove('active');
-                walineContainer.style.display = 'none';
+                // 检查当前是否是留言板页面
+                if (window.location.pathname.endsWith('message.html')) {
+                    // 留言板页面默认展开
+                    walineContainer.classList.add('show');
+                    walineContainer.style.display = 'block';
+                    commentsToggleBtn.classList.add('active');
+                } else {
+                    // 其他页面默认收起留言板
+                    walineContainer.classList.remove('show');
+                    commentsToggleBtn.classList.remove('active');
+                    walineContainer.style.display = 'none';
+                }
             }
         },
         
