@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板测试 | 民谣俱乐部</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="留言板测试页面，验证GitHub Pages路径识别问题">
+    <meta name="keywords" content="民谣俱乐部, 留言板, 测试">
+    <meta name="author" content="民谣俱乐部">
+    
+    <link rel="icon" href="https://1701701.xyz/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/music.css?t=2025112801">
+    <link rel="stylesheet" href="css/waline.css?t=2025112801">
+    <link rel="stylesheet" href="css/nightsky.css">
+    <link rel="stylesheet" href="css/svg-icons.css?t=2025112801">
+    
+    <style>
+        .test-info {
+            background: rgba(25, 28, 36, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            color: #f0f0f8;
+        }
+        
+        .test-info h2 {
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+        
+        .test-info .info-item {
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(45, 50, 65, 0.5);
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .test-info .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .status.error {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .status.warning {
+            background: #ffc107;
+            color: #212529;
+        }
+    </style>
+</head>
+<body>
+    <!-- 统一SVG图标库 -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <!-- 复制原有的SVG图标 -->
+        <symbol id="icon-comments" viewBox="0 0 1024 1024">
+            <path d="M841.643177 905.367589a32.864162 32.864162 0 0 1-32.864162 32.463379H117.830045a32.864162 32.864162 0 0 1-32.864162-32.463379v-681.330191a32.46338 32.46338 0 0 1 32.864162-32.062597H561.095451V108.612048H120.23474a117.429262 117.429262 0 0 0-120.23474 117.02848v681.330191a117.429262 117.429262 0 0 0 117.830045 117.028479h688.945057a117.429262 117.429262 0 0 0 117.830045-117.028479V467.312354H841.643177z" fill="currentColor"></path>
+            <path d="M1010.372595 140.674645l-62.522065-63.724412-26.05086-27.253207-36.070422-36.871987a43.685289 43.685289 0 0 0-30.86025-12.825039 42.883724 42.883724 0 0 0-30.459467 12.825039l-34.467292 35.669639-3.20626 3.20626L406.794202 440.860712v2.805477l-153.499684 286.15868a42.482941 42.482941 0 0 0 37.272769 62.121282 44.086071 44.086071 0 0 0 20.840688-5.610954l271.329729-150.293425 372.727693-379.540994 20.439906-20.840688 34.467292-35.268857a42.482941 42.482941 0 0 0 0-59.716588z" fill="currentColor"></path>
+        </symbol>
+    </svg>
+    
+    <div class="container">
+        <!-- 头部导航 -->
+        <header>
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo" title="民谣俱乐部">
+                <svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1007">
+                    <path d="M544 288c0-52.928-43.072-96-96-96s-96 43.072-96 96 43.072 96 96 96S544 340.928 544 288zM416 288c0-17.632 14.368-32 32-32s32 14.368 32 32-14.368 32-32 32S416 305.632 416 288zM304 448C259.904 448 224 483.904 224 528 224 572.128 259.904 608 304 608s80-35.872 80-80C384 483.904 348.096 448 304 448zM304 544C295.168 544 288 536.832 288 528S295.168 512 304 512s16 7.168 16 16S312.832 544 304 544zM640 736m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z" p-id="1008"></path>
+                </svg>
+            </a>
+        </header>
+        
+        <!-- 测试信息容器 -->
+        <div class="test-info">
+            <h2>🧪 留言板路径识别测试</h2>
+            <p>这个页面用于测试和验证留言板在不同环境下的路径识别问题。</p>
+            
+            <div class="info-item">
+                <strong>当前路径 (pathname):</strong> <span id="current-path"></span>
+            </div>
+            <div class="info-item">
+                <strong>完整URL:</strong> <span id="full-url"></span>
+            </div>
+            <div class="info-item">
+                <strong>页面标题:</strong> <span id="page-title"></span>
+            </div>
+            <div class="info-item">
+                <strong>路径检测结果:</strong> <span id="path-result" class="status"></span>
+            </div>
+            <div class="info-item">
+                <strong>留言板状态:</strong> <span id="comments-status" class="status warning">检测中...</span>
+            </div>
+        </div>
+        
+        <!-- 留言板容器 -->
+        <div class="comments-page-container">
+            <h1 style="text-align: center; margin: 30px 0; color: var(--primary); font-size: 24px;">留言板测试</h1>
+            
+            <!-- 留言板展开收起按钮 -->
+            <div class="comments-toggle-container">
+                <div class="comments-left-buttons">
+                    <div class="comments-btn qr-btn" data-qr="gzh.jpg" data-link="https://music.1701701.xyz/" title="音乐播放器II">
+                        <svg class="icon" viewBox="0 0 1024 1024"><path d="M924.184854 974.291262h-40.592155a39.617864 39.617864 0 0 0 13.76932-29.92466V69.69165A39.866408 39.866408 0 0 0 857.495612 29.825243h-691.050874c-21.971262 0-39.866408 17.895146-39.866408 39.866407v874.674952c0 11.969864 5.428194 22.607534 13.819029 29.92466H92.696854a9.941748 9.941748 0 1 0 0 19.883495h831.497942a9.941748 9.941748 0 1 0 0-19.883495z"></path></svg>
+                        <span class="btn-text">音乐播放器II</span>
+                    </div>
+                </div>
+                
+                <button id="comments-toggle-btn" class="comments-toggle-btn">
+                    <svg class="svg-icon comments-icon-expand" viewBox="0 0 1024 1024"><path d="M841.643177 905.367589a32.864162 32.864162 0 0 1-32.864162 32.463379H117.830045a32.864162 32.864162 0 0 1-32.864162-32.463379v-681.330191a32.46338 32.46338 0 0 1 32.864162-32.062597H561.095451V108.612048H120.23474a117.429262 117.429262 0 0 0-120.23474 117.02848v681.330191a117.429262 117.429262 0 0 0 117.830045 117.028479h688.945057a117.429262 117.429262 0 0 0 117.830045-117.028479V467.312354H841.643177z" fill="currentColor"></path></svg>
+                    <svg class="svg-icon comments-icon-collapse" viewBox="0 0 1024 1024"><path d="M906.35377778 242.11911111H276.93511111c-59.96088889 0-102.74133333 48.01422222-102.74133333 107.17866667v409.6c0 60.64355555 42.78044445 110.02311111 102.74133333 110.02311111h78.73422222l-3.072 116.62222222c-0.34133333 11.83288889 6.144 22.98311111 16.61155556 28.55822222 4.55111111 2.50311111 9.67111111 3.64088889 14.67733333 3.64088889 6.48533333 0 12.85688889-2.048 18.20444445-5.91644444l199.56622222-143.01866667h304.69688889c59.96088889 0 114.688-49.37955555 114.688-110.02311111v-409.6c-0.11377778-58.93688889-54.72711111-107.06488889-114.688-107.06488889z" fill="currentColor"></path></svg>
+                </button>
+            
+                <div class="comments-right-buttons">
+                    <div class="comments-btn qr-btn" data-qr="wx.jpg">
+                        <svg class="svg-icon"><use href="#icon-wechat"></use></svg>
+                        <span class="btn-text">联系</span>
+                    </div>
+                </div>
+            </div>
+            <div id="waline">留言</div>
+            
+            <!-- 页脚 -->
+            <footer>
+                <p>© 2025 民谣俱乐部 - 留言板测试</p>
+             </footer>
+        </div>
+    </div>
+    
+    <!-- 使用修复版本的JavaScript -->
+    <script src="js/comments-toggle-fixed.js?t=2025112801"></script>
+    <script src="js/comments-buttons.js?t=2025112801"></script>
+    <script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
+    <script src="js/hello.js"></script>
+    
+    <script>
+        // 测试和调试信息
+        document.addEventListener('DOMContentLoaded', function() {
+            // 显示当前路径信息
+            const currentPath = window.location.pathname;
+            const fullUrl = window.location.href;
+            const pageTitle = document.title;
+            
+            document.getElementById('current-path').textContent = currentPath;
+            document.getElementById('full-url').textContent = fullUrl;
+            document.getElementById('page-title').textContent = pageTitle;
+            
+            // 测试路径检测逻辑
+            function testPathDetection() {
+                const pathResult = document.getElementById('path-result');
+                const isMessagePage = window.CommentsToggle && window.CommentsToggle.isMessagePage ? 
+                    window.CommentsToggle.isMessagePage(currentPath) : false;
+                
+                if (isMessagePage) {
+                    pathResult.textContent = '✅ 识别为留言板页面';
+                    pathResult.className = 'status success';
+                } else {
+                    pathResult.textContent = '❌ 未识别为留言板页面';
+                    pathResult.className = 'status error';
+                }
+                
+                // 检查留言板状态
+                setTimeout(() => {
+                    const walineContainer = document.getElementById('waline');
+                    const commentsStatus = document.getElementById('comments-status');
+                    
+                    if (walineContainer) {
+                        const isVisible = walineContainer.classList.contains('show') || 
+                                        walineContainer.style.display !== 'none';
+                        
+                        if (isVisible) {
+                            commentsStatus.textContent = '📖 留言板已展开';
+                            commentsStatus.className = 'status success';
+                        } else {
+                            commentsStatus.textContent = '📕 留言板已收起';
+                            commentsStatus.className = 'status warning';
+                        }
+                    }
+                }, 1000);
+            }
+            
+            // 延迟执行测试，确保留言板初始化完成
+            setTimeout(testPathDetection, 500);
+            
+            // 添加手动测试按钮
+            const testButton = document.createElement('button');
+            testButton.textContent = '重新测试路径识别';
+            testButton.style.cssText = 'background: #d4af37; color: #191c24; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 10px;';
+            testButton.onclick = testPathDetection;
+            document.querySelector('.test-info').appendChild(testButton);
+        });
+    </script>
+    
+    <button id="back-to-top" class="back-to-top" aria-label="回到顶部"><svg class="svg-icon"><use href="#icon-arrow-up"></use></svg></button>
+</body>
+</html>
