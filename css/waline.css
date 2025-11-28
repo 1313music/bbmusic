@@ -1622,6 +1622,13 @@
     padding: 0;
 }
 
+/* 留言板页面默认展开留言板 */
+body:has(#comments-toggle-btn) #waline {
+    max-height: 5000px;
+    opacity: 1;
+    padding: 20px 0;
+}
+
 #waline.show {
     max-height: 5000px; /* 进一步增加最大高度以确保能显示所有留言 */
     opacity: 1;
