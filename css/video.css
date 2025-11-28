@@ -155,6 +155,7 @@ to{bottom:20px;opacity:1}
 .hamburger-nav-item{display:flex;align-items:center;gap:15px;padding:15px 20px;color:var(--primary);text-decoration:none;border-radius:var(--radius-md);transition:all 0.3s ease;font-size:16px;font-weight:500;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)}
 .hamburger-nav-item:hover{background:rgba(212,175,55,0.2);border:1px solid rgba(212,175,55,0.4);transform:translateX(5px);color:var(--accent)}
 .hamburger-nav-item .svg-icon{width:20px;height:20px;fill:currentColor}
+.hamburger-nav-item.active{background:rgba(212,175,55,0.3);border-color:var(--primary);color:var(--accent)}
 @media (max-width:1200px){.videos-list{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
 }@media (max-width:788px){body{padding:15px 10px}
 .videos-section{display:block}
