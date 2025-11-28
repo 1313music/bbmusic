@@ -3,9 +3,25 @@ document.addEventListener('DOMContentLoaded', function() {
   // 等待Waline库加载完成
   function initWaline() {
     if (typeof Waline !== 'undefined') {
+      // 设置统一的页面路径，让index和message页面共享评论
+      const currentPath = window.location.pathname;
+      let pagePath = currentPath;
+      
+      // 如果是留言板相关页面（index.html, message.html, test-message-detection.html），
+      // 使用统一的标识符来共享评论
+      if (currentPath.includes('index.html') || 
+          currentPath.includes('message.html') || 
+          currentPath.includes('test-message-detection')) {
+        pagePath = '/shared-comments'; // 统一的评论标识符
+      }
+      
+      console.log('当前页面路径:', currentPath);
+      console.log('Waline页面标识符:', pagePath);
+      
       Waline.init({
         el: '#waline',
         serverURL: 'https://hello.1701701.xyz',
+        path: pagePath, // 指定页面路径，实现评论共享
         emoji: [
           'https://unpkg.com/@waline/emojis@1.2.0/weibo',
           'https://unpkg.com/@waline/emojis@1.2.0/qq',
