@@ -31,7 +31,7 @@
             
             if (commentsToggleBtn && walineContainer) {
                 // 检查当前是否是留言板页面
-                if (window.location.pathname.includes('message.html')) {
+                if (window.location.pathname.endsWith('message.html')) {
                     // 留言板页面默认展开
                     walineContainer.classList.add('show');
                     walineContainer.style.display = 'block';
