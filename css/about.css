@@ -818,6 +818,38 @@ header {
     justify-content: center;
 }
 
+/* 文章内容样式 */
+.article-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    font-size: 16px;
+    background: rgba(25, 28, 36, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
+    /* 添加淡入动画 */
+    animation: fadeIn 1s ease-out 0.5s;
+    animation-fill-mode: both;
+    opacity: 0;
+}
+
+.article-content p {
+    margin-bottom: 20px;
+    text-indent: 2em;
+    transition: all 0.2s ease;
+}
+
+.article-content p:last-child {
+    margin-bottom: 0;
+}
+
+.article-content p:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
 /* 修复按钮内的图标和文字居中显示 */
 .btn-row .qr-btn {
     display: flex;
