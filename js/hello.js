@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
         el: '#waline',
         serverURL: 'https://hello.1701701.xyz',
         path: pagePath, // 强制所有页面使用相同的评论标识符
-        avatarCDN: 'https://cravatar.cn/avatar/{md5}?d=wavatar', // 修改默认头像为 Cravatar 服务
+        avatar: 'wavatar', // 设置默认头像样式为卡通头像
+        // 注意：Waline v3.8.0的客户端不再直接处理头像CDN配置
+        // 头像URL生成主要由服务端的GRAVATAR_STR环境变量控制
         emoji: [
           'https://unpkg.com/@waline/emojis@1.2.0/weibo',
           'https://unpkg.com/@waline/emojis@1.2.0/qq',
@@ -33,6 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
           placeholder: ' 保持理智 相信未来',
         }
       });
+      
+      // 添加头像配置调试信息
+      console.log('=== Waline头像配置调试信息 ===');
+      console.log('当前使用的头像样式:', 'wavatar');
+      console.log('头像CDN配置由服务端GRAVATAR_STR环境变量控制');
+      console.log('=== Waline头像配置调试信息 ===');
       
       // 标记为已初始化
       window.walineInitialized = true;
