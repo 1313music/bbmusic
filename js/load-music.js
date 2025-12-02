@@ -14,7 +14,7 @@ function loadMusicPlayer() {
 
 // 根据URL参数加载对应的歌单
 document.addEventListener('DOMContentLoaded', function() {
-    // 添加欢迎调试信息，模仿DPlayer样式
+    
     console.log('\n %c 欢迎来到【民谣俱乐部】- 音乐播放器 %c https://1701701.xyz \n\n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;');
     
     const urlParams = new URLSearchParams(window.location.search);
