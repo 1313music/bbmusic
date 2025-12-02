@@ -6,11 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // 简单直接：所有页面都使用相同的评论标识符
       const pagePath = '/shared-comments';
       
-      console.log('=== Waline初始化调试信息 ===');
-      console.log('当前页面完整URL:', window.location.href);
-      console.log('当前页面路径:', window.location.pathname);
-      console.log('Waline页面标识符:', pagePath);
-      console.log('=== Waline初始化调试信息 ===');
+
       
       // 初始化Waline
       Waline.init({
@@ -36,11 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
       
-      // 添加头像配置调试信息
-      console.log('=== Waline头像配置调试信息 ===');
-      console.log('当前使用的头像样式:', 'wavatar');
-      console.log('头像CDN配置由服务端GRAVATAR_STR环境变量控制');
-      console.log('=== Waline头像配置调试信息 ===');
+
       
       // 标记为已初始化
       window.walineInitialized = true;
