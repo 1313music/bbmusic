@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const qrTitles = {
         'gzh.jpg': '关注民谣俱乐部',
         'wx.jpg': '交个朋友🍻',
-        'zs.jpg': '加个鸡腿🍗'
+        'zs.jpg': '感谢支持'
     };
     
     // 获取所有二维码按钮
