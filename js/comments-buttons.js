@@ -54,24 +54,47 @@ document.addEventListener('DOMContentLoaded', function() {
             if (btn.id === 'flac-btn' && link) {
                 e.preventDefault();
                 
+                // 检查当前页面是否为video页面
+                const isVideoPage = window.location.pathname.includes('video.html');
+                
                 // 创建FLAC确认弹窗
                 const flacModal = document.createElement('div');
                 flacModal.className = 'qr-modal';
-                flacModal.innerHTML = `
-                    <div class="qr-content flac-content">
-                        <div class="qr-close">
-                            <svg class="svg-icon"><use href="#icon-close"></use></svg>
+                
+                // 根据页面设置不同的弹窗内容
+                if (isVideoPage) {
+                    flacModal.innerHTML = `
+                        <div class="qr-content flac-content">
+                            <div class="qr-close">
+                                <svg class="svg-icon"><use href="#icon-close"></use></svg>
+                            </div>
+                            <h3 class="qr-title">更多视频请关注公众号</h3>
+                            <div class="flac-message">
+                                <p> 即将跳转到更多视频</p>
+                            </div>
+                            <div class="flac-buttons">
+                                <button class="flac-confirm">确认跳转</button>
+                                <button class="flac-cancel">取消</button>
+                            </div>
                         </div>
-                        <h3 class="qr-title">音乐播放器II</h3>
-                        <div class="flac-message">
-                            <p>即将跳转到不同风格的音乐播放器II</p>
+                    `;
+                } else {
+                    flacModal.innerHTML = `
+                        <div class="qr-content flac-content">
+                            <div class="qr-close">
+                                <svg class="svg-icon"><use href="#icon-close"></use></svg>
+                            </div>
+                            <h3 class="qr-title">音乐播放器II</h3>
+                            <div class="flac-message">
+                                <p>即将跳转到不同风格的音乐播放器II</p>
+                            </div>
+                            <div class="flac-buttons">
+                                <button class="flac-confirm">确认跳转</button>
+                                <button class="flac-cancel">取消</button>
+                            </div>
                         </div>
-                        <div class="flac-buttons">
-                            <button class="flac-confirm">确认跳转</button>
-                            <button class="flac-cancel">取消</button>
-                        </div>
-                    </div>
-                `;
+                    `;
+                }
                 document.body.appendChild(flacModal);
                 
                 // 显示弹窗
