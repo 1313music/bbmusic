@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 二维码标题映射
     const qrTitles = {
         'gzh.jpg': '关注民谣俱乐部',
-        'wx.jpg': '交个朋友🍻',
+        'wx.jpg': '添加微信',
         'zs.jpg': '感谢支持'
     };
     
