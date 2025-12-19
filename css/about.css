@@ -479,7 +479,7 @@ header {
     margin: 0;
 }
 
-/* 关注支持部分样式 */
+/* 关注赞赏部分样式 */
 .support-section {
     border-radius: var(--radius-md);
     padding: 30px;
@@ -874,7 +874,7 @@ header {
     height: 40px ;
 }
 
-/* 为支持部分的图标添加主题色 */
+/* 为赞赏部分的图标添加主题色 */
 .btn-row .qr-btn .svg-icon {
     color: var(--primary);
     fill: var(--primary);

@@ -115,6 +115,12 @@ body::before {
     transform: scale(1.05);
 }
 
+.download-btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
 /* 下载按钮样式 */
 .download-link {
     display: none;
