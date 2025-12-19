@@ -14,7 +14,7 @@ function loadMusicPlayer() {
 
 // 根据URL参数加载对应的歌单
 document.addEventListener('DOMContentLoaded', function() {
-    
+    // 添加欢迎调试信息，模仿DPlayer样式
     console.log('\n %c 欢迎来到【民谣俱乐部】- 音乐播放器 %c https://1701701.xyz \n\n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;');
     
     const urlParams = new URLSearchParams(window.location.search);
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             jlpScript.src = 'js/jlp.js?t=' + Date.now();
             jlpScript.onload = function() {
                 const mp3Script = document.createElement('script');
-                mp3Script.src = 'js/mp3list.js?t=2025120222';
+                mp3Script.src = 'js/mp3list.js?t=2025122001';
                 mp3Script.onload = function() {
                     loadMusicPlayer();
                 };
