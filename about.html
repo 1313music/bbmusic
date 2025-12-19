@@ -371,32 +371,7 @@
                 }
             });
             
-            // 下载按钮功能
-            const downloadBtns = document.querySelectorAll('.download-btn');
-            downloadBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    // 如果是<a>标签（预览按钮），让它执行默认行为
-                    if (btn.tagName === 'A') {
-                        return; // 不阻止默认行为，让浏览器正常打开链接
-                    }
-                    
-                    const url = btn.getAttribute('data-url');
-                    const filename = btn.getAttribute('data-filename');
-                    
-                    // 如果是按钮类型且文本为预览，直接返回
-                    if (btn.textContent.trim() === '预览') {
-                        return;
-                    }
-                    
-                    // 创建下载链接
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                });
-            });
+
         });
     </script>
 </body>
