@@ -50,102 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const qrFile = btn.getAttribute('data-qr');
             const link = btn.getAttribute('data-link');
             
-            // 如果是flac-btn按钮，显示确认弹窗
+            // 如果是flac-btn按钮，直接跳转到下载页
             if (btn.id === 'flac-btn' && link) {
                 e.preventDefault();
-                
-                // 检查当前页面是否为video页面
-                const isVideoPage = window.location.pathname.includes('video.html');
-                
-                // 创建FLAC确认弹窗
-                const flacModal = document.createElement('div');
-                flacModal.className = 'qr-modal';
-                
-                // 根据页面设置不同的弹窗内容
-                if (isVideoPage) {
-                    flacModal.innerHTML = `
-                        <div class="qr-content flac-content">
-                            <div class="qr-close">
-                                <svg class="svg-icon"><use href="#icon-close"></use></svg>
-                            </div>
-                            <h3 class="qr-title">更多视频请关注公众号</h3>
-                            <div class="flac-message">
-                                <p> 即将跳转到更多视频</p>
-                            </div>
-                            <div class="flac-buttons">
-                                <button class="flac-confirm">确认跳转</button>
-                                <button class="flac-cancel">取消</button>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    flacModal.innerHTML = `
-                        <div class="qr-content flac-content">
-                            <div class="qr-close">
-                                <svg class="svg-icon"><use href="#icon-close"></use></svg>
-                            </div>
-                            <h3 class="qr-title">音乐播放器II</h3>
-                            <div class="flac-message">
-                                <p>即将跳转到不同风格的音乐播放器II</p>
-                            </div>
-                            <div class="flac-buttons">
-                                <button class="flac-confirm">确认跳转</button>
-                                <button class="flac-cancel">取消</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                document.body.appendChild(flacModal);
-                
-                // 显示弹窗
-                flacModal.classList.add('active');
-                
-                // 确认按钮事件
-                const confirmBtn = flacModal.querySelector('.flac-confirm');
-                confirmBtn.addEventListener('click', () => {
-                    window.open(link, '_blank');
-                    flacModal.classList.remove('active');
-                    setTimeout(() => {
-                        if (document.body.contains(flacModal)) {
-                            document.body.removeChild(flacModal);
-                        }
-                    }, 300);
-                });
-                
-                // 取消按钮事件
-                const cancelBtn = flacModal.querySelector('.flac-cancel');
-                cancelBtn.addEventListener('click', () => {
-                    flacModal.classList.remove('active');
-                    setTimeout(() => {
-                        if (document.body.contains(flacModal)) {
-                            document.body.removeChild(flacModal);
-                        }
-                    }, 300);
-                });
-                
-                // 关闭按钮事件
-                const closeBtn = flacModal.querySelector('.qr-close');
-                closeBtn.addEventListener('click', () => {
-                    flacModal.classList.remove('active');
-                    setTimeout(() => {
-                        if (document.body.contains(flacModal)) {
-                            document.body.removeChild(flacModal);
-                        }
-                    }, 300);
-                });
-                
-                // 点击背景关闭
-                flacModal.addEventListener('click', (event) => {
-                    if (event.target === flacModal) {
-                        flacModal.classList.remove('active');
-                        setTimeout(() => {
-                            if (document.body.contains(flacModal)) {
-                                document.body.removeChild(flacModal);
-                            }
-                        }, 300);
-                    }
-                });
-                
+                window.open(link, '_blank');
                 return;
             }
             
