@@ -28,10 +28,10 @@
     <meta name="twitter:image" content="https://img.1701701.xyz/api/0_preview/封面/tokyo.webp">
     
     <link rel="icon" href="https://1701701.xyz/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/music.css?t=2025120222">
-    <link rel="stylesheet" href="css/waline.css?t=2025120222">
-    <link rel="stylesheet" href="css/nightsky.css">
-    <link rel="stylesheet" href="css/svg-icons.css?t=2025120222">
+    <link rel="stylesheet" href="css/music.css?t=2025122301">
+    <link rel="stylesheet" href="css/waline.css?t=2025122301">
+    <link rel="stylesheet" href="css/nightsky.css?t=2025122301">
+    <link rel="stylesheet" href="css/svg-icons.css?t=2025122301">
     
 </head>
 <body>
@@ -242,15 +242,34 @@
     
     <!-- 音乐播放元素 -->
     <audio id="audio-player" preload="metadata"></audio>
-    <script src="js/comments-toggle-fixed.js?t=2025120222"></script>
-    <script src="js/comments-buttons.js?t=20251222"></script>
+    <script src="js/comments-toggle-fixed.js?t=2025122301"></script>
+    <script src="js/comments-buttons.js?t=2025122301"></script>
     <script src="https://unpkg.com/@waline/client@3.8.0/dist/waline.umd.js"></script>
-    <script src="js/hello.js?t=2025120222"></script>
+    <script src="js/hello.js?t=2025122301"></script>
     <script defer src="https://tongji.1701701.xyz/q/WH6otKhes" data-website-id="620f8452-9530-409a-9fa5-909ea0297d88"></script>
     
     <!-- 汉堡菜单交互脚本 -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // 回到顶部按钮功能
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 汉堡菜单交互
             const hamburgerMenu = document.getElementById('hamburger-menu');
             const hamburgerNav = document.getElementById('hamburger-nav');
             
