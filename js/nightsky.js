@@ -6,7 +6,10 @@ function dark() {
         a = "180,184,240",
         r = "226,225,142",
         d = "226,225,224",
-        c = [];
+        c = [],
+        lastTime = 0,
+        targetFPS = 30,
+        frameInterval = 1000 / targetFPS;
 
     function f() {
         if (s) {
@@ -82,9 +85,24 @@ function dark() {
         h = s.getContext("2d");
         f();
         window.addEventListener("resize", f, !1);
-        for (var p = 0; p < i; p++) c[p] = new y, c[p].reset();
-        function g() {
-            u(), window.requestAnimationFrame(g)
+        
+        function getStarCount() {
+            const isMobile = window.innerWidth < 768;
+            return isMobile ? Math.floor(i * 0.6) : i;
+        }
+        
+        for (var p = 0; p < getStarCount(); p++) c[p] = new y, c[p].reset();
+        function g(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            
+            const elapsed = timestamp - lastTime;
+            
+            if (elapsed > frameInterval) {
+                lastTime = timestamp - (elapsed % frameInterval);
+                u();
+            }
+            
+            window.requestAnimationFrame(g);
         }
         g()
     }
