@@ -125,7 +125,7 @@
 .nav-item[title="关于"] .svg-icon {
   width: 26px;
   height: 26px;
-  /* 确保关于图标与音乐图标视觉大小一致 */
+  
   transform: scale(1.04);
 }
 
