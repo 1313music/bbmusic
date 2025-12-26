@@ -7,7 +7,8 @@
     <link rel="icon" href="https://1701701.xyz/favicon.ico" type="image/x-icon" />
       <link rel="stylesheet" href="css/nightsky.css?t=2025122301">
       <link rel="stylesheet" href="css/svg-icons.css?t=2025122301">
-    <link rel="stylesheet" href="css/about.css?t=2025122301">
+    <link rel="stylesheet" href="css/about.css?t=2025122601">
+    <link rel="stylesheet" href="css/hamburger-menu.css?t=2025122601">
 </head>
 <body>
     <!-- 统一SVG图标库 -->
@@ -162,7 +163,8 @@
     <canvas id="universe"></canvas>
     
     <!-- 引入星空效果脚本 -->
-    <script src="js/nightsky.js"></script>
+    <script src="js/nightsky.js?t=2025122601"></script>
+    <script defer src="js/hamburger-menu.js?t=2025122601"></script>
     
     <!-- 导航菜单交互脚本 -->
     <script>
@@ -183,42 +185,6 @@
                     top: 0,
                     behavior: 'smooth'
                 });
-            });
-            
-            // 汉堡菜单交互
-            const hamburgerMenu = document.getElementById('hamburger-menu');
-            const hamburgerNav = document.getElementById('hamburger-nav');
-            
-            // 点击汉堡菜单按钮
-            hamburgerMenu.addEventListener('click', function() {
-                // 切换激活状态
-                hamburgerMenu.classList.toggle('active');
-                hamburgerNav.classList.toggle('active');
-                
-                // 阻止事件冒泡
-                event.stopPropagation();
-            });
-            
-            // 点击菜单项时关闭菜单
-            const navItems = document.querySelectorAll('.hamburger-nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    hamburgerMenu.classList.remove('active');
-                    hamburgerNav.classList.remove('active');
-                });
-            });
-            
-            // 点击页面其他地方时关闭菜单
-            document.addEventListener('click', function(event) {
-                if (!hamburgerMenu.contains(event.target) && !hamburgerNav.contains(event.target)) {
-                    hamburgerMenu.classList.remove('active');
-                    hamburgerNav.classList.remove('active');
-                }
-            });
-            
-            // 阻止菜单内部的点击事件冒泡
-            hamburgerNav.addEventListener('click', function(event) {
-                event.stopPropagation();
             });
             
             // 下载按钮功能

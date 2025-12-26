@@ -28,10 +28,11 @@
     <meta name="twitter:image" content="https://img.1701701.xyz/api/0_preview/封面/tokyo.webp">
     
     <link rel="icon" href="https://1701701.xyz/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/download.css?t=2025122301">
+    <link rel="stylesheet" href="css/download.css?t=2025122601">
     <link rel="stylesheet" href="css/waline.css?t=2025122301">
     <link rel="stylesheet" href="css/nightsky.css?t=2025122301">
     <link rel="stylesheet" href="css/svg-icons.css?t=2025122301">
+    <link rel="stylesheet" href="css/hamburger-menu.css?t=2025122601">
 </head>
 <body>
     <!-- 统一SVG图标库 -->
@@ -209,8 +210,8 @@
                         <p class="qr-code-text">登录 点击专辑/歌曲 即可上传至网易云盘</p>
                        
                         <p class="qr-code-text">
-                            <a href="https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary); transition: all 0.3s ease;">
-                                【详细使用指南】
+                            <a href="https://mp.weixin.qq.com/s/pHsFSPTn3Cd7MXV81J4NHg" target="_blank" style="color: var(--primary); text-decoration: none; transition: all 0.3s ease;">
+                                【使用指南】
                             </a>
                         </p>
                     </div>
@@ -2192,47 +2193,12 @@
     
     <button id="back-to-top" class="back-to-top" aria-label="回到顶部"><svg class="svg-icon"><use href="#icon-arrow-up"></use></svg></button>
     <canvas id="universe"></canvas>
-    <script src="js/nightsky.js"></script>
+    <script defer src="js/nightsky.js?t=2025122601"></script>
+    <script defer src="js/hamburger-menu.js?t=2025122601"></script>
     
-    <!-- 汉堡菜单交互脚本 -->
+    <!-- 折叠功能脚本 -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const hamburgerMenu = document.getElementById('hamburger-menu');
-            const hamburgerNav = document.getElementById('hamburger-nav');
-            
-            // 点击汉堡菜单按钮
-            hamburgerMenu.addEventListener('click', function() {
-                // 切换激活状态
-                hamburgerMenu.classList.toggle('active');
-                hamburgerNav.classList.toggle('active');
-                
-                // 阻止事件冒泡
-                event.stopPropagation();
-            });
-            
-            // 点击菜单项时关闭菜单
-            const navItems = document.querySelectorAll('.hamburger-nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    hamburgerMenu.classList.remove('active');
-                    hamburgerNav.classList.remove('active');
-                });
-            });
-            
-            // 点击页面其他地方时关闭菜单
-            document.addEventListener('click', function(event) {
-                if (!hamburgerMenu.contains(event.target) && !hamburgerNav.contains(event.target)) {
-                    hamburgerMenu.classList.remove('active');
-                    hamburgerNav.classList.remove('active');
-                }
-            });
-            
-            // 阻止菜单内部的点击事件冒泡
-            hamburgerNav.addEventListener('click', function(event) {
-                event.stopPropagation();
-            });
-            
-            // 折叠功能
             const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
             collapsibleHeaders.forEach(header => {
                 header.addEventListener('click', function() {
@@ -2483,12 +2449,8 @@
         });
     </script>
     
-    <!-- 回到顶部按钮 -->
-    <button id="back-to-top" class="back-to-top" aria-label="回到顶部"><svg class="svg-icon"><use href="#icon-arrow-up"></use></svg></button>
-    
     <!-- 星空背景 -->
     <canvas id="universe"></canvas>
-    <script src="js/nightsky.js"></script>
     <script defer src="https://tongji.1701701.xyz/q/RsJpLP1ez" data-website-id="620f8452-9530-409a-9fa5-909ea0297d88"></script>
 </body>
 </html>

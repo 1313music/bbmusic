@@ -8,9 +8,10 @@
     <meta name="keywords" content="李志,李志视频,李志casters,李志巡演,李志音乐节,李志纪录片,李志跨年,1701,我爱南京,南京市民,叁叁肆,逼哥夜话,逼哥,民谣视频">
     <link rel="icon" href="https://1701701.xyz/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="https://testingcf.jsdelivr.net/npm/dplayer@latest/dist/DPlayer.min.css">
-    <link rel="stylesheet" href="css/video.css?t=2025120222">
+    <link rel="stylesheet" href="css/video.css?t=2025122601">
       <link rel="stylesheet" href="css/nightsky.css?t=2025122301">
       <link rel="stylesheet" href="css/svg-icons.css?t=2025122301">
+      <link rel="stylesheet" href="css/hamburger-menu.css?t=2025122601">
     <link rel="stylesheet" href="css/waline.css?t=2025122301"
   />
     <noscript>
@@ -299,10 +300,10 @@
         <div id="waline">留言板</div>
         
         <!-- Waline 初始化脚本 -->
-        <script src="https://unpkg.com/@waline/client@3.8.0/dist/waline.umd.js"></script>
-        <script src="js/hello.js?t=2025120222"></script>
-        <script src="js/comments-toggle.js"></script>
-        <script src="js/comments-buttons.js?t=20251222"></script>
+        <script defer src="https://unpkg.com/@waline/client@3.8.0/dist/waline.umd.js"></script>
+        <script defer src="js/hello.js?t=2025120222"></script>
+        <script defer src="js/comments-toggle.js"></script>
+        <script defer src="js/comments-buttons.js?t=20251222"></script>
 
         
         <footer>
@@ -310,7 +311,7 @@
         </footer>
     </div>
 
-      <script src="js/video.js?t=2025120222"></script>
+      <script defer src="js/video.js?t=2025120222"></script>
       <script defer src="https://tongji.1701701.xyz/q/mbmK4MB8p" data-website-id="620f8452-9530-409a-9fa5-909ea0297d88"></script>
       
       <!-- 回到顶部按钮 -->
@@ -322,355 +323,13 @@
       <canvas id="universe"></canvas>
       
       <!-- 引入星空效果脚本 -->
-      <script src="js/nightsky.js"></script>
+      <script defer src="js/nightsky.js?t=2025122601"></script>
       
 
       
-      <!-- 汉堡菜单交互脚本 -->
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburgerMenu = document.getElementById('hamburger-menu');
-            const hamburgerNav = document.getElementById('hamburger-nav');
-            
-            // 点击汉堡菜单按钮
-            hamburgerMenu.addEventListener('click', function() {
-                // 切换激活状态
-                hamburgerMenu.classList.toggle('active');
-                hamburgerNav.classList.toggle('active');
-                
-                // 阻止事件冒泡
-                event.stopPropagation();
-            });
-            
-            // 点击菜单项时关闭菜单
-            const navItems = document.querySelectorAll('.hamburger-nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    hamburgerMenu.classList.remove('active');
-                    hamburgerNav.classList.remove('active');
-                });
-            });
-            
-            // 点击页面其他地方时关闭菜单
-            document.addEventListener('click', function(event) {
-                if (!hamburgerMenu.contains(event.target) && !hamburgerNav.contains(event.target)) {
-                    hamburgerMenu.classList.remove('active');
-                    hamburgerNav.classList.remove('active');
-                }
-            });
-            
-            // 阻止菜单内部的点击事件冒泡
-            hamburgerNav.addEventListener('click', function(event) {
-                event.stopPropagation();
-            });
-        });
-      </script>
+      <script defer src="js/hamburger-menu.js?t=2025122601"></script>
 
-      <!-- 搜索功能脚本 -->
-      <script>
-        // 搜索功能
-        function searchVideos(query) {
-            if (!query.trim()) return [];
-            
-            const results = [];
-            const lowerQuery = query.toLowerCase();
-            
-            // 首先搜索分类名称
-            if (window.categories) {
-                window.categories.forEach(category => {
-                    if (category.name && category.name.toLowerCase().includes(lowerQuery)) {
-                        // 如果这个分类有视频，添加分类结果
-                        if (window.videoData && window.videoData[category.id] && window.videoData[category.id].length > 0) {
-                            results.push({
-                                title: category.name,
-                                category: category.name,
-                                categoryId: category.id,
-                                type: 'category',
-                                videoCount: window.videoData[category.id].length
-                            });
-                        }
-                    }
-                });
-            }
-            
-            // 然后搜索视频标题
-            if (window.videoData) {
-                // 遍历所有分类
-                Object.keys(window.videoData).forEach(categoryId => {
-                    const category = window.videoData[categoryId];
-                    if (Array.isArray(category)) {
-                        category.forEach(video => {
-                            if (video.title && video.title.toLowerCase().includes(lowerQuery)) {
-                                // 获取分类名称
-                                let categoryName = categoryId;
-                                
-                                // 检查是否为主分类
-                                if (window.categories) {
-                                    const cat = window.categories.find(c => c.id === categoryId);
-                                    if (cat) {
-                                        categoryName = cat.name;
-                                    } else {
-                                        // 对于子文件夹，找到它的父文件夹名称
-                                        for (const parentCatId in window.videoData) {
-                                            const parentVideos = window.videoData[parentCatId];
-                                            if (Array.isArray(parentVideos)) {
-                                                for (const parentVideo of parentVideos) {
-                                                    if (parentVideo.isFolder && parentVideo.folderId === categoryId) {
-                                                        // 检查父分类是否为主分类
-                                                        const parentCat = window.categories.find(c => c.id === parentCatId);
-                                                        if (parentCat) {
-                                                            categoryName = `${parentCat.name} - ${parentVideo.title}`;
-                                                        } else {
-                                                            categoryName = parentVideo.title;
-                                                        }
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            if (categoryName !== categoryId) break;
-                                        }
-                                    }
-                                }
-                                
-                                results.push({
-                                    title: video.title,
-                                    category: categoryName,
-                                    video: video,
-                                    categoryId: categoryId,
-                                    type: 'video'
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-            
-            return results;
-        }
-        
-        // 显示搜索结果
-        function displaySearchResults(results) {
-            const searchResults = document.getElementById('search-results');
-            
-            if (results.length === 0) {
-                searchResults.innerHTML = '<div class="search-no-results">没有找到相关内容</div>';
-                searchResults.style.display = 'block';
-                return;
-            }
-            
-            let html = '';
-            results.forEach(result => {
-                if (result.type === 'category') {
-                    // 分类结果
-                    html += `
-                        <div class="search-result-item search-category-result" data-category="${result.category}" data-category-id="${result.categoryId}" data-type="category">
-                            <div class="search-result-title">
-                                <svg class="svg-icon" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-                                    <use xlink:href="#icon-folder-open"></use>
-                                </svg>
-                                ${result.title}
-                            </div>
-                            <div class="search-result-category">分类 (${result.videoCount} 个视频)</div>
-                        </div>
-                    `;
-                } else {
-                    // 视频结果
-                    html += `
-                        <div class="search-result-item search-video-result" data-category="${result.category}" data-category-id="${result.categoryId}" data-video='${JSON.stringify(result.video)}' data-type="video">
-                            <div class="search-result-title">
-                                <svg class="svg-icon" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-                                    <use xlink:href="#icon-play"></use>
-                                </svg>
-                                ${result.title}
-                            </div>
-                            <div class="search-result-category">分类: ${result.category}</div>
-                        </div>
-                    `;
-                }
-            });
-            
-            searchResults.innerHTML = html;
-            searchResults.style.display = 'block';
-            
-            // 添加点击事件
-            searchResults.querySelectorAll('.search-result-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const type = this.dataset.type;
-                    const categoryId = this.dataset.categoryId;
-                    
-                    if (type === 'category') {
-                        // 点击分类，切换到该分类
-                        selectCategory(categoryId);
-                    } else {
-                        // 点击视频，切换到分类并播放视频
-                        const category = this.dataset.category;
-                        const video = JSON.parse(this.dataset.video);
-                        selectCategoryAndPlayVideo(category, video, categoryId);
-                    }
-                    
-                    // 隐藏搜索结果
-                    searchResults.style.display = 'none';
-                    document.getElementById('s').value = '';
-                });
-            });
-        }
-        
-        // 选择分类
-        function selectCategory(categoryId) {
-            // 找到对应的分类按钮并点击
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            categoryButtons.forEach(btn => {
-                // 优先使用 data-category 属性进行精确匹配
-                if (btn.dataset.category === categoryId) {
-                    btn.click();
-                }
-            });
-        }
-        
-        // 选择分类并播放视频
-        function selectCategoryAndPlayVideo(categoryName, video, categoryId) {
-            // 这里需要与现有的视频播放逻辑集成
-            
-            // 检查当前分类是否为子文件夹
-            const isSubFolder = !document.querySelector(`.category-btn[data-category="${categoryId}"]`);
-            
-            if (isSubFolder) {
-                // 对于子文件夹，我们需要先找到它的父分类
-                let parentCategoryId = '';
-                let parentCategoryBtn = null;
-                
-                // 遍历所有分类，找到包含当前子文件夹的父分类
-                if (window.videoData) {
-                    for (const catId in window.videoData) {
-                        const videos = window.videoData[catId];
-                        if (Array.isArray(videos)) {
-                            for (const v of videos) {
-                                if (v.isFolder && v.folderId === categoryId) {
-                                    parentCategoryId = catId;
-                                    break;
-                                }
-                            }
-                        }
-                        if (parentCategoryId) break;
-                    }
-                }
-                
-                // 找到父分类按钮
-                const categoryButtons = document.querySelectorAll('.category-btn');
-                categoryButtons.forEach(btn => {
-                    if (btn.dataset.category === parentCategoryId) {
-                        parentCategoryBtn = btn;
-                    }
-                });
-                
-                if (parentCategoryBtn) {
-                    // 点击父分类
-                    parentCategoryBtn.click();
-                    
-                    // 延迟一下，确保父分类已切换
-                    setTimeout(() => {
-                        // 找到子文件夹并点击
-                        const folderItems = document.querySelectorAll('.video-item.folder-item');
-                        folderItems.forEach(item => {
-                            if (item.dataset.folderId === categoryId) {
-                                item.click();
-                                
-                                // 再次延迟，确保子文件夹已打开
-                                setTimeout(() => {
-                                    playVideoByTitle(video.title);
-                                }, 800);
-                            }
-                        });
-                    }, 800);
-                }
-            } else {
-                // 普通分类，直接点击分类按钮并播放视频
-                const categoryButtons = document.querySelectorAll('.category-btn');
-                categoryButtons.forEach(btn => {
-                    if (btn.dataset.category === categoryId) {
-                        btn.click();
-                        
-                        // 延迟一下再播放视频，确保分类已切换
-                        setTimeout(() => {
-                            playVideoByTitle(video.title);
-                        }, 800);
-                    }
-                });
-            }
-        }
-        
-        // 根据标题播放视频
-        function playVideoByTitle(title) {
-            // 这里需要与现有的视频播放逻辑集成
-            // 找到对应的视频元素并点击
-            const videoItems = document.querySelectorAll('.video-item');
-            videoItems.forEach(item => {
-                const videoTitle = item.querySelector('.video-title');
-                if (videoTitle && videoTitle.textContent === title) {
-                    item.click();
-                }
-            });
-        }
-        
-        // 初始化搜索
-        function initSearch() {
-            const searchInput = document.getElementById('s');
-            const searchResults = document.getElementById('search-results');
-            let searchTimeout;
-            
-            // 输入事件处理
-            searchInput.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                const query = this.value.trim();
-                
-                if (!query) {
-                    searchResults.style.display = 'none';
-                    return;
-                }
-                
-                // 防抖处理
-                searchTimeout = setTimeout(() => {
-                    const results = searchVideos(query);
-                    displaySearchResults(results);
-                }, 300);
-            });
-            
-            // 点击外部隐藏搜索结果
-            document.addEventListener('click', function(event) {
-                if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
-                    searchResults.style.display = 'none';
-                }
-            });
-            
-            // 回车键处理
-            searchInput.addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    const query = this.value.trim();
-                    if (query) {
-                        const results = searchVideos(query);
-                        if (results.length > 0) {
-                            // 自动选择第一个结果
-                            const firstResult = results[0];
-                            if (firstResult.type === 'category') {
-                                // 如果是分类结果，切换到该分类
-                                selectCategory(firstResult.categoryId);
-                            } else {
-                                // 如果是视频结果，切换到分类并播放视频
-                                selectCategoryAndPlayVideo(firstResult.category, firstResult.video, firstResult.categoryId);
-                            }
-                            searchResults.style.display = 'none';
-                            this.value = '';
-                        }
-                    }
-                }
-            });
-        }
-        
-        // 页面加载完成后初始化搜索功能
-        document.addEventListener('DOMContentLoaded', function() {
-            initSearch();
-        });
-      </script>
+
       
 </body>
 </html>
